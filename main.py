@@ -44,10 +44,9 @@ async def user():
     return {"message": "Wellcome to MindMarketAPI"}
 
 
-def create_api(app: FastAPI):
-    @app.get(app.root_path + "/openapi.json")
-    def custom_swagger_ui_html():
-        return app.openapi()
+@app.get("/openapi.json", name="Wellcome", tags=["Основное"], description="Тут будет описание методов?")
+async def user():
+    return app.openapi()
 
 
 app.include_router(profile_router)
@@ -57,5 +56,5 @@ app.include_router(crm_router)
 app.include_router(chat_router)
 
 if __name__ == "__main__":
-    create_api(app)
-    uvicorn.run(app, host='0.0.0.0', port=8000)
+
+    uvicorn.run(app, host='0.0.0.0', port=7000)
