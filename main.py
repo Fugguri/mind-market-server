@@ -44,10 +44,6 @@ async def user():
     return {"message": "Wellcome to MindMarketAPI"}
 
 
-@app.get("/openapi.json", name="Wellcome", tags=["Основное"], description="Тут будет описание методов?")
-async def user():
-    return app.openapi()
-
 
 app.include_router(profile_router)
 app.include_router(assistant_router)
