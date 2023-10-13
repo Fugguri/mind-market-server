@@ -8,13 +8,13 @@ from mics import utls
 profile_router = APIRouter()
 
 
-@profile_router.get("/profile/{access_token}", response_model=models.Profile, name="Данные профиля", description="Данные по пользователе", tags=["Профиль"])
+@profile_router.get("/api_v2/profile/{access_token}", response_model=models.Profile, name="Данные профиля", description="Данные по пользователе", tags=["Профиль"])
 async def profile(access_token: str):
     profile = await utls.check_profile_access_token(access_token, False)
     return profile
 
 
-@profile_router.put("/profile/new", name="Редактировать профиль", tags=["Профиль"])
+@profile_router.put("/api_v2/profile/new", name="Редактировать профиль", tags=["Профиль"])
 async def create_profile(profile: schemas.ProfileEntry):
     prisma.profile.create(data={
         "name": profile.name,
@@ -23,7 +23,7 @@ async def create_profile(profile: schemas.ProfileEntry):
     })
 
 
-@profile_router.post("/profile/new", name="Новый пользователь", tags=["Профиль"])
+@profile_router.post("/api_v2/profile/new", name="Новый пользователь", tags=["Профиль"])
 async def create_profile(profile: schemas.ProfileEntry):
     prisma.profile.create(data={
         "name": profile.name,

@@ -6,7 +6,7 @@ from mics import utls
 assistant_router = APIRouter()
 
 
-@assistant_router.post("/assistants/{access_token}/{assistant_id}", name="Использовать ассистента", description="Запрос ответа от ассистента", tags=["Ассистенты"])
+@assistant_router.post("/api_v2/assistants/{access_token}/{assistant_id}", name="Использовать ассистента", description="Запрос ответа от ассистента", tags=["Ассистенты"])
 async def create_user(access_token: str, assistant_id: str, ):
     profile = await utls.check_profile_access_token(access_token, False)
     for assistant in profile.assistants:
@@ -16,7 +16,7 @@ async def create_user(access_token: str, assistant_id: str, ):
     raise HTTPException(status_code=401, detail="Assistant is not exist.")
 
 
-@assistant_router.get("/assistants/{access_token}/{assistant_id}", name="Текущий ассистент", description="Запрос информации об ассистенте", tags=["Ассистенты"])
+@assistant_router.get("/api_v2/assistants/{access_token}/{assistant_id}", name="Текущий ассистент", description="Запрос информации об ассистенте", tags=["Ассистенты"])
 async def create_user(access_token: str, assistant_id: str, ):
     profile = await utls.check_profile_access_token(access_token, False)
 
@@ -27,7 +27,7 @@ async def create_user(access_token: str, assistant_id: str, ):
     raise HTTPException(status_code=401, detail="Assistant is not exist.")
 
 
-@assistant_router.post("/assistants/new/{access_token}", name="Новый ассистент", description="Создание ассистента", tags=["Ассистенты"])
+@assistant_router.post("/api_v2/assistants/new/{access_token}", name="Новый ассистент", description="Создание ассистента", tags=["Ассистенты"])
 async def create_user(access_token: str, assistant: schemas.AssistantEntry):
     profile = await utls.check_profile_access_token(access_token, False)
 
@@ -43,7 +43,7 @@ async def create_user(access_token: str, assistant: schemas.AssistantEntry):
     return new
 
 
-@assistant_router.post("/assistants/edit/{access_token}", name="Редактировать ассистента", description="Редактирование ассистента ассистента", tags=["Ассистенты"])
+@assistant_router.post("/api_v2/assistants/edit/{access_token}", name="Редактировать ассистента", description="Редактирование ассистента ассистента", tags=["Ассистенты"])
 async def create_user(access_token: str, assistant: schemas.AssistantEntry):
     profile = await utls.check_profile_access_token(access_token, False)
 

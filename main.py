@@ -39,7 +39,7 @@ async def shutdown():
     await prisma.disconnect()
 
 
-@app.get("/", name="Wellcome", tags=["Основное"], description="Тут будет описание методов?")
+@app.get("/api_v2", name="Wellcome", tags=["Основное"], description="Тут будет описание методов?")
 async def user():
     return {"message": "Wellcome to MindMarketAPI"}
 
