@@ -57,5 +57,5 @@ app.include_router(crm_router)
 app.include_router(chat_router)
 
 if __name__ == "__main__":
-    create_api()
+    create_api(app)
     uvicorn.run(app, host='0.0.0.0', port=8000)
