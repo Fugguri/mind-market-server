@@ -44,7 +44,6 @@ async def user():
     return {"message": "Wellcome to MindMarketAPI"}
 
 
-
 app.include_router(profile_router)
 app.include_router(assistant_router)
 app.include_router(integration_router)
@@ -53,4 +52,4 @@ app.include_router(chat_router)
 
 if __name__ == "__main__":
 
-    uvicorn.run(app, host='0.0.0.0', port=7000)
+    uvicorn.run(app, host='0.0.0.0', port=8000)
