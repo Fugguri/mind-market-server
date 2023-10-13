@@ -1,0 +1,26 @@
+2023-09-13 19:27:13,270 - instabot version: 0.117.0 (bot) - INFO - Instabot version: 0.117.0 Started
+2023-09-13 19:27:13,270 - instabot version: 0.117.0 (bot) - DEBUG - Bot imported from /home/fugguri/.local/lib/python3.11/site-packages/instabot/bot/bot.py
+2023-09-13 19:27:13,271 - instabot version: 0.117.0 (api_login) - DEBUG - Loading cookies
+2023-09-13 19:27:13,272 - instabot version: 0.117.0 (api_login) - DEBUG - Loading uuids
+2023-09-13 19:27:13,272 - instabot version: 0.117.0 (api_login) - INFO - Recovery from /home/fugguri/Документы/maindmarket/config/gizzzar_uuid_and_cookie.json: COOKIE True - UUIDs True - TIMING, DEVICE and ...
+- user-agent=Instagram 117.0.0.28.123 Android (28/9.0; 420dpi; 1080x1920; OnePlus; ONEPLUS A3003; OnePlus3; qcom; en_US; 180322800)
+- phone_id=0f1230e6-af28-4962-bf71-0b9313d5df72
+- uuid=71a5a124-05e4-4872-bd94-f97a9a86c236
+- client_session_id=80414d90-f42d-4c53-aa05-a6002ed2de61
+- device_id=android-24b9909697b57b30
+2023-09-13 19:27:13,274 - instabot version: 0.117.0 (api_login) - INFO - LOGIN FLOW! Just logged-in: False
+2023-09-13 19:27:14,550 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: feed/timeline/ returned response: <Response [200]>
+2023-09-13 19:27:14,851 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: feed/reels_tray/ returned response: <Response [200]>
+2023-09-13 19:27:14,852 - instabot version: 0.117.0 (api) - INFO - Logged-in successfully as 'gizzzar'!
+2023-09-13 19:27:14,852 - instabot version: 0.117.0 (bot_checkpoint) - DEBUG - Loading Checkpoint file from: /home/fugguri/Документы/maindmarket/config/gizzzar.checkpoint
+2023-09-13 19:27:16,229 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: direct_v2/inbox/ returned response: <Response [200]>
+2023-09-13 19:27:21,435 - instabot version: 0.117.0 (api) - DEBUG - GET to endpoint: users/fugguri/usernameinfo/ returned response: <Response [200]>
+2023-09-13 19:27:22,369 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: direct_v2/threads/broadcast/text/ returned response: <Response [200]>
+2023-09-13 19:27:26,478 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: direct_v2/inbox/ returned response: <Response [200]>
+2023-09-13 19:27:30,381 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: direct_v2/inbox/ returned response: <Response [200]>
+2023-09-13 19:27:34,286 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: direct_v2/inbox/ returned response: <Response [200]>
+2023-09-13 19:27:38,221 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: direct_v2/inbox/ returned response: <Response [200]>
+2023-09-13 19:27:42,327 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: direct_v2/inbox/ returned response: <Response [200]>
+2023-09-13 19:28:37,820 - instabot version: 0.117.0 (bot_checkpoint) - DEBUG - Saving Checkpoint file to: /home/fugguri/Документы/maindmarket/config/gizzzar.checkpoint
+2023-09-13 19:28:37,820 - instabot version: 0.117.0 (bot) - INFO - Total messages: 2/63
+2023-09-13 19:28:37,820 - instabot version: 0.117.0 (bot) - INFO - Total requests: 51

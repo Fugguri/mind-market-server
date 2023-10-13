@@ -1,0 +1,16 @@
+aiogram==2.23.1
+fastapi==0.103.2
+gpt_index==0.8.12
+gradio==3.47.1
+instabot==0.117.0
+InstagramAPI==1.0.2
+instagrapi==1.17.3
+langchain==0.0.313
+llama_index==0.8.44
+openai==0.27.8
+pydantic==1.10.7
+python-dotenv==1.0.0
+requests==2.31.0
+SQLAlchemy==2.0.15
+uvicorn==0.23.2
+whatsapp_api_client_python==0.0.34

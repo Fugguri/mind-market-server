@@ -1,0 +1,29 @@
+import openai 
+users_message ={}
+
+openai.api_key ="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"
+
+async def create_responce(user_id:int|str, settigs:str, text:str|int):
+    try:
+        answer = ""
+        try:
+            users_message[user_id]
+        except:
+            users_message[user_id] = [{"role": "user", "content": settigs}]
+        users_message[user_id].append(
+            {"role": "user", "content": text})        
+        responce = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=users_message[user_id],
+            temperature =  0.7
+        )
+        answer = responce['choices'][0]['message']['content']
+        
+        users_message[user_id].append({"role": "assistant", "content": answer})
+    except openai.error.RateLimitError as ex:
+        return "RateLimitError"
+    except Exception as ex:
+        print(ex)
+        users_message[user_id] = []
+        create_responce(user_id,text)
+    return answer

@@ -1,0 +1,57 @@
+from mics import jivo, tg, greenApi, utls
+from prisma_ import prisma
+from models import schemas
+from fastapi import APIRouter, HTTPException
+from prisma import models
+
+integration_router = APIRouter()
+
+
+@integration_router.post("/integrations/tgbot/{access_token}", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+async def create_tg_bot(access_token: str, tgbot: schemas.TgBotEntry):
+
+    profile = await utls.check_profile_access_token(access_token)
+
+    bot = tg.TgBot(tgbot.token)
+    me = await bot.getInfo()
+    new = await prisma.telegrambot.create(data={
+        "token": tgbot.token,
+        'telegram_id': str(me[0].id),
+        'name': me[0].first_name,
+        'imageUrl': me[1],
+        'profileId': profile.id,
+    })
+
+    return new
+
+
+@integration_router.post("/integrations/wabot/{access_token}", name="Добавление WhatsApp бота", description="Добавление профиля WhatsApp созданного в сервисе GreenApi", tags=["Интеграции"])
+async def create_wa_bot(access_token: str, wabot: schemas.WaBotEntry):
+    profile = await utls.check_profile_access_token(access_token)
+
+    me = greenApi.Watsapp(wabot.IdInstance, wabot.ApiTokenInstance).get_me()
+    new = await prisma.whatsappbot.create(data={
+        "phone": wabot.phone,
+        "ApiTokenInstance": wabot.ApiTokenInstance,
+        "IdInstance": wabot.IdInstance,
+        'name': " ",
+        'imageUrl': me,
+        'profileId': profile.id,
+    })
+
+    return new
+
+
+@integration_router.post("/integration/tguserbot/{access_token}", name="Новый ассистент", description="Создание нового ассистента", tags=["Интеграции"])
+async def create_tg_user_bot(access_token: str, tguserbot: schemas.TgUserBotEntry):
+    profile = await utls.check_profile_access_token(access_token)
+
+    # new = await prisma.telegrambot.create(data={
+    #     "token": tguserbot.token,
+    #     'telegram_id': str(me[0].id),
+    #     'name': me[0].first_name,
+    #     'imageUrl': me[1],
+    #     'profileId': user.id,
+    # })
+
+    return profile
