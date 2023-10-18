@@ -67,12 +67,12 @@ async def create_user(access_token: str, request: schemas.ClientMessage):
             pass
 
     assistant = await utls.check_assistant_access_token(access_token)
-    
+
     response = await jivo.create_jivo_responce(request, assistant)
     answer_request = await jivo.send_jivo_aswer(response, assistant)
 
     if answer_request.status_code == 200:
-        await prisma.
+        pass
     elif answer_request.status_code == 400:
         await tg.tg_bot.send_err_notification(answer_request.json())
     elif answer_request.status_code == 500:
