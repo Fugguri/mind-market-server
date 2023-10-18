@@ -76,9 +76,7 @@ async def create_user(access_token: str, request: schemas.ClientMessage):
             where={
                 id: assistant.jivoBot[0].id
             },
-            data={
-                "useCount": "useCount"+1
-            }
+            data={"useCount": { "increment": 1 }}
         )
     elif answer_request.status_code == 400:
         await tg.tg_bot.send_err_notification(answer_request.json())
