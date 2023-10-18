@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
+  provider      = "prisma-client-py"
   binaryTargets = ["native", "debian-openssl-1.0.x"]
 }
 
@@ -24,7 +24,7 @@ model Profile {
   telegramBots     TelegramBot[]
   telegramUserBots TelegramUserBot[]
   whatsAppBot      WhatsAppBot[]
-  JivoBot          JivoBot[]
+  jivoBot          JivoBot[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
