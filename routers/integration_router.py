@@ -73,13 +73,10 @@ async def create_user(access_token: str, request: schemas.ClientMessage):
 
     if answer_request.status_code == 200:
         await prisma.assistant.update(
+            data={'use_count': {'increment': 1}
+                  },
             where={
                 id: assistant.id
-            },
-            data={
-                'use_count': {
-                    'increment': 1
-                },
             },
         )
     elif answer_request.status_code == 400:
