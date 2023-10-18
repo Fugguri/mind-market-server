@@ -77,8 +77,8 @@ async def create_user(access_token: str, request: schemas.ClientMessage):
                 id: assistant.id
             },
             data={
-                'useCount': {
-                    'increment': 1,
+                'use_count': {
+                    'increment': 1
                 },
             },
         )
