@@ -2,9 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider             = "prisma-client-py"
-  interface            = "asyncio"
-  recursive_type_depth = 5
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.0.x"]
 }
 
 datasource db {
@@ -17,12 +16,15 @@ model Profile {
   userId           String            @unique
   name             String
   imageUrl         String            @db.Text
-  email            String            @db.Text
+  login            String?
+  password         String?
+  email            String?           @db.Text
   token            String            @default(uuid())
   assistants       Assistant[]
   telegramBots     TelegramBot[]
   telegramUserBots TelegramUserBot[]
   whatsAppBot      WhatsAppBot[]
+  JivoBot          JivoBot[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -43,9 +45,11 @@ model Assistant {
   profile          Profile           @relation(fields: [profileId], references: [id], onDelete: Cascade)
   telegramBots     TelegramBot[]
   telegramUserBots TelegramUserBot[]
-  thatsAppBot      WhatsAppBot[]
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  whatsAppBot      WhatsAppBot[]
+  jivoBot          JivoBot[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([profileId])
 }
@@ -108,6 +112,27 @@ model WhatsAppBot {
   ApiTokenInstance String @db.Text
 
   profileId   String
+  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  assistantId String
+  assistant   Assistant @relation(fields: [assistantId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([assistantId])
+}
+
+model JivoBot {
+  id       String @id @default(uuid())
+  name     String @db.Text
+  settings String @db.Text
+  imageUrl String @db.Text
+
+  profileId   String
+  useCount    Int    @default(0)
+  provider_id String @db.Text
+
   profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
   assistantId String
   assistant   Assistant @relation(fields: [assistantId], references: [id])

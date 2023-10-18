@@ -56,3 +56,26 @@ async def create_tg_user_bot(access_token: str, tguserbot: schemas.TgUserBotEntr
     # })
 
     return profile
+
+
+@integration_router.post("/integration/jivo/{access_token}", name="Ассистент", description="Запрос ответа от ассистента", tags=["Ассистент"])
+async def create_user(access_token: str, request: schemas.ClientMessage):
+    match request.event:
+        case "CHAT_CLOSED":
+            return
+        case _:
+            pass
+
+    assistant = await utls.check_assistant_access_token(access_token, False)
+    
+    response = await jivo.create_jivo_responce(request, user)
+    answer_request = await jivo.send_jivo_aswer(response, user)
+
+    if answer_request.status_code == 200:
+        await crud.update_assistant_count(db, user.assistants[0])
+    elif answer_request.status_code == 400:
+        await tg.tg_bot.send_err_notification(answer_request.json())
+    elif answer_request.status_code == 500:
+        await tg.tg_bot.send_err_notification(answer_request.json())
+
+    return response.__dict__
