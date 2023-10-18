@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(
     title="MindMarketAPI",
     summary="",
-    version="0.0.1",
+    version="0.1.1",
     description="Your AI assistant",
 )
 
