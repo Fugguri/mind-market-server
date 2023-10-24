@@ -28,7 +28,7 @@ async def create_profile(profile: schemas.ProfileEntry):
     prisma.profile.create(data={
         "name": profile.name,
         "imageUrl": profile.imageUrl,
-        "email": profile.email
+        "email": profile.email,
     })
 
 

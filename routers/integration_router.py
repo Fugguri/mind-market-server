@@ -58,7 +58,7 @@ async def create_tg_user_bot(access_token: str, tguserbot: schemas.TgUserBotEntr
     return profile
 
 
-@integration_router.post("/integration/jivo/{access_token}", name="JivoBot", description="Запрос ответа от ассистента", tags=["Интеграции"])
+@integration_router.post("/integration/jivo/{access_token}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
 async def create_user(access_token: str, request: schemas.ClientMessage):
     match request.event:
         case "CHAT_CLOSED":
