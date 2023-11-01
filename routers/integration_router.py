@@ -63,6 +63,14 @@ async def create_user(access_token: str, request: schemas.ClientMessage):
     match request.event:
         case "CHAT_CLOSED":
             return
+        case "INVITE_AGENT":
+            return
+        case "AGENT_JOINED":
+            return
+        case "AGENT_UNAVAILABLE":
+            return
+        case "CLIENT_INFO":
+            return
         case _:
             pass
 
