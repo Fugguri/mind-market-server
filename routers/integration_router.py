@@ -60,6 +60,14 @@ async def create_tg_user_bot(access_token: str, tguserbot: schemas.TgUserBotEntr
 
 @integration_router.get("/integration/instagram/webhook", description="Регистрация instagram webhook", tags=["Системные"])
 async def user(request: Request):
+    body = await request.body()
+
+    print(body)
+    return
+
+
+@integration_router.get("/integration/instagram/webhook", description="Регистрация instagram webhook", tags=["Системные"])
+async def user(request: Request):
     res = request.query_params.get('hub.challenge')
     return int(res)
 
