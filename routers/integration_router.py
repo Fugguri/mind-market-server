@@ -1,7 +1,7 @@
 from mics import jivo, tg, greenApi, utls
 from prisma_ import prisma
 from models import schemas
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from prisma import models
 
 integration_router = APIRouter()
@@ -56,6 +56,12 @@ async def create_tg_user_bot(access_token: str, tguserbot: schemas.TgUserBotEntr
     # })
 
     return profile
+
+
+@integration_router.get("/integration/instagram/webhook", description="Регистрация instagram webhook", tags=["Системные"])
+async def user(request: Request):
+    res = request.query_params.get('hub.challenge')
+    return int(res)
 
 
 @integration_router.post("/integration/jivo/{access_token}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
