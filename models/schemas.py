@@ -83,7 +83,7 @@ class Assistant(BaseModel):
     comment: str = ""
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ProfileEntry(BaseModel):
@@ -105,7 +105,7 @@ class User(BaseModel):
     provider_id: str | None = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class MessageRequest(BaseModel):
