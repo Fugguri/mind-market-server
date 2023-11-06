@@ -16,10 +16,11 @@ async def profile(bot_id: str, request: Request):
     tg_provider: TgBot = TgBot(token=tg_bot.token)
 
     data = await request.json()
-    print(data)
+
     message = data.get("message")
     user_id = message.get("from").get("id")
-    print(message)
-    tg_provider.bot.send_message(user_id, message.get("text"))
+    
+    
+    await tg_provider.bot.send_message(user_id, message.get("text"))
     # profile = await utls.check_profile_access_token(access_token, False)
     # return profile
