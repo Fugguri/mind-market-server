@@ -19,9 +19,9 @@ async def profile(bot_id: str, request: Request):
 
     message = data.get("message")
     user_id = message.get("from").get("id")
-
+    text = message.get("text")
     response = await _openai.create_responce(
-        user_id, tg_bot.assistant.settings, message.get("text"))
+        user_id, tg_bot.assistant.settings, text)
 
     await tg_provider.bot.send_message(user_id, response)
     # profile = await utls.check_profile_access_token(access_token, False)
