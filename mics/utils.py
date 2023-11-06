@@ -52,6 +52,7 @@ class Utils:
         Raises:
             HTTPException: status_code: 401 Your access token is not exist."
         """
+        print(access_token)
         profile = await prisma.assistant.find_first(
             where={"token": access_token},
             include={
