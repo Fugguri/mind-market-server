@@ -16,10 +16,8 @@ async def profile(bot_id: str, request: Request):
     tg_provider: TgBot = TgBot(token=tg_bot.token)
 
     data = await request.json()
-    print
     message = Message(data)
     print(message)
-    print(message.text)
-    tg_provider.bot.send_message(message.chat.id, message.text)
+    # tg_provider.bot.send_message(message.chat.id, message.text)
     # profile = await utls.check_profile_access_token(access_token, False)
     # return profile
