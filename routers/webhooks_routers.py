@@ -10,7 +10,7 @@ webhooks_router = APIRouter()
 
 @webhooks_router.post("/webhook/tg_bot/{access_token}", response_model=models.Profile, name="Данные профиля", description="Данные по пользователе", tags=["Профиль"])
 async def profile(access_token: str, request: Request):
-    body = await request.json()
+    message = await request.json()
 
     print(body)
     profile = await utls.check_profile_access_token(access_token, False)
