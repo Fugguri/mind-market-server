@@ -83,7 +83,7 @@ model Profile {
   password         String?
   email            String?           @db.Text
   token            String            @default(uuid())
-  assistants       Assistant[]
+  // assistants       Assistant[]
   telegramBots     TelegramBot[]
   telegramUserBots TelegramUserBot[]
   whatsAppBot      WhatsAppBot[]
@@ -104,8 +104,8 @@ model Assistant {
   token            String            @default(uuid())
   imageUrl         String            @db.Text
   temperature      Float             @default(0.7)
-  profileId        String
-  profile          Profile           @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  // profileId        String
+  // profile          Profile           @relation(fields: [profileId], references: [id], onDelete: Cascade)
   userId           String
   user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   telegramBots     TelegramBot[]
@@ -116,7 +116,7 @@ model Assistant {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([profileId,userId])
+  @@index([userId])
 }
 
 model TelegramBot {
