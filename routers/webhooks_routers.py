@@ -14,8 +14,9 @@ async def profile(bot_id: str, request: Request):
     tg_bot = await prisma.telegrambot.find_first(where={"id": bot_id})
     tg_provider: TgBot = TgBot(token=tg_bot.token)
 
-    message: TgBot.types.Message = TgBot.types.Message(await request.json())
-    print(message.text)
+    message = await request.json().get("message")
+    print(message)
+    print(message.get("text"))
     tg_provider.bot.send_message(message.chat.id, message.text)
     # profile = await utls.check_profile_access_token(access_token, False)
     return profile
