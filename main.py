@@ -51,6 +51,8 @@ app.include_router(assistant_router)
 app.include_router(integration_router)
 app.include_router(crm_router)
 app.include_router(chat_router)
+app.include_router(webhooks_router)
+
 
 if __name__ == "__main__":
 

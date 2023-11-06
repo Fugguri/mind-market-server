@@ -62,9 +62,6 @@ async def create_tg_user_bot(access_token: str, tguserbot: schemas.TgUserBotEntr
 async def user(request: Request):
     body = await request.body()
     
-    
-    
-    
     print(body)
     return
 
