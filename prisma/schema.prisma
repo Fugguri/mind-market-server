@@ -10,6 +10,69 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  userId       String
+  expires      DateTime
+  sessionToken String   @unique
+  accessToken  String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  userId           String            @unique
+  imageUrl         String            @db.Text
+  login            String?
+  password         String?
+  token            String            @default(uuid())
+  assistants       Assistant[]
+  telegramBots     TelegramBot[]
+  telegramUserBots TelegramUserBot[]
+  whatsAppBot      WhatsAppBot[]
+  jivoBot          JivoBot[]
+
+  expires DateTime @default(dbgenerated("ADDDATE(now(), 3)"))
+}
+
+model VerificationRequest {
+  id         String   @id @default(cuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
+
+
 
 model Profile {
   id               String            @id @default(uuid())
@@ -43,6 +106,8 @@ model Assistant {
   temperature      Float             @default(0.7)
   profileId        String
   profile          Profile           @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  userId           String
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   telegramBots     TelegramBot[]
   telegramUserBots TelegramUserBot[]
   whatsAppBot      WhatsAppBot[]
@@ -51,7 +116,7 @@ model Assistant {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([profileId])
+  @@index([profileId,userId])
 }
 
 model TelegramBot {
@@ -62,6 +127,8 @@ model TelegramBot {
   useCount    Int    @default(0)
   token       String @db.Text
 
+  userId           String
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   profileId   String
   assistantId String?
 
@@ -71,7 +138,7 @@ model TelegramBot {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([profileId])
+  @@index([profileId,userId])
   @@index([assistantId])
 }
 
@@ -89,13 +156,16 @@ model TelegramUserBot {
   profileId   String
   assistantId String
 
+  userId           String
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   profile   Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
   assistant Assistant @relation(fields: [assistantId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([profileId])
+  @@index([profileId,userId])
   @@index([assistantId])
 }
 
@@ -111,6 +181,9 @@ model WhatsAppBot {
   IdInstance       String @db.Text
   ApiTokenInstance String @db.Text
 
+  userId           String
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   profileId   String
   profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
   assistantId String
@@ -119,7 +192,7 @@ model WhatsAppBot {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([profileId])
+  @@index([profileId,userId])
   @@index([assistantId])
 }
 
@@ -131,6 +204,9 @@ model JivoBot {
 
   profileId   String
   useCount    Int    @default(0)
+  userId           String
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   provider_id String @db.Text
 
   profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
@@ -140,6 +216,6 @@ model JivoBot {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([profileId])
+  @@index([profileId,userId])
   @@index([assistantId])
 }
