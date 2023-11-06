@@ -50,7 +50,7 @@ model User {
   userId           String            @unique
   imageUrl         String            @db.Text
   login            String?
-  password         String?
+  password         String  
   token            String            @default(uuid())
   assistants       Assistant[]
   telegramBots     TelegramBot[]
