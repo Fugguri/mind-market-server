@@ -20,7 +20,7 @@ async def profile(bot_id: str, request: Request):
     message = data.get("message")
     user_id = message.get("from").get("id")
 
-    response = _openai.create_responce(
+    response = await _openai.create_responce(
         user_id, tg_bot.assistant.settings, message.get("text"))
 
     await tg_provider.bot.send_message(user_id, response)
