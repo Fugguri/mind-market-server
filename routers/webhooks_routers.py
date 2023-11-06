@@ -15,6 +15,7 @@ async def profile(bot_id: str, request: Request):
     tg_provider: TgBot = TgBot(token=tg_bot.token)
 
     data = await request.json()
+    print(data)
     message = data.get("message")
     print(message)
     print(message.get("text"))
