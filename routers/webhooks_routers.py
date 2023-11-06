@@ -12,5 +12,4 @@ webhooks_router = APIRouter()
 async def profile(access_token: str, request: Request):
     print(request)
     profile = await utls.check_profile_access_token(access_token, False)
-    print(profile)
     return profile
