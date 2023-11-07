@@ -17,7 +17,7 @@ async def create_responce(user_id: int | str, settigs: str, text: str | int):
         users_message[user_id].append(
             {"role": "user", "content": text})
         responce = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4-turbo",
             messages=users_message[user_id],
             temperature=0.7
         )
