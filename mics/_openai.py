@@ -7,13 +7,14 @@ config = dotenv_values(".env")
 openai.api_key = config['openAi']
 
 
-async def create_responce(user_id: int | str, settigs: str, text: str | int):
+async def create_responce(user_id: int | str, settings: str, text: str | int):
+    print(text)
     try:
         answer = ""
         try:
             users_message[user_id]
         except:
-            users_message[user_id] = [{"role": "user", "content": settigs}]
+            users_message[user_id] = [{"role": "user", "content": settings}]
         users_message[user_id].append(
             {"role": "user", "content": text})
         responce = openai.ChatCompletion.create(
