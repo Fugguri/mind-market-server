@@ -5,3 +5,8 @@ update:
 
 push:
 	git push
+
+upgrade:
+	git stash
+	git pull
+	python3 main.py
