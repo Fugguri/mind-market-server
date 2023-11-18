@@ -33,7 +33,7 @@ async def create_responce(user_id: int | str, settings: str, text: str | int):
             messages=users_message[user_id],
             temperature=0.7,
         )
-        answer = responce['choices'][0]['message']['content']
+        answer = responce.choices[0].message.content
 
         users_message[user_id].append({"role": "assistant", "content": answer})
     except openai.error.RateLimitError as ex:
