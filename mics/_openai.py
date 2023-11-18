@@ -8,7 +8,7 @@ openai.api_key = config['openAi']
 
 
 async def create_responce(user_id: int | str, settings: str, text: str | int):
-    print(text)
+
     try:
         answer = ""
         try:
@@ -20,7 +20,8 @@ async def create_responce(user_id: int | str, settings: str, text: str | int):
         responce = openai.ChatCompletion.create(
             model="gpt-4-1106-preview",
             messages=users_message[user_id],
-            temperature=0.7
+            temperature=0.7,
+            proxy='http://9gfWr9:g0LSUy@131.108.17.194:9799/'
         )
         answer = responce['choices'][0]['message']['content']
 
