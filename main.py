@@ -32,7 +32,7 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup():
-    set_proxy()
+    # set_proxy()
     print("starting up!")
     await prisma.connect()
 
