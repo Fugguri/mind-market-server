@@ -19,15 +19,18 @@ users_message = {}
 async def create_responce(user_id: int | str, settings: str, text: str | int):
     try:
         answer = ""
-        users_message.get(user_id)
-        if not users_message:
+
+        if not users_message.get(user_id):
             users_message[user_id] = [{"role": "user", "content": settings}]
             users_message[user_id].append(
                 {"role": "user", "content": text})
-        current_settings = users_message[user_id][0].get("content")
-        if settings != current_settings:
-            users_message[user_id] = [{"role": "user", "content": settings}]
-            users_message[user_id].append({"role": "user", "content": text})
+        else:
+            current_settings = users_message[user_id][0].get("content")
+            if settings != current_settings:
+                users_message[user_id] = [
+                    {"role": "user", "content": settings}]
+                users_message[user_id].append(
+                    {"role": "user", "content": text})
 
         response = openai.chat.completions.create(
             model="gpt-4-1106-preview",
