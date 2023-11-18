@@ -46,6 +46,6 @@ async def create_responce(user_id: int | str, settings: str, text: str | int):
         return "RateLimitError"
     except Exception as ex:
         users_message[user_id] = []
-        create_responce(user_id, text)
+        create_responce(user_id, settings, text)
 
     return answer
