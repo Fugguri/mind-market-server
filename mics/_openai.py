@@ -3,7 +3,7 @@ from openai import RateLimitError
 from openai import OpenAI
 from dotenv import dotenv_values
 config = dotenv_values(".env")
-proxy = config["proxy"],
+proxy = config["proxy"]
 openai = OpenAI(
     api_key=config['openAi'],
 
