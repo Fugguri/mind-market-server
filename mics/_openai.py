@@ -16,7 +16,7 @@ openai = OpenAI(
 users_message = {}
 
 
-async def create_responce(user_id: int | str, settings: str, text: str | int):
+async def create_response(user_id: int | str, settings: str, text: str | int):
     try:
         answer = ""
 
@@ -38,7 +38,7 @@ async def create_responce(user_id: int | str, settings: str, text: str | int):
             temperature=0.7,
             max_tokens=100
         )
-
+        print(response)
         answer = response.choices[0].message.content
 
         users_message[user_id].append({"role": "assistant", "content": answer})
@@ -46,6 +46,6 @@ async def create_responce(user_id: int | str, settings: str, text: str | int):
         return "RateLimitError"
     except Exception as ex:
         users_message[user_id] = []
-        create_responce(user_id, settings, text)
+        create_response(user_id, settings, text)
 
     return answer
