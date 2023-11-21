@@ -36,7 +36,7 @@ async def create_response(user_id: int | str, settings: str, text: str | int):
             model="gpt-4-1106-preview",
             messages=users_message[user_id],
             temperature=0.7,
-            max_tokens=100
+            max_tokens=200
         )
         print(response)
         answer = response.choices[0].message.content
