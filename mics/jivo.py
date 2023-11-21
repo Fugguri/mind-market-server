@@ -1,6 +1,6 @@
 import requests
 from models import schemas
-from mics._openai import create_responce
+from mics._openai import create_response
 from prisma import models
 
 
@@ -8,7 +8,7 @@ async def create_jivo_responce(request: schemas.ClientMessage, assistant: models
 
     response = schemas.BotMessage(**request.dict())
     response.event = "BOT_MESSAGE"
-    response.message.text = await create_responce(request.chat_id, assistant.settings, request.message.text)
+    response.message.text = await create_response(request.chat_id, assistant.settings, request.message.text)
 
     return response
 
