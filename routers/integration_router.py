@@ -18,13 +18,13 @@ async def create_tg_bot(access_token: str, tgbot: schemas.TgBotEntry):
     bot = tg.TgBot(tgbot.token)
     me = await bot.getInfo()
 
-    new = await prisma.telegrambot.create(data={
-        "token": tgbot.token,
-        'telegram_id': str(me[0].id),
-        'name': me[0].first_name,
-        'imageUrl': me[1],
-        'profileId': profile.id,
-    })
+    # new = await prisma.telegrambot.create(data={
+    #     "token": tgbot.token,
+    #     'telegram_id': str(me[0].id),
+    #     'name': me[0].first_name,
+    #     'imageUrl': me[1],
+    #     'profileId': profile.id,
+    # })
 
     return new
 
