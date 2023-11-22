@@ -33,4 +33,5 @@ class TgBot:
         return webhook
 
 
-boty = TgBot()
+if __name__ == "__main__":
+    ...
