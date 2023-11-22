@@ -124,7 +124,7 @@ async def create_user(access_token: str, request: schemas.ClientMessage):
 
     response = await jivo.create_jivo_responce(request, assistant)
     answer_request = await jivo.send_jivo_aswer(response, assistant)
-    print(answer_request.json())
+    # print(answer_request.json())
     if answer_request.status_code == 200:
         post = await prisma.assistant.update(
             where={
