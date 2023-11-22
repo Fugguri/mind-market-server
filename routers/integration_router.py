@@ -1,7 +1,9 @@
 from mics import jivo, tg, greenApi, utls
 from prisma_ import prisma
 from models import schemas
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, logger
+from fastapi.logger import logger
+
 from prisma import models
 
 integration_router = APIRouter()
@@ -89,10 +91,11 @@ async def create_user(access_token: str, request: schemas.ClientMessage):
             pass
 
     assistant = await utls.check_assistant_access_token(access_token)
+    logger.debug(request.model_dump_json())
 
     response = await jivo.create_jivo_responce(request, assistant)
     answer_request = await jivo.send_jivo_aswer(response, assistant)
-    print(answer_request.text)
+    print(answer_request.json())
     if answer_request.status_code == 200:
         post = await prisma.assistant.update(
             where={

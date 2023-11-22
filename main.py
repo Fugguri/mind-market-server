@@ -1,9 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, logger
 from routers import *
 import uvicorn
 from prisma_ import prisma
 from fastapi.middleware.cors import CORSMiddleware
-from mics.proxy import set_proxy
 
 app = FastAPI(
     title="MindMarketAPI",
@@ -20,6 +19,7 @@ origins = [
     "https://web-mindmarket",
 
 ]
+
 
 app.add_middleware(
     CORSMiddleware,
