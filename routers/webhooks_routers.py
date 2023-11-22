@@ -5,14 +5,19 @@ from prisma import models
 from mics import utls, _openai
 from mics.tg import TgBot
 from aiogram.types import Message
-
+from mics._openai import create_response
 
 webhooks_router = APIRouter()
 
 
 @webhooks_router.post("/webhook/tg_bot/{bot_id}",  name="Получение сообщения", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request):
-    print(request.json())
+    req = await request.json()
+    print(req)
+
+    # create_response(user_id="",settings="",text=)
+
+    print(req)
 
     # tg_bot = await prisma.telegrambot.find_first(where={"id": bot_id}, include={"assistant": True})
     # tg_provider: TgBot = TgBot(token=tg_bot.token)
