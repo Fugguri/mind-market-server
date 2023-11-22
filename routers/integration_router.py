@@ -8,16 +8,35 @@ from prisma import models
 
 
 integration_router = APIRouter()
+BASE_WEBHOOK_URL = "https://web-mindmarket.ru/api_v2/webhook/"
 
 
-@integration_router.post("/integrations/tgbot/{access_token}", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+@integration_router.post("/integrations/tgbot/{user_id}", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+async def create_tg_bot(user_id: str, tgbot: schemas.TgBotEntry):
+
+    # profile = await utls.check_profile_access_token(access_token)
+    bot = tg.TgBot(tgbot.token)
+    me = await bot.getInfo()
+    print(me)
+    print(bot.setWebhook(BASE_WEBHOOK_URL+f"tg_bot/{new.id}"))
+    # new = await prisma.telegrambot.create(data={
+    #     "token": tgbot.token,
+    #     'telegram_id': str(me[0].id),
+    #     'name': me[0].first_name,
+    #     'imageUrl': me[1],
+    #     'userId': user_id,
+    # })
+    # return new
+
+
+@integration_router.post("/integrations/tgbot/setWebhook", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(access_token: str, tgbot: schemas.TgBotEntry):
 
     profile = await utls.check_profile_access_token(access_token)
 
     bot = tg.TgBot(tgbot.token)
     me = await bot.getInfo()
-
+    print(me)
     # new = await prisma.telegrambot.create(data={
     #     "token": tgbot.token,
     #     'telegram_id': str(me[0].id),
