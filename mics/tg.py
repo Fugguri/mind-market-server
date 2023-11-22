@@ -14,7 +14,7 @@ class TgBot:
         self.dispather: Dispatcher = Dispatcher(bot=self.bot)
         self.executor = executor
         self.types: types = types
-        self.BASE_WEBHOOK_URL = "web-mindmarket.ru/api_v2/webhook/tg_bot/"
+        self.BASE_WEBHOOK_URL = "web-mindmarket.ru/api_v2/integrations/tgbot/"
 
     async def getInfo(self) -> [types.User, str]:
         # self.dispather.start_polling()
