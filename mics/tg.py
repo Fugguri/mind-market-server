@@ -1,5 +1,6 @@
 import asyncio
 from aiogram import Bot, Dispatcher, executor, types
+from mics._openai import create_response
 
 
 class TgUserBot:
@@ -32,6 +33,15 @@ class TgBot:
         webhook = await self.bot.set_webhook(url=self.BASE_WEBHOOK_URL + bot_id)
 
         return webhook
+
+    async def answer(self, message, settings):
+        sender = message.get("from")
+        sender_id = sender.get("id")
+        chat = message.get("chat")
+        text = message.get("text")
+        if text:
+            response = await create_response(sender_id, settings, text)
+            return await self.sendMessage(sender_id, response)
 
     async def sendMessage(self, receiver_id: str | int, text: str) -> str:
 
