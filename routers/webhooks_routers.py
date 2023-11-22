@@ -12,7 +12,7 @@ webhooks_router = APIRouter()
 
 @webhooks_router.post("/webhook/tg_bot/{bot_id}",  name="Получение сообщения", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request):
-    print(request)
+    print(request.json())
 
     # tg_bot = await prisma.telegrambot.find_first(where={"id": bot_id}, include={"assistant": True})
     # tg_provider: TgBot = TgBot(token=tg_bot.token)
