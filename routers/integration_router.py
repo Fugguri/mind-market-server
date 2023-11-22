@@ -45,7 +45,7 @@ async def create_tg_bot(user_id: str, tgbot: schemas.TgBotEntry):
         "token": tgbot.token,
         'telegram_id': str(me[0].id),
         'name': me[0].first_name,
-        "assistantId"
+        "assistantId": tgbot.assistantId,
         'imageUrl': me[1],
         'userId': user_id,
     })
