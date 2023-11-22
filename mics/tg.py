@@ -26,9 +26,9 @@ class TgBot:
 
         return [me, url]
 
-    async def setWebhook(self, url: str, token: str) -> str:
+    async def setWebhook(self, url: str) -> str:
 
-        webhook = await self.bot.set_webhook(url=url, secret_token=token)
+        webhook = await self.bot.set_webhook(url=url)
 
         return webhook
 
