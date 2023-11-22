@@ -24,16 +24,19 @@ async def create_response(user_id: int | str, settings: str, text: str | int):
             users_message[user_id] = [{"role": "user", "content": settings}]
             users_message[user_id].append(
                 {"role": "user", "content": text})
+            print(1)
         else:
+            print(2)
             current_settings = users_message[user_id][0].get("content")
             if settings != current_settings:
+                print(3)
                 users_message[user_id] = [
                     {"role": "user", "content": settings}]
                 users_message[user_id].append(
                     {"role": "user", "content": text})
 
         response = openai.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model="gpt-3.5-turbo",
             messages=users_message[user_id],
             temperature=0.7,
             max_tokens=200
