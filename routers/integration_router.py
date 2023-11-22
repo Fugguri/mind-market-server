@@ -118,7 +118,7 @@ async def create_user(access_token: str, request: schemas.ClientMessage):
             return
         case _:
             pass
-
+    print(request.model_dump_json())
     assistant = await utls.check_assistant_access_token(access_token)
     logger.debug(request.model_dump_json())
 
