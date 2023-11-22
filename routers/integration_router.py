@@ -8,7 +8,7 @@ from prisma import models
 
 
 integration_router = APIRouter()
-BASE_WEBHOOK_URL = "https://web-mindmarket.ru/api_v2/webhook/"
+BASE_WEBHOOK_URL = "web-mindmarket.ru/api_v2/webhook/"
 
 
 @integration_router.post("/integrations/tgbot/{user_id}", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
@@ -19,7 +19,7 @@ async def create_tg_bot(user_id: str, tgbot: schemas.TgBotEntry):
     me = await bot.getInfo()
     url = BASE_WEBHOOK_URL+f"tg_bot/{me[0].id}"
     print(url)
-    print(await bot.setWebhook(url))
+    print(await bot.setWebhook(url, tgbot.token))
     # new = await prisma.telegrambot.create(data={
     #     "token": tgbot.token,
     #     'telegram_id': str(me[0].id),
