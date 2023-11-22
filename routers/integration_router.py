@@ -6,6 +6,8 @@ from fastapi.logger import logger
 
 from prisma import models
 
+logger.setLevel("integrations")
+
 integration_router = APIRouter()
 
 
