@@ -10,6 +10,7 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
 model Account {
   id                 String    @id @default(cuid())
   userId             String
@@ -38,19 +39,19 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  accounts      Account[]
-  sessions      Session[]
+  id               String            @id @default(cuid())
+  name             String?
+  email            String?           @unique
+  emailVerified    DateTime?
+  image            String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  accounts         Account[]
+  sessions         Session[]
   userId           String            @unique
   imageUrl         String            @db.Text
   login            String?
-  password         String  
+  password         String
   token            String            @default(uuid())
   assistants       Assistant[]
   telegramBots     TelegramBot[]
@@ -71,8 +72,6 @@ model VerificationRequest {
 
   @@unique([identifier, token])
 }
-
-
 
 model Profile {
   id               String            @id @default(uuid())
@@ -107,7 +106,7 @@ model Assistant {
   // profileId        String
   // profile          Profile           @relation(fields: [profileId], references: [id], onDelete: Cascade)
   userId           String
-  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   telegramBots     TelegramBot[]
   telegramUserBots TelegramUserBot[]
   whatsAppBot      WhatsAppBot[]
@@ -127,18 +126,18 @@ model TelegramBot {
   useCount    Int    @default(0)
   token       String @db.Text
 
-  userId           String
-  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  profileId   String
-  assistantId String?
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  profile   Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  assistant Assistant? @relation(fields: [assistantId], references: [id])
+  assistantId String?
+  assistant   Assistant? @relation(fields: [assistantId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Profile   Profile? @relation(fields: [profileId], references: [id])
+  profileId String?
 
-  @@index([profileId,userId])
+  @@index([userId])
   @@index([assistantId])
 }
 
@@ -153,19 +152,18 @@ model TelegramUserBot {
   api_id    String @db.Text
   api_hash  String @db.Text
 
-  profileId   String
   assistantId String
+  assistant   Assistant @relation(fields: [assistantId], references: [id])
 
-  userId           String
-  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  profile   Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  assistant Assistant @relation(fields: [assistantId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Profile   Profile? @relation(fields: [profileId], references: [id])
+  profileId String?
 
-  @@index([profileId,userId])
+  @@index([userId])
   @@index([assistantId])
 }
 
@@ -181,18 +179,18 @@ model WhatsAppBot {
   IdInstance       String @db.Text
   ApiTokenInstance String @db.Text
 
-  userId           String
-  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  profileId   String
-  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
   assistantId String
   assistant   Assistant @relation(fields: [assistantId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Profile   Profile? @relation(fields: [profileId], references: [id])
+  profileId String?
 
-  @@index([profileId,userId])
+  @@index([userId])
   @@index([assistantId])
 }
 
@@ -202,10 +200,10 @@ model JivoBot {
   settings String @db.Text
   imageUrl String @db.Text
 
-  profileId   String
-  useCount    Int    @default(0)
-  userId           String
-  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  profileId String
+  useCount  Int    @default(0)
+  userId    String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   provider_id String @db.Text
 
@@ -216,6 +214,6 @@ model JivoBot {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([profileId,userId])
+  @@index([profileId, userId])
   @@index([assistantId])
 }

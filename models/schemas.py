@@ -20,24 +20,28 @@ class Sender(BaseModel):
 
 class TgBotEntry(BaseModel):
     token: str
+    assistantId: str
 
 
 class TgUserBotEntry(BaseModel):
     api_id: str
     api_hash: str
     phone: str
+    assistantId: str
 
 
 class InstEntry(BaseModel):
     phone: str
     IdInstance: str
     ApiTokenInstance: str
+    assistantId: str
 
 
 class WaBotEntry(BaseModel):
     IdInstance: str
     ApiTokenInstance: str
     phone: str
+    assistantId: str
 
 
 class Message(BaseModel):

@@ -8,45 +8,50 @@ from prisma import models
 
 
 integration_router = APIRouter()
-BASE_WEBHOOK_URL = "web-mindmarket.ru/api_v2/webhook/"
 
 
-@integration_router.post("/integrations/tgbot/{user_id}", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+@integration_router.post("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+async def create_tg_bot(user_id: str, request: Request):
+    req = await request.json()
+    message = req.get("message")
+    if not message:
+        return
+    sender = message.get("from")
+    chat = message.get("chat")
+    text = message.get("text")
+    if text:
+        print(text)
+
+
+@integration_router.delete("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+async def create_tg_bot(user_id: str, request: Request):
+    req = await request.json()
+    message = req.get("message")
+    if not message:
+        return
+    sender = message.get("from")
+    chat = message.get("chat")
+    text = message.get("text")
+    if text:
+        print(text)
+
+
+@integration_router.patch("/integrations/tgbot/{user_id}", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(user_id: str, tgbot: schemas.TgBotEntry):
 
-    # profile = await utls.check_profile_access_token(access_token)
     bot = tg.TgBot(tgbot.token)
     me = await bot.getInfo()
-    url = BASE_WEBHOOK_URL+f"tg_bot/{me[0].id}"
-    print(url)
-    print(await bot.setWebhook(url))
-    # new = await prisma.telegrambot.create(data={
-    #     "token": tgbot.token,
-    #     'telegram_id': str(me[0].id),
-    #     'name': me[0].first_name,
-    #     'imageUrl': me[1],
-    #     'userId': user_id,
-    # })
-    # return new
-
-
-@integration_router.post("/integrations/tgbot/setWebhook", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
-async def create_tg_bot(access_token: str, tgbot: schemas.TgBotEntry):
-
-    profile = await utls.check_profile_access_token(access_token)
-
-    bot = tg.TgBot(tgbot.token)
-    me = await bot.getInfo()
-    print(me)
-    # new = await prisma.telegrambot.create(data={
-    #     "token": tgbot.token,
-    #     'telegram_id': str(me[0].id),
-    #     'name': me[0].first_name,
-    #     'imageUrl': me[1],
-    #     'profileId': profile.id,
-    # })
-
+    new = await prisma.telegrambot.create(data={
+        "token": tgbot.token,
+        'telegram_id': str(me[0].id),
+        'name': me[0].first_name,
+        "assistantId"
+        'imageUrl': me[1],
+        'userId': user_id,
+    })
     return new
+
+    await bot.setWebhook(new.id)
 
 
 @integration_router.post("/integrations/wabot/{access_token}", name="Добавление WhatsApp бота", description="Добавление профиля WhatsApp созданного в сервисе GreenApi", tags=["Интеграции"])
