@@ -14,7 +14,14 @@ webhooks_router = APIRouter()
 async def profile(bot_id: str, request: Request):
     req = await request.json()
     print(req)
-
+    message = req.get("message")
+    if not message:
+        return
+    sender = message.get("from")
+    chat = message.get("chat")
+    text = message.get("text")
+    if text:
+        print(text)
     # create_response(user_id="",settings="",text=)
 
     print(req)
