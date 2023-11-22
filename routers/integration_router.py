@@ -13,6 +13,7 @@ integration_router = APIRouter()
 @integration_router.post("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(bot_id: str, request: Request):
     req = await request.json()
+    print(req)
     message = req.get("message")
     if not message:
         return
