@@ -32,8 +32,8 @@ async def create_response(user_id: int | str, settings: str, text: str | int):
                 print(3)
                 users_message[user_id] = [
                     {"role": "user", "content": settings}]
-                users_message[user_id].append(
-                    {"role": "user", "content": text})
+            users_message[user_id].append(
+                {"role": "user", "content": text})
 
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
