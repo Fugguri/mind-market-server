@@ -33,6 +33,10 @@ class TgBot:
 
         return webhook
 
+    async def sendMessage(self, receiver_id: str | int, text: str) -> str:
+
+        return await self.bot.send_message(chat_id=receiver_id, text=text)
+
 
 if __name__ == "__main__":
     ...

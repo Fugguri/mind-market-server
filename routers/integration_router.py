@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Request, logger
 from fastapi.logger import logger
 
 from prisma import models
-
+from mics._openai import create_response
 
 integration_router = APIRouter()
 
@@ -13,15 +13,23 @@ integration_router = APIRouter()
 @integration_router.post("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(bot_id: str, request: Request):
     req = await request.json()
-    print(req)
+
+    bot = await prisma.telegrambot.find_first(where={
+        "id": bot_id
+    }, include={
+        "assistant": True
+    })
+    tgbot = tg.TgBot(bot.token)
     message = req.get("message")
     if not message:
         return
     sender = message.get("from")
+    sender_id = sender.get("id")
     chat = message.get("chat")
     text = message.get("text")
     if text:
-        print(text)
+        response = await create_response(sender_id, bot.assistant.settings, text)
+        return await tgbot.sendMessage(sender_id, response)
 
 
 @integration_router.delete("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
