@@ -17,8 +17,9 @@ async def create_tg_bot(user_id: str, tgbot: schemas.TgBotEntry):
     # profile = await utls.check_profile_access_token(access_token)
     bot = tg.TgBot(tgbot.token)
     me = await bot.getInfo()
-    print(me[0].id)
-    print(await bot.setWebhook(BASE_WEBHOOK_URL+f"tg_bot/{me[0].id}"))
+    url = BASE_WEBHOOK_URL+f"tg_bot/{me[0].id}"
+    print(url)
+    print(await bot.setWebhook(url))
     # new = await prisma.telegrambot.create(data={
     #     "token": tgbot.token,
     #     'telegram_id': str(me[0].id),
