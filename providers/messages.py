@@ -29,7 +29,7 @@ async def handle_telegrambot_message(json_request,
         chat = await db.create_chat(
             channelType=models.enums.ChannelType.TelegramBot,
             userId=tg_bot_model.userId,
-            clientId=client.id
+            clientId=client.id,
             assistantId=tg_bot_model.assistantId
         )
     await db.create_message(text, chat.id)
