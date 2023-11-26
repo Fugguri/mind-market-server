@@ -7,25 +7,25 @@ from prisma import models
 class Utils:
 
     @staticmethod
-    async def check_expires(profile: models.Profile):
+    async def check_expires(user: models.User):
 
-        is_pay = profile.expires >= datetime.now()
+        is_pay = user.expires >= datetime.now()
         if not is_pay:
             raise HTTPException(
                 status_code=402, detail="Your access token is expired. Contact with us https://mind-market.ru/pay to pay for access")
 
         return True
 
-    async def check_profile_access_token(self, access_token: str, checking_expires: bool = True):
+    async def check_user_access_token(self, access_token: str, checking_expires: bool = True):
         """ 
-        Chect existing profile and check payment expires 
+        Chect existing user and check payment expires 
 
         Args:
-            access_token (str): Profile token  
+            access_token (str): user token  
         Raises:
             HTTPException: status_code: 401 Your access token is not exist."
         """
-        profile = await prisma.profile.find_first(
+        user = await prisma.user.find_first(
             where={"token": access_token},
             include={
                 "assistants": True,
@@ -36,12 +36,12 @@ class Utils:
             }
         )
 
-        if not profile:
+        if not user:
             raise HTTPException(
                 status_code=401, detail="Your access token is not exist.")
         if checking_expires:
-            self.check_expires(profile=profile)
-        return profile
+            self.check_expires(user=user)
+        return user
 
     async def check_assistant_access_token(self, access_token: str):
         """ 
@@ -53,7 +53,7 @@ class Utils:
             HTTPException: status_code: 401 Your access token is not exist."
         """
         print(access_token)
-        profile = await prisma.assistant.find_first(
+        user = await prisma.assistant.find_first(
             where={"token": access_token},
             include={
                 "telegramBots": True,
@@ -63,7 +63,7 @@ class Utils:
             }
         )
 
-        if not profile:
+        if not user:
             raise HTTPException(
                 status_code=401, detail="Your access token is not exist.")
-        return profile
+        return user
