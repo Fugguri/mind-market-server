@@ -36,6 +36,7 @@ async def handle_telegrambot_message(json_request,
             assistantId=tg_bot_model.assistantId
         )
     await db.create_message(content=text,
+                            clientId=client.id,
                             chatId=chat.id,
                             channelType=models.enums.ChannelType.TelegramBot,)
     if message:
