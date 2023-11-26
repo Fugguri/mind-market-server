@@ -34,7 +34,7 @@ async def create_message(content: models.enums.ChannelType,
                          channelType=None,
                          operatorId=None):
 
-    return await prisma.chat.create(data={
+    return await prisma.message.create(data={
         "content": content,
         "chatId": chatId,
         "fileUrl": fileUrl,
