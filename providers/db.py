@@ -53,11 +53,14 @@ async def get_telegrambot(bot_id: str | int) -> models.TelegramBot:
     })
 
 
-async def get_chat(user: models.User, client: models.Client) -> models.Chat:
+async def get_chat(userId: models.User.id,
+                   channelType: models.enums.ClientStatus,
+                   clientId: models.Client.id) -> models.Chat:
 
-    chat = await prisma.chat.find_unique(where={
-        "userId"
-    })
+    chat = await prisma.chat.query_first(
+        'SELECT * FROM Chat WHERE channelType = ? and clientId = ? and userId = ?',
+        channelType, clientId, userId
+    )
 
     return chat
 
