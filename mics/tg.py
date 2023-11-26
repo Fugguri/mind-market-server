@@ -18,10 +18,10 @@ class TgBot:
         self.BASE_WEBHOOK_URL = "web-mindmarket.ru/api_v2/integrations/tgbot/"
 
     async def getInfo(self) -> [types.User, str]:
-        me = await self.bot.get_me()
+        me = await self.dispather.bot.get_me()
 
-        pict = await self.bot.get_user_profile_photos(me.id)
-        file = await self.bot.get_file(file_id=pict.photos[0][0].file_id)
+        pict = await self.dispather.bot.get_user_profile_photos(me.id)
+        file = await self.dispather.bot.get_file(file_id=pict.photos[0][0].file_id)
 
         url = self.bot.get_file_url(file_path=file)
 
@@ -35,11 +35,14 @@ class TgBot:
 
         if text:
             response = await create_response(sender_id, settings, text)
-            return await self.sendMessage(sender_id, response)
+            mes = await self.sendMessage(sender_id, response)
 
     async def sendMessage(self, receiver_id: str | int, text: str) -> str:
 
-        return await self.bot.send_message(chat_id=receiver_id, text=text)
+        return await self.dispather.bot.send_message(chat_id=receiver_id, text=text)
+
+    async def stop(self):
+        self.dispather.stop_polling()
 
 
 if __name__ == "__main__":
