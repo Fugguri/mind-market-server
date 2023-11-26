@@ -31,11 +31,7 @@ class TgBot:
 
         return await self.bot.set_webhook(url=self.BASE_WEBHOOK_URL + bot_id)
 
-    async def answer(self, message, settings):
-        sender = message.get("from")
-        sender_id = sender.get("id")
-        chat = message.get("chat")
-        text = message.get("text")
+    async def answer(self, text, sender_id, settings):
 
         if text:
             response = await create_response(sender_id, settings, text)

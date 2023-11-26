@@ -3,42 +3,25 @@ from prisma_ import prisma
 from models import schemas
 from fastapi import APIRouter, HTTPException, Request, logger
 from fastapi.logger import logger
-
 from prisma import models
 from mics._openai import create_response
+from providers import db, messages
+
 
 integration_router = APIRouter()
 
 
 @integration_router.post("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(bot_id: str, request: Request):
-    req = await request.json()
+    json_request = await request.json()
 
-    bot = await prisma.telegrambot.find_first(where={
-        "id": bot_id
-    }, include={
-        "user": True,
-        "assistant": True
-    })
-
-    tgbot = tg.TgBot(bot.token)
-    message = req.get("message")
-
-    if message:
-        await tgbot.answer(message, bot.assistant.settings)
+    tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
+    await messages.handle_telegrambot_message(json_request, tg_bot_model)
 
 
-@integration_router.delete("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+@integration_router.delete("/integrations/tgbot/{bot_id}", name="Удаление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(user_id: str, request: Request):
-    req = await request.json()
-    message = req.get("message")
-    if not message:
-        return
-    sender = message.get("from")
-    chat = message.get("chat")
-    text = message.get("text")
-    if text:
-        print(text)
+    ...
 
 
 @integration_router.patch("/integrations/tgbot/{user_id}", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
