@@ -2,7 +2,7 @@ from prisma import models
 from prisma_ import prisma
 
 
-async def create_client(name, username, InChannelId, userId):
+async def create_client(name, username, InChannelId: str, userId):
 
     return await prisma.client.create(data={
         "name": name,

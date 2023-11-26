@@ -22,7 +22,7 @@ async def handle_telegrambot_message(json_request,
             name=mes.from_user.full_name,
             username=mes.from_user.username,
             InChannelId=mes.from_user.id,
-            userId=tg_bot_model.userId
+            userId=str(tg_bot_model.userId)
         )
     chat = await db.get_chat()
     if not chat:
