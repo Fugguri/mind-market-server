@@ -14,12 +14,14 @@ async def create_client(name, username, InChannelId: str, userId):
 
 async def create_chat(channelType: models.enums.ChannelType,
                       userId,
+                      clientId,
                       assistantId=None,
                       operatorId=None):
 
     return await prisma.chat.create(data={
         "channelType": channelType,
         "userId": userId,
+        "clientId": clientId,
         "assistantId": assistantId,
         "operatorId": operatorId
     })

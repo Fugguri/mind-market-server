@@ -24,12 +24,13 @@ async def handle_telegrambot_message(json_request,
             InChannelId=str(mes.from_user.id),
             userId=tg_bot_model.userId
         )
-    chat = await db.get_chat()
+    chat = await db.get_chat(tg_bot_model.user, client)
     if not chat:
         chat = await db.create_chat(
-            models.enums.ChannelType.TelegramBot,
-            tg_bot_model.userId,
-            tg_bot_model.assistantId
+            channelType=models.enums.ChannelType.TelegramBot,
+            userId=tg_bot_model.userId,
+            clientId=client.id
+            assistantId=tg_bot_model.assistantId
         )
     await db.create_message(text, chat.id)
     if message:
