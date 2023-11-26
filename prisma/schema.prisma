@@ -283,7 +283,9 @@ model Message {
   chatId String
   chat   Chat   @relation(fields: [chatId], references: [id])
 
-  fromClient Boolean @default(true)
+  fromClient    Boolean @default(true)
+  fromAssistant Boolean @default(false)
+  fromOperator  Boolean @default(false)
 
   operator   Operator? @relation(fields: [operatorId], references: [id])
   operatorId String?

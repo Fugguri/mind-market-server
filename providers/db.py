@@ -31,12 +31,32 @@ async def create_message(content: models.enums.ChannelType,
                          chatId,
                          fileUrl=None,
                          fromClient=True,
+                         fromAssistant=False,
                          operatorId=None):
 
     return await prisma.message.create(data={
         "content": content,
         "chatId": chatId,
         "fileUrl": fileUrl,
+        "fromClient": fromClient,
+        "operatorId": operatorId
+    })
+
+
+async def create_message_assistant_answer(content: models.enums.ChannelType,
+                                          chatId,
+                                          fileUrl=None,
+                                          fromClient=False,
+                                          fromAssistant=True,
+                                          fromOperator=False,
+                                          operatorId=None):
+
+    return await prisma.message.create(data={
+        "content": content,
+        "chatId": chatId,
+        "fileUrl": fileUrl,
+        "fromAssistant": fromAssistant,
+        "fromOperator": fromOperator,
         "fromClient": fromClient,
         "operatorId": operatorId
     })
