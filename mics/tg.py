@@ -31,11 +31,12 @@ class TgBot:
 
         return await self.bot.set_webhook(url=self.BASE_WEBHOOK_URL + bot_id)
 
-    async def answer(self, text, sender_id, settings):
+    async def answer(self, text, sender_id, settings) -> str:
 
         if text:
             response = await create_response(sender_id, settings, text)
             mes = await self.sendMessage(sender_id, response)
+        return response
 
     async def sendMessage(self, receiver_id: str | int, text: str) -> str:
 
