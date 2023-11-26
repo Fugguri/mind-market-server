@@ -17,14 +17,15 @@ async def create_tg_bot(bot_id: str, request: Request):
     bot = await prisma.telegrambot.find_first(where={
         "id": bot_id
     }, include={
+        "user": True,
         "assistant": True
     })
 
     tgbot = tg.TgBot(bot.token)
     message = req.get("message")
+
     if message:
         await tgbot.answer(message, bot.assistant.settings)
-        return
 
 
 @integration_router.delete("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])

@@ -39,15 +39,16 @@ model Session {
 }
 
 model User {
-  id               String            @id @default(cuid())
-  name             String?
-  email            String?           @unique
-  emailVerified    DateTime?
-  image            String?
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  accounts         Account[]
-  sessions         Session[]
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+
   userId           String            @unique
   imageUrl         String            @db.Text
   login            String?
@@ -59,7 +60,11 @@ model User {
   whatsAppBot      WhatsAppBot[]
   jivoBot          JivoBot[]
 
-  expires DateTime @default(dbgenerated("ADDDATE(now(), 3)"))
+  chats Chat[]
+
+  expires   DateTime   @default(dbgenerated("ADDDATE(now(), 3)"))
+  clients   Client[]
+  operators Operator[]
 }
 
 model VerificationRequest {
@@ -73,40 +78,24 @@ model VerificationRequest {
   @@unique([identifier, token])
 }
 
-model Profile {
-  id               String            @id @default(uuid())
-  userId           String            @unique
-  name             String
-  imageUrl         String            @db.Text
-  login            String?
-  password         String?
-  email            String?           @db.Text
-  token            String            @default(uuid())
-  // assistants       Assistant[]
-  telegramBots     TelegramBot[]
-  telegramUserBots TelegramUserBot[]
-  whatsAppBot      WhatsAppBot[]
-  jivoBot          JivoBot[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  expires DateTime @default(dbgenerated("ADDDATE(now(), 3)"))
-}
-
 model Assistant {
-  id               String            @id @default(uuid())
-  name             String
-  settings         String            @db.Text
-  use_count        Int               @default(0)
-  comment          String            @db.Text
-  token            String            @default(uuid())
-  imageUrl         String            @db.Text
-  temperature      Float             @default(0.7)
-  // profileId        String
-  // profile          Profile           @relation(fields: [profileId], references: [id], onDelete: Cascade)
-  userId           String
-  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id String @id @default(uuid())
+
+  name     String
+  settings String @db.Text
+
+  use_count Int @default(0)
+
+  token   String @default(uuid())
+  comment String @db.Text
+
+  imageUrl String @db.Text
+
+  temperature Float @default(0.7)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   telegramBots     TelegramBot[]
   telegramUserBots TelegramUserBot[]
   whatsAppBot      WhatsAppBot[]
@@ -114,6 +103,8 @@ model Assistant {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  chats Chat[]
 
   @@index([userId])
 }
@@ -134,34 +125,33 @@ model TelegramBot {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Profile   Profile? @relation(fields: [profileId], references: [id])
-  profileId String?
 
   @@index([userId])
   @@index([assistantId])
 }
 
 model TelegramUserBot {
-  id        String @id @default(uuid())
+  id String @id @default(uuid())
+
   firstName String @db.Text
   lastName  String @db.Text
   username  String @db.Text
   imageUrl  String @db.Text
-  useCount  Int    @default(0)
-  phone     String @db.Text
-  api_id    String @db.Text
-  api_hash  String @db.Text
 
-  assistantId String
-  assistant   Assistant @relation(fields: [assistantId], references: [id])
+  useCount Int @default(0)
+
+  phone    String @db.Text
+  api_id   String @db.Text
+  api_hash String @db.Text
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  assistantId String
+  assistant   Assistant @relation(fields: [assistantId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Profile   Profile? @relation(fields: [profileId], references: [id])
-  profileId String?
 
   @@index([userId])
   @@index([assistantId])
@@ -187,8 +177,6 @@ model WhatsAppBot {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Profile   Profile? @relation(fields: [profileId], references: [id])
-  profileId String?
 
   @@index([userId])
   @@index([assistantId])
@@ -200,20 +188,101 @@ model JivoBot {
   settings String @db.Text
   imageUrl String @db.Text
 
-  profileId String
-  useCount  Int    @default(0)
-  userId    String
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  useCount Int    @default(0)
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  provider_id String @db.Text
-
-  profile     Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
   assistantId String
   assistant   Assistant @relation(fields: [assistantId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([profileId, userId])
+  @@index([userId])
   @@index([assistantId])
+}
+
+enum ClientStatus {
+  NOTREADY
+  WAIT
+  READY
+  BOUGTH
+}
+
+enum ChannelType {
+  TelegramBot
+  TelegramUserBot
+  WhatsAppBot
+  JivoBot
+}
+
+enum OperatorRole {
+  OWNER
+  OPERATOR
+  ASSISTANT
+}
+
+model Client {
+  id       String  @id @default(uuid())
+  name     String
+  username String?
+  User     User?   @relation(fields: [userId], references: [id])
+  userId   String?
+  Chat     Chat[]
+}
+
+model Operator {
+  id       String  @id @default(uuid())
+  name     String
+  username String?
+
+  imageUrl String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  Chats    Chat[]
+  Messages Message[]
+
+  @@index([userId])
+}
+
+model Chat {
+  id   String @id @default(uuid())
+  name String
+
+  channel ChannelType
+
+  userId String?
+  User   User?   @relation(fields: [userId], references: [id])
+
+  clientId String
+  client   Client @relation(fields: [clientId], references: [id])
+
+  assistantId String?
+  assistant   Assistant? @relation(fields: [assistantId], references: [id])
+
+  IsAssistantInChat Boolean @default(true)
+
+  operatorId String?
+  operator   Operator? @relation(fields: [operatorId], references: [id])
+
+  messages Message[]
+}
+
+model Message {
+  id String @id @default(uuid())
+
+  content String  @db.Text
+  fileUrl String?
+
+  chatId String
+  chat   Chat   @relation(fields: [chatId], references: [id])
+
+  fromClient Boolean @default(true)
+
+  operator   Operator? @relation(fields: [operatorId], references: [id])
+  operatorId String?
+
+  timestamp DateTime @default(now())
 }
