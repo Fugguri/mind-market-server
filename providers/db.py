@@ -61,6 +61,6 @@ async def get_chat(user: models.User, client: models.Client) -> models.Chat:
 
 
 async def get_client(InChannelId: str | int) -> models.Client:
-    return await prisma.client.find_first(where={
-        "InChannelId": InChannelId,
-    })
+    return await prisma.client.query_first('SELECT * FROM Client WHERE InChannelId = ?',
+                                           InChannelId,
+                                           )
