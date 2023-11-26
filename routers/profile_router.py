@@ -8,7 +8,7 @@ from mics import utls
 profile_router = APIRouter()
 
 
-@profile_router.get("/profile/{access_token}", response_model=models.Profile, name="Данные профиля", description="Данные по пользователе", tags=["Профиль"])
+@profile_router.get("/profile/{access_token}", response_model=models.User, name="Данные профиля", description="Данные по пользователе", tags=["Профиль"])
 async def profile(access_token: str):
     profile = await utls.check_profile_access_token(access_token, False)
     return profile
