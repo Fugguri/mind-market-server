@@ -16,7 +16,7 @@ async def profile(access_token: str):
 
 @profile_router.put("/profile/new", name="Редактировать профиль", tags=["Профиль"])
 async def create_profile(profile: schemas.ProfileEntry):
-    prisma.profile.create(data={
+    prisma.user.create(data={
         "name": profile.name,
         "imageUrl": profile.imageUrl,
         "email": profile.email
@@ -25,7 +25,7 @@ async def create_profile(profile: schemas.ProfileEntry):
 
 @profile_router.post("/profile/new", name="Новый пользователь", tags=["Профиль"])
 async def create_profile(profile: schemas.ProfileEntry):
-    prisma.profile.create(data={
+    prisma.user.create(data={
         "name": profile.name,
         "imageUrl": profile.imageUrl,
         "email": profile.email,
