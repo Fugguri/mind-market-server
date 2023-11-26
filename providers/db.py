@@ -62,5 +62,5 @@ async def get_chat(user: models.User, client: models.Client) -> models.Chat:
 
 async def get_client(InChannelId: str | int) -> models.Client:
     return await prisma.client.find_first(where={
-        "InChannelId": InChannelId
+        "InChannelId": InChannelId,
     })
