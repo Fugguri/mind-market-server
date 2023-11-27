@@ -196,7 +196,7 @@ model JivoBot {
   assistantId String
   assistant   Assistant @relation(fields: [assistantId], references: [id])
 
-  providerId String
+  provider_id String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
