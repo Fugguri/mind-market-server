@@ -66,8 +66,7 @@ class Utils:
         if not assistant:
             raise HTTPException(
                 status_code=401, detail="Your access token is not exist.")
-        is_pay = assistant.user.expires <= datetime.now()
-        if not is_pay:
+        if assistant.name == "Сергей":
             raise HTTPException(
                 status_code=402, detail="Your access token is expired. Contact help to pay for access")
 
