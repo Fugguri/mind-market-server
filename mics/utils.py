@@ -9,7 +9,7 @@ class Utils:
     @staticmethod
     async def check_expires(user: models.User):
 
-        is_pay = user.expires >= datetime.now()
+        is_pay = user.expires <= datetime.now()
         if not is_pay:
             raise HTTPException(
                 status_code=402, detail="Your access token is expired. Contact with us https://mind-market.ru/pay to pay for access")
@@ -53,17 +53,22 @@ class Utils:
             HTTPException: status_code: 401 Your access token is not exist."
         """
         print(access_token)
-        user = await prisma.assistant.find_first(
+        assistant = await prisma.assistant.find_first(
             where={"token": access_token},
             include={
                 "telegramBots": True,
                 "telegramUserBots": True,
                 "whatsAppBot": True,
-                'jivoBot': True
+                'jivoBot': True,
+                "user": True
             }
         )
-
-        if not user:
+        if not assistant:
             raise HTTPException(
                 status_code=401, detail="Your access token is not exist.")
-        return user
+        is_pay = assistant.user.expires <= datetime.now()
+        if not is_pay:
+            raise HTTPException(
+                status_code=402, detail="Your access token is expired. Contact help to pay for access")
+
+        return assistant
