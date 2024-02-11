@@ -1,7 +1,5 @@
 from fastapi import APIRouter, Path, Query, Request, HTTPException
-from models import schemas
-from prisma_ import prisma
-from prisma import models
+
 from mics import utls, _openai
 from mics.tg import TgBot
 from aiogram.types import Message
