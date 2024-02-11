@@ -1,9 +1,8 @@
 from mics import jivo, tg, greenApi, utls
-from prisma_ import prisma
 from models import schemas
 from fastapi import APIRouter, HTTPException, Request, logger
 from fastapi.logger import logger
-from prisma import models
+
 from mics._openai import create_response
 from providers import db, messages
 
@@ -29,16 +28,9 @@ async def create_tg_bot(user_id: str, tgbot: schemas.TgBotEntry):
 
     bot = tg.TgBot(tgbot.token)
     me = await bot.getInfo()
-    new = await prisma.telegrambot.create(data={
-        "token": tgbot.token,
-        'telegram_id': str(me[0].id),
-        'name': me[0].first_name,
-        "assistantId": tgbot.assistantId,
-        'imageUrl': me[1],
-        'userId': user_id,
-    })
-    await bot.setWebhook(new.id)
-    return new
+
+    # await bot.setWebhook(new.id)
+    # return new
 
 
 @integration_router.post("/integrations/wabot/{access_token}", name="Добавление WhatsApp бота", description="Добавление профиля WhatsApp созданного в сервисе GreenApi", tags=["Интеграции"])
@@ -46,14 +38,14 @@ async def create_wa_bot(access_token: str, wabot: schemas.WaBotEntry):
     profile = await utls.check_profile_access_token(access_token)
 
     me = greenApi.Watsapp(wabot.IdInstance, wabot.ApiTokenInstance).get_me()
-    new = await prisma.whatsappbot.create(data={
-        "phone": wabot.phone,
-        "ApiTokenInstance": wabot.ApiTokenInstance,
-        "IdInstance": wabot.IdInstance,
-        'name': " ",
-        'imageUrl': me,
-        'profileId': profile.id,
-    })
+    # new = await prisma.whatsappbot.create(data={
+    #     "phone": wabot.phone,
+    #     "ApiTokenInstance": wabot.ApiTokenInstance,
+    #     "IdInstance": wabot.IdInstance,
+    #     'name': " ",
+    #     'imageUrl': me,
+    #     'profileId': profile.id,
+    # })
 
     return new
 

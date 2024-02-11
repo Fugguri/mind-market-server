@@ -1,7 +1,5 @@
 from fastapi import APIRouter, HTTPException
 from models import schemas
-from prisma import models
-from prisma_ import prisma
 from mics import utls
 assistant_router = APIRouter()
 
@@ -31,36 +29,14 @@ async def create_user(access_token: str, assistant_id: str, ):
 async def create_user(access_token: str, assistant: schemas.AssistantEntry):
     profile = await utls.check_profile_access_token(access_token, False)
 
-    new = prisma.assistant.create(
-        data={
-            "profileId": profile.id,
-            "name": assistant.name,
-            "settings": assistant.settings,
-            "comment": assistant.comment
-        }
-    )
-
-    return new
-
+    return profile
 
 
 @assistant_router.post("/api_v2/assistants/edit/{access_token}", name="Редактировать ассистента", description="Редактирование ассистента ассистента", tags=["Ассистенты"])
 async def create_user(access_token: str, assistant: schemas.AssistantEntry):
     profile = await utls.check_profile_access_token(access_token, False)
 
-    new = prisma.assistant.update(
-        data={
-            "profileId": profile.id,
-            "name": assistant.name,
-            "settings": assistant.settings,
-            "comment": assistant.comment
-        },
-        where={
-            "name": assistant.name
-        }
-    )
-
-    return new
+    return profile
 
 
 @assistant_router.get("/api_v2/assistants/all/{access_token}", response_model=list[schemas.Assistant], name="Все ассистенты", description="Список ассистентов пользователя", tags=["Ассистенты"])
