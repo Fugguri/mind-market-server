@@ -3,7 +3,7 @@ from routers import *
 import uvicorn
 from prisma_ import prisma
 from fastapi.middleware.cors import CORSMiddleware
-
+from DB import db
 app = FastAPI(
     title="MindMarketAPI",
     summary="",
@@ -30,22 +30,24 @@ app.add_middleware(
 )
 
 
-@app.on_event("startup")
-async def startup():
-    # set_proxy()
-    print("starting up!")
-    await prisma.connect()
+# @app.on_event("startup")
+# async def startup():
+#     # set_proxy()
+#     print("starting up!")
+#     await prisma.connect()
 
 
-@app.on_event("shutdown")
-async def shutdown():
-    await prisma.disconnect()
+# @app.on_event("shutdown")
+# async def shutdown():
+#     await prisma.disconnect()
 
 
 @app.get("/", name="Wellcome", tags=["Основное"], description="Тут будет описание методов?")
 async def user():
     return {"message": "Wellcome to MindMarketAPI"}
 
+
+# app.add_middleware()
 
 app.include_router(profile_router)
 app.include_router(assistant_router)
