@@ -7,7 +7,6 @@ from models import schemas
 from sqlalchemy.orm import Session
 from datetime import datetime
 import requests
-from prisma import models
 
 
 crm_router = APIRouter()
