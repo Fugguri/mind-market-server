@@ -24,7 +24,7 @@ class User(Base):
     login = Column(String(255))
     password = Column(String(255))
     token = Column(String(255), default="uuid()")
-    expires_in = Column(DateTime)
+    expires = Column(DateTime)
     created_at = Column(DateTime, default="now()")
     updated_at = Column(DateTime, onupdate="now()")
 
