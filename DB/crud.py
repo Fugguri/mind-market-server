@@ -1,6 +1,5 @@
-from .database import Session
+from .database import Session, User
 from models import schemas
-from database import User
 
 
 class Database:
