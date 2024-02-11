@@ -1,7 +1,6 @@
 from fastapi import FastAPI, logger
 from routers import *
 import uvicorn
-from prisma_ import prisma
 from fastapi.middleware.cors import CORSMiddleware
 from DB import db
 app = FastAPI(
