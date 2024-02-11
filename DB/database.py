@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey
-from sqlalchemy import UniqueConstraint, create_engine, Column, Integer, String, DateTime, Boolean, Text, ForeignKey, Enum
+# from sqlalchemy import UniqueConstraint, create_engine, Column, Integer, DateTime, Boolean, Text, ForeignKey, Enum
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
@@ -14,16 +14,16 @@ Base = declarative_base()
 class User(Base):
     __tablename__ = 'users'
 
-    id = Column(String, primary_key=True, default="cuid()")
-    name = Column(String)
-    email = Column(String, unique=True)
+    id = Column(String(255), primary_key=True, default="cuid()")
+    name = Column(String(255))
+    email = Column(String(255), unique=True)
     email_verified = Column(DateTime)
-    image = Column(String)
-    user_id = Column(String, unique=True)
-    image_url = Column(String)
-    login = Column(String)
-    password = Column(String)
-    token = Column(String, default="uuid()")
+    image = Column(String(255))
+    user_id = Column(String(255), unique=True)
+    image_url = Column(String(255))
+    login = Column(String(255))
+    password = Column(String(255))
+    token = Column(String(255), default="uuid()")
     expires_in = Column(DateTime)
     created_at = Column(DateTime, default="now()")
     updated_at = Column(DateTime, onupdate="now()")
@@ -49,14 +49,14 @@ class User(Base):
 class Assistant(Base):
     __tablename__ = 'assistants'
 
-    id = Column(String, primary_key=True, default="uuid()")
-    user_id = Column(String, ForeignKey('users.id'))
-    name = Column(String)
-    comment = Column(String)
-    settings = Column(String)
-    image_url = Column(String)
+    id = Column(String(255), primary_key=True, default="uuid()")
+    user_id = Column(String(255), ForeignKey('users.id'))
+    name = Column(String(255))
+    comment = Column(String(255))
+    settings = Column(String(255))
+    image_url = Column(String(255))
     use_count = Column(Integer, default=0)
-    access_token = Column(String, default="uuid()")
+    access_token = Column(String(255), default="uuid()")
     created_at = Column(DateTime, default="now()")
     updated_at = Column(DateTime, onupdate="now()")
 
@@ -74,13 +74,13 @@ class Assistant(Base):
 class Integration(Base):
     __tablename__ = 'integrations'
 
-    id = Column(String, primary_key=True, default="uuid()")
-    user_id = Column(String, ForeignKey('users.id'))
-    service_type = Column(String)
-    service_id = Column(String)
+    id = Column(String(255), primary_key=True, default="uuid()")
+    user_id = Column(String(255), ForeignKey('users.id'))
+    service_type = Column(String(255))
+    service_id = Column(String(255))
     created_at = Column(DateTime, default="now()")
     updated_at = Column(DateTime, onupdate="now()")
-    assistant_id = Column(String, ForeignKey('assistants.id'))
+    assistant_id = Column(String(255), ForeignKey('assistants.id'))
 
     user = relationship("User", back_populates="integrations")
     assistant = relationship("Assistant", back_populates="integrations")
@@ -91,12 +91,12 @@ class Integration(Base):
 class Chat(Base):
     __tablename__ = 'chats'
 
-    id = Column(String, primary_key=True, default="uuid()")
-    user_id = Column(String, ForeignKey('users.id'))
-    manager_id = Column(String)
-    client_id = Column(String, unique=True)
-    assistant_id = Column(String)
-    integration_id = Column(String)
+    id = Column(String(255), primary_key=True, default="uuid()")
+    user_id = Column(String(255), ForeignKey('users.id'))
+    manager_id = Column(String(255))
+    client_id = Column(String(255), unique=True)
+    assistant_id = Column(String(255))
+    integration_id = Column(String(255))
     is_blocked = Column(Boolean, default=False)
     is_assistant_in_chat = Column(Boolean, default=True)
     created_at = Column(DateTime, default="now()")
@@ -113,20 +113,20 @@ class Chat(Base):
 class Client(Base):
     __tablename__ = 'clients'
 
-    id = Column(String, primary_key=True, default="uuid()")
-    user_id = Column(String, ForeignKey('users.id'))
-    manager_id = Column(String, ForeignKey('managers.id'))
-    chat_id = Column(String)
-    name = Column(String)
-    username = Column(String)
-    image_url = Column(String)
-    category = Column(String)
-    email = Column(String)
-    phone = Column(String)
-    about = Column(String)
-    company_name = Column(String)
-    tags = Column(String)
-    in_service_id = Column(String)
+    id = Column(String(255), primary_key=True, default="uuid()")
+    user_id = Column(String(255), ForeignKey('users.id'))
+    manager_id = Column(String(255), ForeignKey('managers.id'))
+    chat_id = Column(String(255))
+    name = Column(String(255))
+    username = Column(String(255))
+    image_url = Column(String(255))
+    category = Column(String(255))
+    email = Column(String(255))
+    phone = Column(String(255))
+    about = Column(String(255))
+    company_name = Column(String(255))
+    tags = Column(String(255))
+    in_service_id = Column(String(255))
     created_at = Column(DateTime, default="now()")
     updated_at = Column(DateTime, onupdate="now()")
 
@@ -138,11 +138,11 @@ class Client(Base):
 class Manager(Base):
     __tablename__ = 'managers'
 
-    id = Column(String, primary_key=True, default="uuid()")
-    owner_id = Column(String, ForeignKey('users.id'))
-    manager_id = Column(String)
-    managed_by_id = Column(String, ForeignKey('users.id'))
-    integration_id = Column(String, ForeignKey('integrations.id'))
+    id = Column(String(255), primary_key=True, default="uuid()")
+    owner_id = Column(String(255), ForeignKey('users.id'))
+    manager_id = Column(String(255))
+    managed_by_id = Column(String(255), ForeignKey('users.id'))
+    integration_id = Column(String(255), ForeignKey('integrations.id'))
     created_at = Column(DateTime, default="now()")
     updated_at = Column(DateTime, onupdate="now()")
 
@@ -159,18 +159,18 @@ class Manager(Base):
 class Message(Base):
     __tablename__ = 'messages'
 
-    id = Column(String, primary_key=True, default="uuid()")
-    chat_id = Column(String, ForeignKey('chats.id'))
-    text = Column(String)
-    files_url = Column(String)
-    images_url = Column(String)
+    id = Column(String(255), primary_key=True, default="uuid()")
+    chat_id = Column(String(255), ForeignKey('chats.id'))
+    text = Column(String(255))
+    files_url = Column(String(255))
+    images_url = Column(String(255))
     incoming = Column(Boolean, default=True)
     from_assistant = Column(Boolean, default=False)
     from_user = Column(Boolean, default=False)
     from_manager = Column(Boolean, default=False)
-    manager_id = Column(String)
-    user_id = Column(String)
-    assistant_id = Column(String)
+    manager_id = Column(String(255))
+    user_id = Column(String(255))
+    assistant_id = Column(String(255))
     is_read = Column(Boolean, default=False)
     timestamp = Column(DateTime, default="now()")
     created_at = Column(DateTime, default="now()")
