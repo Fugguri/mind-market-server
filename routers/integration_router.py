@@ -10,10 +10,14 @@ from providers import db, messages
 integration_router = APIRouter()
 
 
+@integration_router.post("/integrations/{user_id}", name="Создание интеграции", description="Создание интеграции", tags=["Интеграции"])
+async def create_tg_bot(user_id: str, request: Request):
+    print(request)
+
+
 @integration_router.post("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(bot_id: str, request: Request):
     json_request = await request.json()
-    print(json_request)
     tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
     await messages.handle_telegrambot_message(json_request, tg_bot_model)
 
