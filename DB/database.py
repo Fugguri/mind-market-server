@@ -189,7 +189,7 @@ class Message(Base):
 
 
 class JivoBot(Base):
-    __tablename__ = 'messages'
+    __tablename__ = 'JivoBot'
 
     id = Column(String(255), primary_key=True, default="uuid()")
     user_id = Column(String(255), ForeignKey('chats.id'))
