@@ -84,7 +84,7 @@ async def user(request: Request):
 
 
 @integration_router.post("/integration/jivo/{id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
-async def create_user(jivo_id: str, request: schemas.ClientMessage):
+async def create_user(id: str, request: schemas.ClientMessage):
     match request.event:
         case "CHAT_CLOSED":
             return
@@ -100,6 +100,7 @@ async def create_user(jivo_id: str, request: schemas.ClientMessage):
             pass
     from DB.database import JivoBot
     bot: JivoBot = await Database.get_jivo_bot(id)
+
     response = await jivo.create_jivo_responce(request, bot.assistant)
     answer_request = await jivo.send_jivo_aswer(response, bot.provider_id, bot.assistant_id)
 
