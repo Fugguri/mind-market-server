@@ -98,12 +98,10 @@ async def create_user(jivo_id: str, request: schemas.ClientMessage):
             return
         case _:
             pass
-
-    bot = Database.get_jivo_bot(jivo_id)
-    assistant = bot.assistant
-    response = await jivo.create_jivo_responce(request, assistant)
-
-    answer_request = await jivo.send_jivo_aswer(response, assistant)
+    from DB.database import JivoBot, Assistant
+    bot: JivoBot = Database.get_jivo_bot(jivo_id)
+    response = await jivo.create_jivo_responce(request, bot.assistant)
+    answer_request = await jivo.send_jivo_aswer(response, bot.provider_id, bot.assistant_id)
 
     if answer_request.status_code == 200:
         ...
