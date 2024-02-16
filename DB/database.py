@@ -188,4 +188,19 @@ class Message(Base):
     assistant = relationship("Assistant", back_populates="messages")
 
 
+class JivoBot(Base):
+    __tablename__ = 'messages'
+
+    id = Column(String(255), primary_key=True, default="uuid()")
+    user_id = Column(String(255), ForeignKey('chats.id'))
+    assistant_id = Column(String(255))
+    provider_id = Column(String(255))
+
+    user = relationship("User", back_populates="messages")
+    assistant = relationship("Assistant", back_populates="messages")
+
+    created_at = Column(DateTime, default="now()")
+    updated_at = Column(DateTime, onupdate="now()")
+
+
 Base.metadata.create_all(engine)

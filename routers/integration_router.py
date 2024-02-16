@@ -5,7 +5,7 @@ from fastapi.logger import logger
 
 from mics._openai import create_response
 from providers import db, messages
-
+from DB import Database
 
 integration_router = APIRouter()
 
@@ -83,8 +83,8 @@ async def user(request: Request):
     return int(res)
 
 
-@integration_router.post("/integration/jivo/{access_token}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
-async def create_user(access_token: str, request: schemas.ClientMessage):
+@integration_router.post("/integration/jivo/{jivo_id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
+async def create_user(jivo_id: str, request: schemas.ClientMessage):
     match request.event:
         case "CHAT_CLOSED":
             return
@@ -99,8 +99,8 @@ async def create_user(access_token: str, request: schemas.ClientMessage):
         case _:
             pass
 
-    assistant = await utls.check_assistant_access_token(access_token)
-
+    bot = Database.get_jivo_bot(jivo_id)
+    assistant = bot.assistant
     response = await jivo.create_jivo_responce(request, assistant)
 
     answer_request = await jivo.send_jivo_aswer(response, assistant)
