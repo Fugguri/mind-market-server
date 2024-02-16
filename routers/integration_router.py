@@ -83,7 +83,7 @@ async def user(request: Request):
     return int(res)
 
 
-@integration_router.post("/integration/jivo/{jivo_id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
+@integration_router.post("/integration/jivo/{id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
 async def create_user(jivo_id: str, request: schemas.ClientMessage):
     match request.event:
         case "CHAT_CLOSED":
@@ -98,8 +98,8 @@ async def create_user(jivo_id: str, request: schemas.ClientMessage):
             return
         case _:
             pass
-    from DB.database import JivoBot, Assistant
-    bot: JivoBot = Database.get_jivo_bot(jivo_id)
+    from DB.database import JivoBot
+    bot: JivoBot = await Database.get_jivo_bot(id)
     response = await jivo.create_jivo_responce(request, bot.assistant)
     answer_request = await jivo.send_jivo_aswer(response, bot.provider_id, bot.assistant_id)
 
