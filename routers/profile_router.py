@@ -19,8 +19,8 @@ async def profile(id:  str | int):
 
 
 @profile_router.delete("/profile/{id}", name="Удалить профиль", description="Удаление профиля по id", tags=["Профиль"])
-async def profile(id:  str | int):
-    db.get_user(id)
+async def profile(id:  str | int, profile: schemas.EditProfileEntry):
+    db.gupdate_user
     return profile
 
 

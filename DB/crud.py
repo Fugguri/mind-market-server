@@ -1,4 +1,5 @@
 from .database import Session, User, JivoBot
+from ..models.schemas import EditProfileEntry
 
 
 class Database:
@@ -7,6 +8,17 @@ class Database:
 
     async def get_user(self, user_id: int):
         return self.db.query(User).filter(User.id == user_id).first()
+
+    async def update_profile(self, id: int, data: EditProfileEntry):
+        user: User = self.db.query(User).filter(User.id == id).first()
+        user.name = data.name
+        user.phone = data.phone
+        user.imageUrl = data.imageUrl
+        user.telegram = data.telegram
+        user.email = data.email
+        user.company_name = data.company_name
+        user.job_title = data.job_title
+        self.db.commit()
 
     async def get_jivo_bot(self, jivo_id: int) -> JivoBot:
         return self.db.query(JivoBot).filter(JivoBot.id == jivo_id).first()

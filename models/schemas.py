@@ -96,6 +96,16 @@ class ProfileEntry(BaseModel):
     email: str = None
 
 
+class EditProfileEntry(BaseModel):
+    name: str = None
+    phone: str = None
+    imageUrl: str = None
+    telegram: str = None
+    email: str = None
+    company_name: str = None
+    job_title: str = None
+
+
 class User(BaseModel):
 
     user_id: int | str = str(uuid4())
