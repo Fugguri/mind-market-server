@@ -1,5 +1,5 @@
 from .database import Session, User, JivoBot
-from ..models.schemas import EditProfileEntry
+from models.schemas import EditProfileEntry
 
 
 class Database:
