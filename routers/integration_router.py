@@ -1,3 +1,4 @@
+import asyncio
 from mics import jivo, tg, greenApi, utls
 from models import schemas
 from fastapi import APIRouter, HTTPException, Request, logger
@@ -5,7 +6,7 @@ from fastapi.logger import logger
 
 from mics._openai import create_response
 from providers import db, messages
-from DB import Database
+from DB import db as Database
 
 integration_router = APIRouter()
 
@@ -113,3 +114,5 @@ async def create_user(id: str, request: schemas.ClientMessage):
         await tg.tg_bot.send_err_notification(answer_request.json())
 
     return response.__dict__
+# print(asyncio.run(Database.get_jivo_bot(
+#     jivo_id="59e250a4-f1d4-4585-8141-d35d3cb1736")))

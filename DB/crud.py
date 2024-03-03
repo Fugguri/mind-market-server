@@ -1,16 +1,15 @@
 from .database import Session, User, JivoBot
-from models import schemas
 
 
 class Database:
     def __init__(self) -> None:
-        ...
+        self.db = Session()
 
-    async def get_user(user_id: int, db=Session):
-        return db.query(User).filter(User.id == user_id).first()
+    async def get_user(self, user_id: int):
+        return self.db.query(User).filter(User.id == user_id).first()
 
-    async def get_jivo_bot(jivo_id: int, db=Session) -> JivoBot:
-        return db.query(JivoBot).filter(JivoBot.id == jivo_id).first()
+    async def get_jivo_bot(self, jivo_id: int) -> JivoBot:
+        return self.db.query(JivoBot).filter(JivoBot.id == jivo_id).first()
 
     # async def get_users(db: Session, skip: int = 0, limit: int = 100):
     #     return db.query(models.Users).offset(skip).limit(limit).all()
