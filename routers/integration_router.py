@@ -32,7 +32,7 @@ async def create_tg_bot(user_id: str, request: Request):
 
 @integration_router.patch("/integrations/tgbot", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(tgbot: schemas.TgBotEntry):
-    print(tgbot)
+    print(tgbot.assistantId)
     bot = tg.TgBot(tgbot.token)
     me: types.User = await bot.getInfo()
     print(me.as_json())
