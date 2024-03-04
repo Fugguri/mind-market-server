@@ -7,6 +7,8 @@ from mics._openai import create_response
 
 webhooks_router = APIRouter()
 
+bots = dict()
+
 
 @webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request):
@@ -20,4 +22,5 @@ async def profile(bot_id: str, request: Request):
     text = message.get("text")
     if text:
         print(text)
+
     create_response(user_id="", settings="", text=text)
