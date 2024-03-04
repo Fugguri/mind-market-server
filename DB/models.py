@@ -1,17 +1,6 @@
-import dotenv
-import datetime
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, BigInteger, Text
-# from sqlalchemy import UniqueConstraint, create_engine, Column, Integer, DateTime, Boolean, Text, ForeignKey, Enum
-from sqlalchemy.orm import relationship, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy_utils import database_exists, create_database
-
-DATABASE_URL = dotenv.get_key(".env", "DATABASE_URL")
-engine = create_engine(DATABASE_URL)
-Session_ = sessionmaker(bind=engine)
-Base = declarative_base()
-if not database_exists(engine.url):
-    create_database(engine.url)
+from .db import Base
+from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, BigInteger, Text
+from sqlalchemy.orm import relationship
 
 
 class Account(Base):
@@ -278,6 +267,7 @@ class TelegramBot(Base):
 
     id = Column(String(255), primary_key=True, default="uuid()")
     telegram_id = Column(BigInteger)
+    tokenAPI = (String(255))
     is_bot = Column(Boolean, default=True)
     first_name = Column(String(255))
     username = Column(String(255))
