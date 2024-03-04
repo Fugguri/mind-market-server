@@ -21,6 +21,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry):
     print(tgbot)
     bot = tg.TgBot(tgbot.token)
     me: types.User = await bot.getInfo()
+    await bot.setWebhook(tgbot.token)
     # tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
     # await messages.handle_telegrambot_message(json_request, tg_bot_model)
 
