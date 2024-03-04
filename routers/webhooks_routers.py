@@ -8,7 +8,7 @@ from mics._openai import create_response
 webhooks_router = APIRouter()
 
 
-@webhooks_router.post("/webhook/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
+@webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request):
     print(bot_id)
     req = await request.json()
