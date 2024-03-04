@@ -23,7 +23,15 @@ async def checker(func):
 
 
 # @checker
-async def add_tg_bot(session: AsyncSession, **kwargs) -> TelegramBot:
-    new_city = TelegramBot(kwargs)
-    session.add(new_city)
-    return new_city
+async def add_tg_bot(session: AsyncSession,
+                     tokenAPI,
+                     telegram_id,
+                     first_name,
+                     username,) -> TelegramBot:
+    new_bot = TelegramBot()
+    new_bot.tokenAPI = tokenAPI,
+    new_bot.telegram_id = telegram_id,
+    new_bot.first_name = first_name,
+    new_bot.username = username
+    session.add(new_bot)
+    return new_bot
