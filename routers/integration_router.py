@@ -11,14 +11,14 @@ from DB import db as Database
 integration_router = APIRouter()
 
 
-@integration_router.post("/integrations/{projectId}", name="Список интеграции", description="Создание интеграции", tags=["Интеграции"])
+@integration_router.post("/integrations/all/{projectId}", name="Список интеграции", description="Создание интеграции", tags=["Интеграции"])
 async def create_tg_bot(projectId: str, request: Request):
-    print(request)
+    ...
+    # Database.get_integration_by_project_id(projectId)
 
 
 @integration_router.post("/integrations/tgbot", name="Добавление Telegram бота", description="Добавление бота, созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(tgbot: schemas.TgBotEntry):
-    print()
     bot = tg.TgBot(tgbot.token)
     me = await bot.getInfo()
     print(me)
@@ -57,7 +57,7 @@ async def create_wa_bot(access_token: str, wabot: schemas.WaBotEntry):
     #     'profileId': profile.id,
     # })
 
-    return new
+    # return new
 
 
 @integration_router.post("/integration/tguserbot/{access_token}", name="Новый ассистент", description="Создание нового ассистента", tags=["Интеграции"])
