@@ -18,6 +18,8 @@ origins = [
     "http://localhost:8080",
     "http://localhost:8000",
     "https://web-mindmarket",
+    "http://93.92.200.180:0"
+    "https://93.92.200.180:0"
     "http://93.92.200.180"
     "https://93.92.200.180"
 

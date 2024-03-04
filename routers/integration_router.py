@@ -20,7 +20,8 @@ async def create_tg_bot(projectId: str, request: Request, session: AsyncSession 
 async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depends(get_session)):
     bot = tg.TgBot(tgbot.token)
     try:
-        me = await bot.getInfo()
+        info = await bot.getInfo()
+        me = info[0]
     except Exception as ex:
         return HTTPException(401, ex)
     await database.add_tg_bot(session=session,
