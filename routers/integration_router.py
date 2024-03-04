@@ -3,7 +3,7 @@ from mics import jivo, tg, greenApi, utls
 from models import schemas
 from fastapi import APIRouter, HTTPException, Request, logger
 from fastapi.logger import logger
-
+from aiogram import types
 from mics._openai import create_response
 from providers import db, messages
 from DB import db as Database
@@ -32,7 +32,7 @@ async def create_tg_bot(user_id: str, request: Request):
 async def create_tg_bot(tgbot: schemas.TgBotEntry):
     print(tgbot)
     bot = tg.TgBot(tgbot.token)
-    me = await bot.getInfo()
+    me: types.User = await bot.getInfo()
     print(me)
     # Database.create_tg_bot()
     # await bot.setWebhook(new.id)
