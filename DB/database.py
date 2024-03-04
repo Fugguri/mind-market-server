@@ -8,7 +8,7 @@ from sqlalchemy_utils import database_exists, create_database
 
 DATABASE_URL = dotenv.get_key(".env", "DATABASE_URL")
 engine = create_engine(DATABASE_URL)
-Session = sessionmaker(bind=engine)
+Session_ = sessionmaker(bind=engine)
 Base = declarative_base()
 if not database_exists(engine.url):
     create_database(engine.url)
@@ -127,7 +127,7 @@ class Assistant(Base):
     name = Column(String(255))
     comment = Column(String(255))
     settings = Column(String(255))
-    image_url = Column(String(255))
+    imageUrl = Column(String(255))
     use_count = Column(Integer, default=0)
     access_token = Column(String(255), default="uuid()")
 

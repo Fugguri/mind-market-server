@@ -28,14 +28,14 @@ async def create_tg_bot(user_id: str, request: Request):
     ...
 
 
-@integration_router.patch("/integrations/tgbot/{user_id}", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
-async def create_tg_bot(user_id: str, tgbot: schemas.TgBotEntry):
+@integration_router.patch("/integrations/tgbot", name="Добавление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+async def create_tg_bot(tgbot: schemas.TgBotEntry):
 
     bot = tg.TgBot(tgbot.token)
     me = await bot.getInfo()
-
+    Database.
     # await bot.setWebhook(new.id)
-    # return new
+    return new
 
 
 @integration_router.post("/integrations/wabot/{access_token}", name="Добавление WhatsApp бота", description="Добавление профиля WhatsApp созданного в сервисе GreenApi", tags=["Интеграции"])

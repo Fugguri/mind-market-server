@@ -19,6 +19,7 @@ class Sender(BaseModel):
 
 
 class TgBotEntry(BaseModel):
+    projectId: str
     token: str
     assistantId: str
 
