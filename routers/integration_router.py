@@ -1,6 +1,6 @@
 import asyncio
+from sqlalchemy.exc import IntegrityError
 
-from aiomysql import IntegrityError
 from mics import jivo, tg, greenApi, utls
 from models import schemas
 from fastapi import APIRouter, HTTPException, Request, logger, Depends
