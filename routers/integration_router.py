@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException, Request, logger, Depends
 from fastapi.logger import logger
 from aiogram import types
 from DB.db import AsyncSession, get_session
-from DB import async_crud as database
+from DB.async_crud import add_tg_bot
 
 integration_router = APIRouter()
 
@@ -24,12 +24,12 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
         me = info[0]
     except Exception as ex:
         return HTTPException(401, ex)
-    await database.add_tg_bot(session=session,
-                              tokenAPI=tgbot.token,
-                              telegram_id=me.id,
-                              first_name=me.first_name,
-                              username=me.username,
-                              )
+    await add_tg_bot(session=session,
+                     tokenAPI=tgbot.token,
+                     telegram_id=me.id,
+                     first_name=me.first_name,
+                     username=me.username,
+                     )
     await bot.setWebhook(tgbot.token)
     # tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
     # await messages.handle_telegrambot_message(json_request, tg_bot_model)
