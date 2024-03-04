@@ -32,14 +32,14 @@ async def create_user(access_token: str, assistant: schemas.AssistantEntry):
     return profile
 
 
-@assistant_router.post("/api_v2/assistants/edit/{access_token}", name="Редактировать ассистента", description="Редактирование ассистента ассистента", tags=["Ассистенты"])
+@assistant_router.patch("/assistants/edit/{access_token}", name="Редактировать ассистента", description="Редактирование ассистента ассистента", tags=["Ассистенты"])
 async def create_user(access_token: str, assistant: schemas.AssistantEntry):
     profile = await utls.check_profile_access_token(access_token, False)
 
     return profile
 
 
-@assistant_router.get("/api_v2/assistants/all/{access_token}", response_model=list[schemas.Assistant], name="Все ассистенты", description="Список ассистентов пользователя", tags=["Ассистенты"])
+@assistant_router.get("/assistants/all/{access_token}", response_model=list[schemas.Assistant], name="Все ассистенты", description="Список ассистентов пользователя", tags=["Ассистенты"])
 async def create_user(access_token: str):
     profile = await utls.check_profile_access_token(access_token, False)
 

@@ -36,6 +36,15 @@ async def user():
     return {"message": "Wellcome to MindMarketAPI"}
 
 
+@integration_router.post("/integrations/tgbot", name="Добавление Telegram бота", description="Добавление бота, созданного в BotFather ", tags=["Интеграции"])
+async def create_tg_bot(tgbot: schemas.TgBotEntry):
+    print()
+    bot = tg.TgBot(tgbot.token)
+    me = await bot.getInfo()
+    print(me)
+    await bot.setWebhook(tgbot.token)
+    # tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
+    # await messages.handle_telegrambot_message(json_request, tg_bot_model)
 # app.add_middleware()
 
 app.include_router(profile_router)
