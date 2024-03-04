@@ -26,18 +26,14 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
         me: types.User = info[0]
     except Exception as ex:
         return HTTPException(401, ex)
+    await add_tg_bot(session=session,
+                     telegram_id=me.id,
+                     tokenAPI=tgbot.token,
+                     first_name=me.full_name,
+                     username=me.username,
+                     )
     try:
-        print(session,
-              me.id,
-              tgbot.token,
-              me.full_name,
-              me.username,)
-        await add_tg_bot(session=session,
-                         telegram_id=me.id,
-                         tokenAPI=tgbot.token,
-                         first_name=me.full_name,
-                         username=me.username,
-                         )
+
         await session.commit()
     except IntegrityError as ex:
         await session.rollback()
