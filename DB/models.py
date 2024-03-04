@@ -361,3 +361,5 @@ class Deal(Base):
     Project = relationship("Project", back_populates="Deals", lazy="selectin")
     managerId = Column(String(255), ForeignKey('Manager.id'))
     Manager = relationship("Manager", back_populates="Deals", lazy="selectin")
+
+
