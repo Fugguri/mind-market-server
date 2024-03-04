@@ -22,7 +22,7 @@ async def checker(func):
 #     return result.scalars().all()
 
 
-@checker
+# @checker
 async def add_tg_bot(session: AsyncSession, **kwargs) -> TelegramBot:
     new_city = TelegramBot(kwargs)
     session.add(new_city)

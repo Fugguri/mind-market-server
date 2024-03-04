@@ -1,4 +1,6 @@
 import asyncio
+
+from aiomysql import IntegrityError
 from mics import jivo, tg, greenApi, utls
 from models import schemas
 from fastapi import APIRouter, HTTPException, Request, logger, Depends
@@ -24,12 +26,20 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
         me = info[0]
     except Exception as ex:
         return HTTPException(401, ex)
-    await add_tg_bot(session=session,
-                     tokenAPI=tgbot.token,
-                     telegram_id=me.id,
-                     first_name=me.first_name,
-                     username=me.username,
-                     )
+    try:
+
+        await add_tg_bot(session=session,
+                         tokenAPI=tgbot.token,
+                         telegram_id=me.id,
+                         first_name=me.first_name,
+                         username=me.username,
+                         )
+        await session.commit()
+    except IntegrityError as ex:
+        await session.rollback()
+        print(ex)
+        raise Exception(f"The bot already stored")
+
     await bot.setWebhook(tgbot.token)
     # tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
     # await messages.handle_telegrambot_message(json_request, tg_bot_model)
