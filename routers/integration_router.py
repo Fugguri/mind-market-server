@@ -33,10 +33,10 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry):
     print(tgbot)
     bot = tg.TgBot(tgbot.token)
     me: types.User = await bot.getInfo()
-    print(me)
+    print(me.as_json())
     # Database.create_tg_bot()
     # await bot.setWebhook(new.id)
-    return new
+    return "ghbdt"
 
 
 @integration_router.post("/integrations/wabot/{access_token}", name="Добавление WhatsApp бота", description="Добавление профиля WhatsApp созданного в сервисе GreenApi", tags=["Интеграции"])
