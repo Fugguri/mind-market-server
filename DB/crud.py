@@ -1,4 +1,4 @@
-from .database import Session_, User, JivoBot,TelegramBot,TelegramUserBot,WhatsAppBot,
+from .database import Session_, User, JivoBot, TelegramBot, TelegramUserBot, WhatsAppBot
 from models.schemas import EditProfileEntry
 
 
@@ -20,9 +20,9 @@ class Database:
         user.job_title = data.job_title
         self.db.commit()
 
-    async def create_tg_bot(self,tgbot:):
-        bot:TelegramBot = TelegramBot(
-            project
+    async def create_tg_bot(self, tgbot):
+        bot: TelegramBot = TelegramBot(
+            # project
         )
 
     async def get_jivo_bot(self, jivo_id: int) -> JivoBot:

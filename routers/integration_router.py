@@ -33,7 +33,8 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry):
 
     bot = tg.TgBot(tgbot.token)
     me = await bot.getInfo()
-    Database.
+    print(me)
+    # Database.create_tg_bot()
     # await bot.setWebhook(new.id)
     return new
 
