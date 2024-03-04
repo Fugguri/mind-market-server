@@ -10,7 +10,6 @@ webhooks_router = APIRouter()
 
 @webhooks_router.post("/webhook/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request):
-    print(bot_id)
     req = await request.json()
     print(req)
     message = req.get("message")
@@ -21,19 +20,4 @@ async def profile(bot_id: str, request: Request):
     text = message.get("text")
     if text:
         print(text)
-    # create_response(user_id="",settings="",text=)
-
-    # tg_bot = await prisma.telegrambot.find_first(where={"id": bot_id}, include={"assistant": True})
-    # tg_provider: TgBot = TgBot(token=tg_bot.token)
-
-    # data = await request.json()
-
-    # message = data.get("message")
-    # user_id = message.get("from").get("id")
-    # text = message.get("text")
-    # response = await _openai.create_responce(
-    #     user_id, tg_bot.assistant.settings, text)
-
-    # await tg_provider.bot.send_message(user_id, response)
-    # # profile = await utls.check_profile_access_token(access_token, False)
-    # # return profile
+    create_response(user_id="", settings="", text=text)
