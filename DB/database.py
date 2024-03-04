@@ -1,6 +1,6 @@
 import dotenv
 import datetime
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, ForeignKey, BigInteger
 # from sqlalchemy import UniqueConstraint, create_engine, Column, Integer, DateTime, Boolean, Text, ForeignKey, Enum
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -277,6 +277,14 @@ class TelegramBot(Base):
     __tablename__ = 'TelegramBot'
 
     id = Column(String(255), primary_key=True, default="uuid()")
+    telegram_id = Column(BigInteger)
+    is_bot = Column(Boolean, default=True)
+    first_name = Column(String(255))
+    username = Column(String(255))
+    can_join_groups = Column(Boolean, default=True)
+    can_read_all_group_messages = Column(Boolean, default=False)
+    supports_inline_queries = Column(Boolean, default=False)
+
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship("Project", back_populates="TelegramBot")
     assistant_id = Column(String(255), ForeignKey('Assistant.id'))
