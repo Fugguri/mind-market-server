@@ -24,6 +24,10 @@ class TgBotEntry(BaseModel):
     assistantId: str
 
 
+class TgBotMessageEntry(BaseModel):
+    ...
+
+
 class TgUserBotEntry(BaseModel):
     api_id: str
     api_hash: str

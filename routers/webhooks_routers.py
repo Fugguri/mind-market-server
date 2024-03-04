@@ -9,7 +9,15 @@ webhooks_router = APIRouter()
 
 
 @webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
-async def profile(bot_id: str, message: types.Message):
-    print(bot_id)
-    print(message)
-    # create_response(user_id="", settings="", text=text)
+async def profile(bot_id: str, request: Request):
+    req = await request.json()
+    print(req)
+    message = req.get("message")
+    if not message:
+        return
+    sender = message.get("from")
+    chat = message.get("chat")
+    text = message.get("text")
+    if text:
+        print(text)
+    create_response(user_id="", settings="", text=text)
