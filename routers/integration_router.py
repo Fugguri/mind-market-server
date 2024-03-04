@@ -16,11 +16,13 @@ async def create_tg_bot(user_id: str, request: Request):
     print(request)
 
 
-@integration_router.post("/integrations/tgbot/{bot_id}", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
-async def create_tg_bot(bot_id: str, request: Request):
-    json_request = await request.json()
-    tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
-    await messages.handle_telegrambot_message(json_request, tg_bot_model)
+@integration_router.post("/integrations/tgbot/", name="webhook для telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+async def create_tg_bot(tgbot: schemas.TgBotEntry):
+    print(tgbot)
+    bot = tg.TgBot(tgbot.token)
+    me: types.User = await bot.getInfo()
+    # tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
+    # await messages.handle_telegrambot_message(json_request, tg_bot_model)
 
 
 @integration_router.delete("/integrations/tgbot/{bot_id}", name="Удаление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
