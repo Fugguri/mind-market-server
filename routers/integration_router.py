@@ -1,10 +1,10 @@
 import asyncio
 from mics import jivo, tg, greenApi, utls
 from models import schemas
-from fastapi import APIRouter, HTTPException, Request, logger
+from fastapi import APIRouter, HTTPException, Request, logger, Depends
 from fastapi.logger import logger
 from aiogram import types
-
+from DB.db import AsyncSession, get_session
 from DB import async_crud as database
 
 integration_router = APIRouter()

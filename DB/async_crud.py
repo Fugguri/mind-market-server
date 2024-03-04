@@ -16,10 +16,10 @@ async def checker(func):
     return _wrapper
 
 
-@checker
-async def get_biggest_cities(session: AsyncSession) -> list[City]:
-    result = await session.execute(select(City).order_by(City.population.desc()).limit(20))
-    return result.scalars().all()
+# @checker
+# async def get_biggest_cities(session: AsyncSession) -> list[City]:
+#     result = await session.execute(select(City).order_by(City.population.desc()).limit(20))
+#     return result.scalars().all()
 
 
 @checker
