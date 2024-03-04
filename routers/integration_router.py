@@ -23,22 +23,22 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
     bot = tg.TgBot(tgbot.token)
     try:
         info = await bot.getInfo()
-        me = info[0]
+        me: types.User = info[0]
     except Exception as ex:
         return HTTPException(401, ex)
     try:
 
         await add_tg_bot(session=session,
-                         tokenAPI=tgbot.token,
                          telegram_id=me.id,
-                         first_name=me.first_name,
+                         tokenAPI=tgbot.token,
+                         first_name=me.full_name,
                          username=me.username,
                          )
         await session.commit()
     except IntegrityError as ex:
         await session.rollback()
         print(ex)
-        raise Exception(f"The bot already stored")
+        # raise Exception(f"The bot already stored")
 
     await bot.setWebhook(tgbot.token)
     # tg_bot_model = await db.get_telegrambot(bot_id=bot_id)

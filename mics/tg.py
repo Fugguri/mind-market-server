@@ -24,7 +24,7 @@ class TgBot:
         file = await self.dispather.bot.get_file(file_id=pict.photos[0][0].file_id)
 
         url = self.bot.get_file_url(file_path=file)
-        self.bot.close()
+        await self.bot.close()
         return [me, url]
 
     async def setWebhook(self, bot_id: str) -> str:
