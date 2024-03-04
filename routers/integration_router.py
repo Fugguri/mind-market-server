@@ -18,7 +18,6 @@ async def create_tg_bot(user_id: str, request: Request):
 
 @integration_router.post("/integrations/tgbot/", name="Добавление Telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(tgbot: schemas.TgBotEntry):
-    print(tgbot)
     bot = tg.TgBot(tgbot.token)
     me: types.User = await bot.getInfo()
     await bot.setWebhook(tgbot.token)
