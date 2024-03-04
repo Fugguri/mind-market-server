@@ -14,7 +14,7 @@ async def create_user(access_token: str, assistant_id: str, ):
     raise HTTPException(status_code=401, detail="Assistant is not exist.")
 
 
-@assistant_router.get("/api_v2/assistants/{access_token}/{assistant_id}", name="Текущий ассистент", description="Запрос информации об ассистенте", tags=["Ассистенты"])
+@assistant_router.get("/assistants/{access_token}/{assistant_id}", name="Текущий ассистент", description="Запрос информации об ассистенте", tags=["Ассистенты"])
 async def create_user(access_token: str, assistant_id: str, ):
     profile = await utls.check_profile_access_token(access_token, False)
 
