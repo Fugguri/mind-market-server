@@ -16,11 +16,11 @@ async def create_tg_bot(user_id: str, request: Request):
     print(request)
 
 
-@integration_router.post("/integrations/tgbot", name="Добавление Telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
+@integration_router.post("/integrations/tgbot", name="Добавление Telegram бота", description="Добавление бота, созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(tgbot: schemas.TgBotEntry):
-    print(dsf)
     bot = tg.TgBot(tgbot.token)
     me: types.User = await bot.getInfo()
+    print(me)
     await bot.setWebhook(tgbot.token)
     # tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
     # await messages.handle_telegrambot_message(json_request, tg_bot_model)

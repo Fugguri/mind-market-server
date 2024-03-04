@@ -1,8 +1,10 @@
-from fastapi import FastAPI, logger
-from routers import *
 import uvicorn
+from routers import *
+from fastapi import FastAPI, logger
 from fastapi.middleware.cors import CORSMiddleware
-from DB import db
+from mics import jivo, tg, greenApi, utls
+from models import schemas
+
 app = FastAPI(
     title="MindMarketAPI",
     summary="",
@@ -29,23 +31,20 @@ app.add_middleware(
 )
 
 
-# @app.on_event("startup")
-# async def startup():
-#     # set_proxy()
-#     print("starting up!")
-#     await prisma.connect()
-
-
-# @app.on_event("shutdown")
-# async def shutdown():
-#     await prisma.disconnect()
-
-
 @app.get("/", name="Wellcome", tags=["Основное"], description="Тут будет описание методов?")
 async def user():
     return {"message": "Wellcome to MindMarketAPI"}
 
 
+@app.post("/integrations/tgbot", name="Добавление Telegram бота", description="Добавление бота, созданного в BotFather ", tags=["Интеграции"])
+async def create_tg_bot(tgbot: schemas.TgBotEntry):
+    print(tgbot)
+    bot = tg.TgBot(tgbot.token)
+    me = await bot.getInfo()
+    print(me)
+    await bot.setWebhook(tgbot.token)
+    # tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
+    # await messages.handle_telegrambot_message(json_request, tg_bot_model)
 # app.add_middleware()
 
 app.include_router(profile_router)
