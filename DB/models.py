@@ -285,7 +285,7 @@ class TelegramBot(Base):
 
     id = Column(String(255), primary_key=True, default=str(uuid4()))
     telegram_id = Column(BigInteger)
-    botToken = (String(255))
+    botToken = Column(String(255))
     is_bot = Column(Boolean, default=True)
     first_name = Column(String(255))
     username = Column(String(255))
