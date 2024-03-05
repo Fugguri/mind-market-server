@@ -29,5 +29,5 @@ async def profile(bot_id: str, request: Request, session: AsyncSession = Depends
         print(text)
 
     response = create_response(
-        user_id="", settings=assistant.settings, text=text)
+        user_id=sender, settings=assistant.settings, text=text)
     # await tg_bot.answer(text, settings, sender,)
