@@ -27,9 +27,9 @@ async def print_request(request):
 async def profile(bot_id: str, request=Request, session: AsyncSession = Depends(get_session)):
 
     try:
-        await print_request(request)
+        body = await request.body()
 
-        # print(body)
+        print(body)
     except Exception as ex:
         print(ex)
     # if not message.message.text:
