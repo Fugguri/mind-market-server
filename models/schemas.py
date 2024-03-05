@@ -22,6 +22,7 @@ class TgBotEntry(BaseModel):
     projectId: str
     botToken: str
     assistantId: str
+    startMessage: str
 
 
 class TgBotMessageEntry(BaseModel):

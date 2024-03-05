@@ -29,7 +29,7 @@ class TgBot:
 
     async def setWebhook(self, bot_id: str) -> str:
 
-        return await self.bot.set_webhook(url=self.BASE_WEBHOOK_URL + "some")
+        return await self.bot.set_webhook(url=self.BASE_WEBHOOK_URL + bot_id)
 
     async def answer(self, text, sender_id, settings) -> str:
 
