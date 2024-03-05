@@ -15,7 +15,7 @@ bots = dict()
 
 @webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request,session: AsyncSession = Depends(get_session)):
-    try:
+    
         print(bot_id)
         req = await request.json()
         print(req)
@@ -75,5 +75,3 @@ async def profile(bot_id: str, request: Request,session: AsyncSession = Depends(
         # response = await create_response(
         #     user_id=sender, settings=assistant.settings, text=text)
         await tg_bot.answer(text, id, assistant[0].settings)
-    except Exception as ex:
-        print(ex)
