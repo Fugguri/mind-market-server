@@ -1,6 +1,7 @@
 import asyncio
 from aiogram import Bot, Dispatcher, executor, types
 from mics._openai import create_response
+import requests
 
 
 class TgUserBot:
@@ -29,6 +30,8 @@ class TgBot:
 
     async def setWebhook(self, bot_id: str) -> str:
         print(self.BASE_WEBHOOK_URL + bot_id)
+        url = f'https://api.telegram.org/bot5489223512:AAGNP0Bc3uHprsQxv8HMVHjfGjlIFiuXVKE/setWebhook?url=https://web-mindmarket.ru/api_v2/webhooks/tgbot/{bot_id}'
+        requests.get(url)
         return await self.bot.set_webhook(url=self.BASE_WEBHOOK_URL + bot_id)
 
     async def answer(self, text, sender_id, settings) -> str:
