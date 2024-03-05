@@ -297,7 +297,7 @@ class TelegramBot(Base):
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship(
         "Project", back_populates="TelegramBot", lazy="selectin")
-    assistant_id = Column(String(255), ForeignKey('Assistant.id'))
+    assistantId = Column(String(255), ForeignKey('Assistant.id'))
 
     createdAt = Column(DateTime, default=datetime.datetime.now())
     updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
