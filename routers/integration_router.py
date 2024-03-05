@@ -43,7 +43,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
         print(ex)
         # raise Exception(f"The bot already stored")
 
-    await bot.setWebhook(tgbot.token)
+    await bot.setWebhook(tgbot.botToken)
     # tg_bot_model = await db.get_telegrambot(bot_id=bot_id)
     # await messages.handle_telegrambot_message(json_request, tg_bot_model)
 
