@@ -20,7 +20,7 @@ class Sender(BaseModel):
 
 class TgBotEntry(BaseModel):
     projectId: str
-    token: str
+    botToken: str
     assistantId: str
 
 

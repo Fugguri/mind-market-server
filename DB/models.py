@@ -1,5 +1,5 @@
 import datetime
-import uuid
+from uuid import uuid4
 from .db import Base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, BigInteger, Text
 from sqlalchemy.orm import relationship
@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 class Account(Base):
     __tablename__ = 'Account'
 
-    id = Column(String(255), primary_key=True, default=uuid.uuid4())
+    id = Column(String(255), primary_key=True, default=uuid4())
     userId = Column(String(255), ForeignKey('User.id'), unique=True)
     providerType = Column(String(255), unique=True)
     providerId = Column(String(255), unique=True)
@@ -24,7 +24,7 @@ class Account(Base):
 class Session(Base):
     __tablename__ = 'Session'
 
-    id = Column(String(255), primary_key=True, default=uuid.uuid4())
+    id = Column(String(255), primary_key=True, default=uuid4())
     userId = Column(String(255), ForeignKey('User.id'), unique=True)
     expires = Column(DateTime)
     sessionToken = Column(String(255), unique=True)
@@ -37,7 +37,7 @@ class Session(Base):
 class VerificationRequest(Base):
     __tablename__ = 'VerificationRequest'
 
-    id = Column(String(255), primary_key=True, default=uuid.uuid4())
+    id = Column(String(255), primary_key=True, default=uuid4())
     identifier = Column(String(255))
     token = Column(String(255), unique=True)
     expires = Column(DateTime)
@@ -48,7 +48,7 @@ class VerificationRequest(Base):
 class User(Base):
     __tablename__ = 'User'
 
-    id = Column(String(255), primary_key=True, default=uuid.uuid4())
+    id = Column(String(255), primary_key=True, default=uuid4())
     name = Column(String(255))
     email = Column(String(255), unique=True)
     emailVerified = Column(DateTime)
@@ -285,7 +285,7 @@ class TelegramBot(Base):
 
     id = Column(String(255), primary_key=True, default="uuid()")
     telegram_id = Column(BigInteger)
-    tokenAPI = (String(255))
+    botToken = (String(255))
     is_bot = Column(Boolean, default=True)
     first_name = Column(String(255))
     username = Column(String(255))
