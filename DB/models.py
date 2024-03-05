@@ -299,8 +299,8 @@ class TelegramBot(Base):
         "Project", back_populates="TelegramBot", lazy="selectin")
     assistantId = Column(String(255), ForeignKey('Assistant.id'))
 
-    createdAt = Column(DateTime, default=datetime.datetime.now())
-    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
+    createdAt = Column(DateTime, default=datetime.datetime.now)
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now)
 
 
 class TelegramUserBot(Base):
