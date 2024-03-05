@@ -1,3 +1,5 @@
+import datetime
+import uuid
 from .db import Base
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey, BigInteger, Text
 from sqlalchemy.orm import relationship
@@ -6,7 +8,7 @@ from sqlalchemy.orm import relationship
 class Account(Base):
     __tablename__ = 'Account'
 
-    id = Column(String(255), primary_key=True, default="cuid()")
+    id = Column(String(255), primary_key=True, default=uuid.uuid4())
     userId = Column(String(255), ForeignKey('User.id'), unique=True)
     providerType = Column(String(255), unique=True)
     providerId = Column(String(255), unique=True)
@@ -14,39 +16,39 @@ class Account(Base):
     refreshToken = Column(String(255), unique=True)
     accessToken = Column(String(255), unique=True)
     accessTokenExpires = Column(DateTime)
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
     User = relationship("User", back_populates="Account", lazy="selectin")
 
 
 class Session(Base):
     __tablename__ = 'Session'
 
-    id = Column(String(255), primary_key=True, default="cuid()")
+    id = Column(String(255), primary_key=True, default=uuid.uuid4())
     userId = Column(String(255), ForeignKey('User.id'), unique=True)
     expires = Column(DateTime)
     sessionToken = Column(String(255), unique=True)
     accessToken = Column(String(255), unique=True)
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
     User = relationship("User", back_populates="Session", lazy="selectin")
 
 
 class VerificationRequest(Base):
     __tablename__ = 'VerificationRequest'
 
-    id = Column(String(255), primary_key=True, default="cuid()")
+    id = Column(String(255), primary_key=True, default=uuid.uuid4())
     identifier = Column(String(255))
     token = Column(String(255), unique=True)
     expires = Column(DateTime)
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
 
 class User(Base):
     __tablename__ = 'User'
 
-    id = Column(String(255), primary_key=True, default="cuid()")
+    id = Column(String(255), primary_key=True, default=uuid.uuid4())
     name = Column(String(255))
     email = Column(String(255), unique=True)
     emailVerified = Column(DateTime)
@@ -63,8 +65,8 @@ class User(Base):
     telegram = Column(String(255))
     subscription_end = Column(DateTime)
     expires = Column(DateTime)
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
     Project = relationship("Project", back_populates="owner", lazy="selectin")
     # ManagedProjects = relationship("Project", back_populates="Manager",lazy="selectin")
@@ -108,8 +110,8 @@ class Project(Base):
     JivoBot = relationship(
         "JivoBot", back_populates="Project", lazy="selectin")
 
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
 
 class Assistant(Base):
@@ -127,8 +129,8 @@ class Assistant(Base):
     use_count = Column(Integer, default=0)
     access_token = Column(String(255), default="uuid()")
 
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
     Integration = relationship(
         "Integration", back_populates="Assistant", lazy="selectin")
@@ -152,8 +154,8 @@ class Integration(Base):
 
     service_type = Column(String(255))
     service_id = Column(String(255))
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
     assistant_id = Column(String(255), ForeignKey('Assistant.id'))
 
     Assistant = relationship(
@@ -176,8 +178,8 @@ class Chat(Base):
     integrationId = Column(String(255), ForeignKey('Integration.id'))
     is_blocked = Column(Boolean, default=False)
     is_assistant_in_chat = Column(Boolean, default=True)
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
     Manager = relationship("Manager", back_populates="Chat", lazy="selectin")
     client = relationship("Client", back_populates="Chat", lazy="selectin")
@@ -207,8 +209,8 @@ class Client(Base):
     tags = Column(String(255))
     in_service_id = Column(String(255))
 
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
     managerId = Column(String(255), ForeignKey('Manager.id'))
     Manager = relationship("Manager", back_populates="Client", lazy="selectin")
@@ -224,8 +226,8 @@ class Manager(Base):
         "Project", back_populates="Manager", lazy="selectin")
 
     integration_id = Column(String(255), ForeignKey('Integration.id'))
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
     # userId = relationship("Project", back_populates="Manager",lazy="selectin")
     Tasks = relationship("Task", back_populates="Manager", lazy="selectin")
     Deals = relationship("Deal", back_populates="Manager", lazy="selectin")
@@ -251,9 +253,9 @@ class Message(Base):
     managerId = Column(String(255), ForeignKey("Manager.id"))
     assistant_id = Column(String(255))
     is_read = Column(Boolean, default=False)
-    timestamp = Column(DateTime, default="now()")
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    timestamp = Column(DateTime, default=datetime.datetime.now())
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
     # projectId = Column(String(255), ForeignKey('Project.id'))
     # Project = relationship("Project", back_populates="Assistant",lazy="selectin")
@@ -274,8 +276,8 @@ class JivoBot(Base):
     assistant_id = Column(String(255), ForeignKey('Assistant.id'))
     provider_id = Column(String(255))
 
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
 
 class TelegramBot(Base):
@@ -298,8 +300,8 @@ class TelegramBot(Base):
     assistant_id = Column(String(255), ForeignKey('Assistant.id'))
     provider_id = Column(String(255))
 
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
 
 class TelegramUserBot(Base):
@@ -312,8 +314,8 @@ class TelegramUserBot(Base):
     assistant_id = Column(String(255), ForeignKey('Assistant.id'))
     provider_id = Column(String(255))
 
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
 
 class WhatsAppBot(Base):
@@ -326,8 +328,8 @@ class WhatsAppBot(Base):
     assistant_id = Column(String(255), ForeignKey('Assistant.id'))
     provider_id = Column(String(255))
 
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
 
 
 class Task(Base):
@@ -339,8 +341,8 @@ class Task(Base):
     stage = Column(String(255))
     text = Column(String(255))
     clientId = Column(String(255))
-    createdAt = Column(DateTime, default="now()")
-    updatedAt = Column(DateTime, onupdate="now()")
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
     managerId = Column(String(255), ForeignKey('Manager.id'))
     Manager = relationship("Manager", back_populates="Tasks", lazy="selectin")
 
@@ -361,5 +363,3 @@ class Deal(Base):
     Project = relationship("Project", back_populates="Deals", lazy="selectin")
     managerId = Column(String(255), ForeignKey('Manager.id'))
     Manager = relationship("Manager", back_populates="Deals", lazy="selectin")
-
-
