@@ -298,7 +298,6 @@ class TelegramBot(Base):
     Project = relationship(
         "Project", back_populates="TelegramBot", lazy="selectin")
     assistant_id = Column(String(255), ForeignKey('Assistant.id'))
-    provider_id = Column(String(255))
 
     createdAt = Column(DateTime, default=datetime.datetime.now())
     updatedAt = Column(DateTime, onupdate=datetime.datetime.now())

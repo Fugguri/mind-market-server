@@ -24,11 +24,15 @@ async def checker(func):
 
 # @checker
 async def add_tg_bot(session: AsyncSession,
+                     projectId,
+                     assistantId,
                      botToken,
                      telegram_id,
                      first_name,
                      username,) -> TelegramBot:
     new_bot = TelegramBot()
+    new_bot.projectId = projectId
+    new_bot.assistantId = assistantId
     new_bot.botToken = botToken,
     new_bot.telegram_id = telegram_id,
     new_bot.first_name = first_name,

@@ -27,6 +27,8 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
     except Exception as ex:
         return HTTPException(401, ex)
     await add_tg_bot(session=session,
+                     providerId=tgbot.projectId,
+                     assistantId=tgbot.assistantId,
                      telegram_id=me.id,
                      botToken=tgbot.botToken,
                      first_name=me.full_name,
