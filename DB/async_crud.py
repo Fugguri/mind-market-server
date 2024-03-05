@@ -31,9 +31,9 @@ async def add_tg_bot(session: AsyncSession,
                      first_name,
                      startMessage,
                      username,) -> TelegramBot:
+    print(1234234, botToken)
     new_bot = TelegramBot()
     new_bot.id = str(uuid4())
-    print(new_bot.id)
     new_bot.projectId = projectId
     new_bot.assistantId = assistantId
     new_bot.botToken = botToken
