@@ -22,7 +22,13 @@ async def get_tg_bot(session: AsyncSession, bot_id) -> TelegramBot:
     return result.fetchone()
 
 
+async def get_tg_bot_assistant(session: AsyncSession, assistant_id) -> TelegramBot:
+    result = await session.execute(select(Assistant).where(Assistant.id == assistant_id))
+    return result.fetchone()
+
 # @checker
+
+
 async def add_tg_bot(session: AsyncSession,
                      projectId,
                      assistantId,

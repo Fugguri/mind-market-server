@@ -5,7 +5,7 @@ from mics.tg import TgBot
 from aiogram.types import Message
 from mics._openai import create_response
 from DB.db import AsyncSession, get_session
-from DB.async_crud import get_tg_bot
+from DB.async_crud import get_tg_bot, get_tg_bot_assistant, Assistant, TelegramBot
 webhooks_router = APIRouter()
 
 bots = dict()
@@ -13,7 +13,8 @@ bots = dict()
 
 @webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request, session: AsyncSession = Depends(get_session)):
-    telegram = await get_tg_bot(session, bot_id)[0]
+    telegram: TelegramBot = await get_tg_bot(session, bot_id)[0]
+    assistant: Assistant = await get_tg_bot_assistant(telegram.assistantId)[0]
     print(telegram)
     req = await request.json()
     tg_bot = TgBot(telegram.botToken)
@@ -27,5 +28,6 @@ async def profile(bot_id: str, request: Request, session: AsyncSession = Depends
     if text:
         print(text)
 
-    # response = create_response(user_id="", settings="", text=text)
+    response = create_response(
+        user_id="", settings=assistant.settings, text=text)
     # await tg_bot.answer(text, settings, sender,)
