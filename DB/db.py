@@ -18,8 +18,8 @@ async_session = sessionmaker(
 
 async def get_session() -> AsyncSession:
     async with async_session() as session:
-        yield session
-
+        yield session  
+        await session.close()
 
 async def init_models():
     async with engine.begin() as conn:
