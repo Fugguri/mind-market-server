@@ -23,6 +23,9 @@ async def profile(bot_id: str, request: Request, session: AsyncSession = Depends
     if not message:
         return
     sender = message.get("from_user").get("id")
+    if message == "/start":
+        await tg_bot.sendMessage(sender, telegram.startMessage)
+        return
     chat = message.get("chat")
     text = message.get("text")
     if text:
