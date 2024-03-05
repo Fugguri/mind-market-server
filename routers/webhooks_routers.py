@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Path, Query, Request, HTTPException
+from fastapi import APIRouter, HTTPException, Request, logger, Depends
 from aiogram import types
 from mics import utls, _openai
 from mics.tg import TgBot
