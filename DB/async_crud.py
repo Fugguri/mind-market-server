@@ -18,8 +18,8 @@ async def checker(func):
 
 # @checker
 async def get_tg_bot(session: AsyncSession, bot_id) -> TelegramBot:
-    result = await session.execute(select(TelegramBot).where(id=bot_id))
-    return result
+    result = await session.execute(select(TelegramBot).where(TelegramBot=bot_id))
+    return result.fetchone()
 
 
 # @checker

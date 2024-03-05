@@ -15,7 +15,7 @@ bots = dict()
 async def profile(bot_id: str, request: Request, session: AsyncSession = Depends(get_session)):
     print(telegram=await get_tg_bot(session, bot_id))
     req = await request.json()
-    tg_bot = TgBot()
+    tg_bot = TgBot(telegram.botToken)
     print(req)
     message = req.get("message")
     if not message:
