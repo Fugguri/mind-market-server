@@ -31,6 +31,6 @@ async def profile(bot_id: str, request: Request, session: AsyncSession = Depends
     if text:
         print(text)
 
-    response = create_response(
-        user_id=sender, settings=assistant.settings, text=text)
-    # await tg_bot.answer(text, settings, sender,)
+    # response = await create_response(
+    #     user_id=sender, settings=assistant.settings, text=text)
+    await tg_bot.answer(text, sender, assistant.settings)
