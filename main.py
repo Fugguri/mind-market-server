@@ -6,6 +6,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from mics import jivo, tg, greenApi, utls
 from models import schemas
 from DB.db import init_models
+from dotenv import dotenv_values
+envs = dotenv_values(".env")
+
+mode = envs.get("MODE")
+
 app = FastAPI(
     title="MindMarketAPI",
     summary="",
@@ -49,5 +54,7 @@ app.include_router(webhooks_router)
 
 
 if __name__ == "__main__":
-    # asyncio.run(init_models())
-    uvicorn.run(app, host='0.0.0.0', port=8000, root_path="/api_v2")
+    if mode == "DEV":
+        uvicorn.run(app, host='0.0.0.0', port=8000)
+    else:
+        uvicorn.run(app, host='0.0.0.0', port=8000, root_path="/api_v2")

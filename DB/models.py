@@ -106,7 +106,7 @@ class Project(Base):
     TelegramUserBot = relationship(
         "TelegramUserBot", back_populates="Project", lazy="selectin")
     TelegramBot = relationship(
-        "TelegramBot", back_populates="Project", lazy="selectin")
+        "TelegramBot", back_populates="Project", lazy="selectin", )
     JivoBot = relationship(
         "JivoBot", back_populates="Project", lazy="selectin")
 
@@ -136,7 +136,8 @@ class Assistant(Base):
         "Integration", back_populates="Assistant", lazy="selectin")
     Chat = relationship("Chat", back_populates="Assistant", lazy="selectin")
 
-    # telegram_bots = relationship("TelegramBot", back_populates="assistant",lazy="selectin")
+    TelegramBots = relationship(
+        "TelegramBot", back_populates="Assistant", lazy="selectin")
     # telegram_user_bots = relationship,lazy="selectin")(
     #     "TelegramUserBot", back_populates="assistant")
     # whatsapp_bots = relationship("WhatsAppBot", back_populates="assistant",lazy="selectin")
@@ -164,32 +165,6 @@ class Integration(Base):
     # Manager = relationship("Manager", back_populates="Integration",lazy="selectin")
 
 
-class Chat(Base):
-    __tablename__ = 'Chat'
-
-    id = Column(String(255), primary_key=True, default=str(uuid4()))
-    ProjectId = Column(String(255), ForeignKey('Project.id'))
-    Project = relationship("Project", back_populates="Chats", lazy="selectin")
-
-    managerId = Column(String(255))
-    client_id = Column(String(255), unique=True)
-    assistant_id = Column(String(255), ForeignKey('Assistant.id'))
-    managerId = Column(String(255), ForeignKey('Manager.id'))
-    integrationId = Column(String(255), ForeignKey('Integration.id'))
-    is_blocked = Column(Boolean, default=False)
-    is_assistant_in_chat = Column(Boolean, default=True)
-    createdAt = Column(DateTime, default=datetime.datetime.now())
-    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
-
-    Manager = relationship("Manager", back_populates="Chat", lazy="selectin")
-    client = relationship("Client", back_populates="Chat", lazy="selectin")
-    Assistant = relationship(
-        "Assistant", back_populates="Chat", lazy="selectin")
-    Integration = relationship(
-        "Integration", back_populates="Chats", lazy="selectin")
-    Messages = relationship("Message", back_populates="Chat", lazy="selectin")
-
-
 class Client(Base):
     __tablename__ = 'Client'
 
@@ -197,7 +172,6 @@ class Client(Base):
     ProjectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship("Project", back_populates="Client", lazy="selectin")
 
-    chatId = Column(String(255), ForeignKey('Chat.id'))
     name = Column(String(255))
     username = Column(String(255))
     image_url = Column(String(255))
@@ -214,7 +188,33 @@ class Client(Base):
 
     managerId = Column(String(255), ForeignKey('Manager.id'))
     Manager = relationship("Manager", back_populates="Client", lazy="selectin")
-    Chat = relationship("Chat", back_populates="client", lazy="selectin")
+    Chat = relationship("Chat", back_populates="Client", lazy='selectin')
+
+
+class Chat(Base):
+    __tablename__ = 'Chat'
+
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
+    Project = relationship("Project", back_populates="Chats", lazy="selectin")
+    ProjectId = Column(String(255), ForeignKey('Project.id'))
+    managerId = Column(String(255))
+    assistant_id = Column(String(255), ForeignKey('Assistant.id'))
+    managerId = Column(String(255), ForeignKey('Manager.id'))
+    integrationId = Column(String(255), ForeignKey('Integration.id'))
+    is_blocked = Column(Boolean, default=False)
+    is_assistant_in_chat = Column(Boolean, default=True)
+    createdAt = Column(DateTime, default=datetime.datetime.now())
+    updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
+
+    client_id = Column(String(255), ForeignKey('Client.id'))
+    Client = relationship("Client", back_populates="Chat", lazy="selectin")
+
+    Manager = relationship("Manager", back_populates="Chat", lazy="selectin")
+    Assistant = relationship(
+        "Assistant", back_populates="Chat", lazy="selectin")
+    Integration = relationship(
+        "Integration", back_populates="Chats", lazy="selectin")
+    Messages = relationship("Message", back_populates="Chat", lazy="selectin")
 
 
 class Manager(Base):
@@ -224,10 +224,13 @@ class Manager(Base):
     ProjectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship(
         "Project", back_populates="Manager", lazy="selectin")
-
+    # userId = Column(String(255), ForeignKey("User.id"))
+    # User = relationship("User", back_populates="Manager_id",lazy="selectin")
+    # role = Column(String(255))
     integration_id = Column(String(255), ForeignKey('Integration.id'))
     createdAt = Column(DateTime, default=datetime.datetime.now())
     updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
+
     # userId = relationship("Project", back_populates="Manager",lazy="selectin")
     Tasks = relationship("Task", back_populates="Manager", lazy="selectin")
     Deals = relationship("Deal", back_populates="Manager", lazy="selectin")
@@ -296,9 +299,10 @@ class TelegramBot(Base):
 
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship(
-        "Project", back_populates="TelegramBot", lazy="selectin")
+        "Project", back_populates="TelegramBot", lazy='selectin')
     assistantId = Column(String(255), ForeignKey('Assistant.id'))
-
+    Assistant = relationship(
+        "Assistant", back_populates="TelegramBots", lazy="selectin")
     createdAt = Column(DateTime, default=datetime.datetime.now)
     updatedAt = Column(DateTime, onupdate=datetime.datetime.now)
 

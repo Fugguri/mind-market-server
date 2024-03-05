@@ -25,8 +25,32 @@ class TgBotEntry(BaseModel):
     startMessage: str
 
 
+class TgBotMessageFrom(BaseModel):
+    id: int
+    is_bot: bool
+    first_name: str
+    username: str
+    language_code: str
+
+
+class TgBotMessageChat(BaseModel):
+    id: int
+    first_name: str
+    username: str
+    type: str
+
+
+class TgBotMessage(BaseModel):
+    message_id: int
+    from_: TgBotMessageFrom
+    chat: TgBotMessageChat
+    date: int
+    text: str
+
+
 class TgBotMessageEntry(BaseModel):
-    ...
+    update_id: int
+    message: TgBotMessage
 
 
 class TgUserBotEntry(BaseModel):

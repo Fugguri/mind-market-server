@@ -22,6 +22,8 @@ async def create_tg_bot(projectId: str, request: Request, session: AsyncSession 
 async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depends(get_session)):
     bot = tg.TgBot(tgbot.botToken)
     print(tgbot.botToken)
+    
+    
     try:
         info = await bot.getInfo()
         me: types.User = info[0]
