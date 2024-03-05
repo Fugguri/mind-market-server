@@ -42,5 +42,7 @@ async def add_tg_bot(session: AsyncSession,
     new_bot.startMessage = startMessage
     new_bot.createdAt = datetime.datetime.now()
     new_bot.updatedAt = datetime.datetime.now()
+    print(new_bot.startMessage)
+
     session.add(new_bot)
     return new_bot
