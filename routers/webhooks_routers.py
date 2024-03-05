@@ -21,10 +21,11 @@ async def profile(bot_id: str, request: Request, session: AsyncSession = Depends
     message = req.get("message")
     if not message:
         return
-    sender = message.get("from")
+    sender = message.get("from_user").get("id")
     chat = message.get("chat")
     text = message.get("text")
     if text:
         print(text)
 
-    create_response(user_id="", settings="", text=text)
+    # response = create_response(user_id="", settings="", text=text)
+    # await tg_bot.answer(text, settings, sender,)
