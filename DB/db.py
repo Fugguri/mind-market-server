@@ -1,4 +1,5 @@
 import dotenv
+from sqlalchemy import NullPool
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -6,7 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy_utils import database_exists, create_database
 
 DATABASE_URL = dotenv.get_key(".env", "DATABASE_URL")
-engine = create_async_engine(DATABASE_URL, echo=False,pool_pre_ping=True)
+engine = create_async_engine(DATABASE_URL, poolclass = NullPool ,echo=False,pool_pre_ping=True,pool_recycle=3600)
 Base = declarative_base()
 # if not database_exists(engine.url):
 #     create_database(engine.url)
