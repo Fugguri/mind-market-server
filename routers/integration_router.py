@@ -20,7 +20,7 @@ async def create_tg_bot(projectId: str, request: Request, session: AsyncSession 
 
 @integration_router.post("/integrations/tgbot", name="Добавление Telegram бота", description="Добавление бота, созданного в BotFather ", tags=["Интеграции"])
 async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depends(get_session)):
-    bot = tg.TgBot(tgbot.token)
+    bot = tg.TgBot(tgbot.botToken)
     try:
         info = await bot.getInfo()
         me: types.User = info[0]
@@ -28,7 +28,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
         return HTTPException(401, ex)
     await add_tg_bot(session=session,
                      telegram_id=me.id,
-                     botToken=tgbot.token,
+                     botToken=tgbot.botToken,
                      first_name=me.full_name,
                      username=me.username,
                      )
