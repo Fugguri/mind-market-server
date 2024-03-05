@@ -17,11 +17,11 @@ bots = dict()
 async def profile(bot_id: str, request=Request):
 
     try:
-        body = await request.body(request)
+        body = await request.body()
 
         print(body)
-    except:
-        ...
+    except Exception as ex:
+        print(ex)
     # if not message.message.text:
     #     return
 
