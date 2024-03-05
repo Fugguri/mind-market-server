@@ -18,7 +18,7 @@ async def checker(func):
 
 # @checker
 async def get_tg_bot(session: AsyncSession, bot_id) -> TelegramBot:
-    result = await session.execute(select(TelegramBot).where(id=bot_id).join(Assistant))
+    result = await session.execute(select(TelegramBot).where(id=bot_id))
     return result
 
 
@@ -40,6 +40,7 @@ async def add_tg_bot(session: AsyncSession,
     new_bot.first_name = first_name
     new_bot.username = username
     new_bot.startMessage = startMessage
-    print(new_bot.startMessage)
+    new_bot.createdAt = datetime.datetime.now()
+    new_bot.updatedAt = datetime.datetime.now()
     session.add(new_bot)
     return new_bot
