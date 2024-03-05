@@ -15,7 +15,7 @@ class TgBot:
         self.dispather: Dispatcher = Dispatcher(bot=self.bot)
         self.executor = executor
         self.types: types = types
-        self.BASE_WEBHOOK_URL = "web-mindmarket.ru/api_v2/webhooks/tgbot/"
+        self.BASE_WEBHOOK_URL = "https://web-mindmarket.ru/api_v2/webhooks/tgbot/"
 
     async def getInfo(self) -> [types.User, str]:
         me = await self.dispather.bot.get_me()
