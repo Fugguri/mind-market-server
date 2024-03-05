@@ -17,7 +17,7 @@ bots = dict()
 async def profile(bot_id: str, request=Request, session: AsyncSession = Depends(get_session)):
 
     try:
-        body = request
+        body = request.query_params
 
         print(body)
     except Exception as ex:
