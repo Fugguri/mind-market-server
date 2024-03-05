@@ -17,7 +17,7 @@ bots = dict()
 async def profile(bot_id: str, request=Request):
 
     try:
-        body = await request.body()
+        body = request.body()
 
         print(body)
     except Exception as ex:
