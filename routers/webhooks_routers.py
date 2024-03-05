@@ -13,8 +13,9 @@ bots = dict()
 
 @webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request, session: AsyncSession = Depends(get_session)):
-    print(await get_tg_bot(session, bot_id))
+    print(telegram=await get_tg_bot(session, bot_id))
     req = await request.json()
+    tg_bot = TgBot()
     print(req)
     message = req.get("message")
     if not message:
