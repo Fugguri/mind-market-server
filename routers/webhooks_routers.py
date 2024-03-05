@@ -12,14 +12,24 @@ webhooks_router = APIRouter()
 bots = dict()
 
 
+async def print_request(request):
+    print(f'request header       : {dict(request.headers.items())}')
+    print(f'request query params : {dict(request.query_params.items())}')
+    try:
+        print(f'request json         : {await request.json()}')
+    except Exception as err:
+        # could not parse json
+        print(f'request body         : {await request.body()}')
+
+
 @webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 # async def profile(bot_id: str, message: schemas.TgBotMessageEntry, session: AsyncSession = Depends(get_session)):
 async def profile(bot_id: str, request=Request, session: AsyncSession = Depends(get_session)):
 
     try:
-        body = request.query_params.fget()
+        await print_request(request)
 
-        print(body)
+        # print(body)
     except Exception as ex:
         print(ex)
     # if not message.message.text:
