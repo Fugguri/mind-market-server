@@ -40,7 +40,6 @@ app.add_middleware(
 async def user():
     return {"message": "Wellcome to MindMarketAPI"}
 
-
 app.include_router(profile_router)
 app.include_router(assistant_router)
 app.include_router(integration_router)

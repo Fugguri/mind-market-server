@@ -22,7 +22,7 @@ async def profile(bot_id: str, request: Request, session: AsyncSession = Depends
     message = req.get("message")
     if not message:
         return
-    sender = message.get("from_user").get("id")
+    sender = message.get("from").get("id")
     if message == "/start":
         await tg_bot.sendMessage(sender, telegram.startMessage)
         return
