@@ -24,10 +24,12 @@ async def print_request(request):
 
 @webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 # async def profile(bot_id: str, message: schemas.TgBotMessageEntry, session: AsyncSession = Depends(get_session)):
-async def profile(bot_id: str, request, session: AsyncSession = Depends(get_session)):
+async def profile(bot_id: str, request=Request, session: AsyncSession = Depends(get_session)):
 
     try:
-        print(request)
+        data = await request.json()
+
+        print(data)
     except Exception as ex:
         print(ex)
     # if not message.message.text:
