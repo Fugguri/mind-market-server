@@ -36,10 +36,12 @@ async def add_tg_bot(session: AsyncSession,
     print(new_bot.id)
     new_bot.projectId = projectId
     new_bot.assistantId = assistantId
-    new_bot.botToken = botToken,
-    new_bot.telegram_id = telegram_id,
-    new_bot.first_name = first_name,
-    new_bot.username = username,
-    new_bot.startMessage = startMessage,
+    new_bot.botToken = botToken
+    new_bot.telegram_id = telegram_id
+    new_bot.first_name = first_name
+    new_bot.username = username
+    new_bot.startMessage = startMessage
+    new_bot.createdAt = datetime.datetime.now()
+    new_bot.updatedAt = datetime.datetime.now()
     session.add(new_bot)
     return new_bot
