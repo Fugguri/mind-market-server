@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 class Account(Base):
     __tablename__ = 'Account'
 
-    id = Column(String(255), primary_key=True, default=uuid4())
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     userId = Column(String(255), ForeignKey('User.id'), unique=True)
     providerType = Column(String(255), unique=True)
     providerId = Column(String(255), unique=True)
@@ -24,7 +24,7 @@ class Account(Base):
 class Session(Base):
     __tablename__ = 'Session'
 
-    id = Column(String(255), primary_key=True, default=uuid4())
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     userId = Column(String(255), ForeignKey('User.id'), unique=True)
     expires = Column(DateTime)
     sessionToken = Column(String(255), unique=True)
@@ -37,7 +37,7 @@ class Session(Base):
 class VerificationRequest(Base):
     __tablename__ = 'VerificationRequest'
 
-    id = Column(String(255), primary_key=True, default=uuid4())
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     identifier = Column(String(255))
     token = Column(String(255), unique=True)
     expires = Column(DateTime)
@@ -48,7 +48,7 @@ class VerificationRequest(Base):
 class User(Base):
     __tablename__ = 'User'
 
-    id = Column(String(255), primary_key=True, default=uuid4())
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     name = Column(String(255))
     email = Column(String(255), unique=True)
     emailVerified = Column(DateTime)
@@ -57,8 +57,8 @@ class User(Base):
     imageUrl = Column(String(255))
     login = Column(String(255))
     password = Column(String(255))
-    token = Column(String(255), default="uuid()")
-    apiKey = Column(String(255), default="uuid()")
+    token = Column(String(255), default=str(uuid4()))
+    apiKey = Column(String(255), default=str(uuid4()))
     job_title = Column(String(255))
     companyName = Column(String(255))
     phone_number = Column(String(255))
@@ -83,7 +83,7 @@ class User(Base):
 class Project(Base):
     __tablename__ = 'Project'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     name = Column(String(255))
     ownerId = Column(String(255), ForeignKey('User.id'))
     owner = relationship("User", back_populates="Project", lazy="selectin")
@@ -117,7 +117,7 @@ class Project(Base):
 class Assistant(Base):
     __tablename__ = 'Assistant'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship(
         "Project", back_populates="Assistant", lazy="selectin")
@@ -127,7 +127,7 @@ class Assistant(Base):
     settings = Column(String(255))
     imageUrl = Column(String(255))
     use_count = Column(Integer, default=0)
-    access_token = Column(String(255), default="uuid()")
+    access_token = Column(String(255), default=str(uuid4()))
 
     createdAt = Column(DateTime, default=datetime.datetime.now())
     updatedAt = Column(DateTime, onupdate=datetime.datetime.now())
@@ -147,7 +147,7 @@ class Assistant(Base):
 class Integration(Base):
     __tablename__ = 'Integration'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     ProjectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship(
         "Project", back_populates="Integration", lazy="selectin")
@@ -167,7 +167,7 @@ class Integration(Base):
 class Chat(Base):
     __tablename__ = 'Chat'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     ProjectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship("Project", back_populates="Chats", lazy="selectin")
 
@@ -193,7 +193,7 @@ class Chat(Base):
 class Client(Base):
     __tablename__ = 'Client'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     ProjectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship("Project", back_populates="Client", lazy="selectin")
 
@@ -220,7 +220,7 @@ class Client(Base):
 class Manager(Base):
     __tablename__ = 'Manager'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     ProjectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship(
         "Project", back_populates="Manager", lazy="selectin")
@@ -241,7 +241,7 @@ class Manager(Base):
 class Message(Base):
     __tablename__ = 'Message'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     chat_id = Column(String(255), ForeignKey('Chat.id'))
     text = Column(String(255))
     files_url = Column(String(255))
@@ -268,7 +268,7 @@ class Message(Base):
 class JivoBot(Base):
     __tablename__ = 'JivoBot'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship(
         "Project", back_populates="JivoBot", lazy="selectin")
@@ -283,7 +283,7 @@ class JivoBot(Base):
 class TelegramBot(Base):
     __tablename__ = 'TelegramBot'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     telegram_id = Column(BigInteger)
     botToken = (String(255))
     is_bot = Column(Boolean, default=True)
@@ -306,7 +306,7 @@ class TelegramBot(Base):
 class TelegramUserBot(Base):
     __tablename__ = 'TelegramUserBot'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship(
         "Project", back_populates="TelegramUserBot", lazy="selectin")
@@ -320,7 +320,7 @@ class TelegramUserBot(Base):
 class WhatsAppBot(Base):
     __tablename__ = 'WhatsAppBot'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship(
         "Project", back_populates="WhatsAppBot", lazy="selectin")
@@ -334,7 +334,7 @@ class WhatsAppBot(Base):
 class Task(Base):
     __tablename__ = 'Task'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship("Project", back_populates="Tasks", lazy="selectin")
     stage = Column(String(255))
@@ -349,7 +349,7 @@ class Task(Base):
 class Quiz(Base):
     __tablename__ = 'Quiz'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship("Project", back_populates="Quiz", lazy="selectin")
 
@@ -357,7 +357,7 @@ class Quiz(Base):
 class Deal(Base):
     __tablename__ = 'Deal'
 
-    id = Column(String(255), primary_key=True, default="uuid()")
+    id = Column(String(255), primary_key=True, default=str(uuid4()))
     projectId = Column(String(255), ForeignKey('Project.id'))
     Project = relationship("Project", back_populates="Deals", lazy="selectin")
     managerId = Column(String(255), ForeignKey('Manager.id'))

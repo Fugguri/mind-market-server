@@ -17,9 +17,9 @@ async def checker(func):
 
 
 # @checker
-# async def get_biggest_cities(session: AsyncSession) -> list[City]:
-#     result = await session.execute(select(City).order_by(City.population.desc()).limit(20))
-#     return result.scalars().all()
+async def get_tg_bot(session: AsyncSession, bot_id) -> TelegramBot:
+    result = await session.execute(select(TelegramBot).where(id=bot_id))
+    return result
 
 
 # @checker
@@ -31,7 +31,6 @@ async def add_tg_bot(session: AsyncSession,
                      first_name,
                      startMessage,
                      username,) -> TelegramBot:
-    print(1234234, botToken)
     new_bot = TelegramBot()
     new_bot.id = str(uuid4())
     new_bot.projectId = projectId
