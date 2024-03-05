@@ -14,7 +14,7 @@ bots = dict()
 @webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request, session: AsyncSession = Depends(get_session)):
     telegram: TelegramBot = await get_tg_bot(session, bot_id)
-    assistant: Assistant = await get_tg_bot_assistant(telegram.assistantId)
+    assistant: Assistant = await get_tg_bot_assistant(session, telegram.assistantId)
     print(telegram)
     req = await request.json()
     tg_bot = TgBot(telegram.botToken)
