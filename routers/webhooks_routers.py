@@ -22,7 +22,7 @@ async def print_request(request):
         print(f'request body         : {await request.body()}')
 
 
-@webhooks_router.post("/webhooks//tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
+@webhooks_router.post("/webhooks/tgbot/{bot_id}",  name="Получение сообщения от телеграмм", description="", tags=["webhooks"])
 async def profile(bot_id: str, request: Request):
     print(bot_id)
     req = await request.json()
