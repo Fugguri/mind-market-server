@@ -39,7 +39,7 @@ async def profile(bot_id: str, request: Request,session: AsyncSession = Depends(
     date=message.get("date")
     if text:
         print(text)
-    if not message.message.text:
+    if not text:
         return
 
     telegram: TelegramBot = await get_tg_bot(session, bot_id)
