@@ -27,7 +27,8 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
     print(1)
     try:
         info = await bot.getInfo()
-        me: types.User = info[0]
+        print(info)
+        me: types.User = info
     except Exception as ex:
         print(ex)
         return HTTPException(401, ex)
