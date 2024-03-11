@@ -6,7 +6,9 @@ from models import schemas
 from fastapi import APIRouter, HTTPException, Request, logger, Depends
 from fastapi.logger import logger
 from aiogram import types
-from DB.db import AsyncSession, get_session
+from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from DB.db import get_session
 from DB.async_crud import add_tg_bot
 
 integration_router = APIRouter()
@@ -22,8 +24,7 @@ async def create_tg_bot(projectId: str, request: Request, session: AsyncSession 
 async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depends(get_session)):
     bot = tg.TgBot(tgbot.botToken)
     print(tgbot.botToken)
-    
-    
+
     try:
         info = await bot.getInfo()
         me: types.User = info[0]
@@ -39,7 +40,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
                                startMessage=tgbot.startMessage
                                )
     try:
-        await session.commit()
+        session.commit()
     except IntegrityError as ex:
         await session.rollback()
         print(ex)

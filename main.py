@@ -5,7 +5,7 @@ from fastapi import FastAPI, logger
 from fastapi.middleware.cors import CORSMiddleware
 from mics import jivo, tg, greenApi, utls
 from models import schemas
-from DB.db import init_models
+# from DB.db import init_models
 from dotenv import dotenv_values
 envs = dotenv_values(".env")
 

@@ -1,21 +1,10 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 from .models import *
 from sqlalchemy.orm import selectinload, lazyload, joinedload
 
 from sqlalchemy.exc import IntegrityError
-
-
-async def commiter(func):
-    async def _wrapper(session, *args, **kwargs):
-        try:
-            return func(session, *args, **kwargs)
-            await session.commit()
-        except IntegrityError as ex:
-            await session.rollback()
-            print(ex)
-            raise Exception(f"The {args} already stored")
-    return _wrapper
 
 
 # CHATS FUNCTIONS
@@ -28,7 +17,7 @@ async def add_chat(session: AsyncSession, **kwargs):
 
 
 async def update_chat(session: AsyncSession, chat_id, **kwargs):
-    chat = await session.get(Chat, chat_id)
+    chat = session.get(Chat, chat_id)
     for key, value in kwargs.items():
         setattr(chat, key, value)
     await session.commit()
@@ -36,13 +25,14 @@ async def update_chat(session: AsyncSession, chat_id, **kwargs):
 
 
 async def get_chat(session: AsyncSession, client_id, projectId):
-    chat = await session.execute(select(Chat).filter(Chat.client_id == client_id and Chat.ProjectId == projectId))
+    chat = await session.execute(select(Chat).filter(
+        Chat.client_id == client_id and Chat.ProjectId == projectId))
     return chat.fetchone()
 # TELEGTAM BOT FUNCTIONS
 
 
 async def get_telegram_bot(session: AsyncSession, bot_id):
-    bot = await session.get(TelegramBot, bot_id)
+    bot = session.get(TelegramBot, bot_id)
     return bot
 
 
@@ -78,13 +68,15 @@ async def add_tg_bot(session: AsyncSession,
 
 
 async def get_tg_bot(session: AsyncSession, bot_id) -> TelegramBot:
-    result = await session.execute(select(TelegramBot).filter(TelegramBot.id == bot_id))
-    # await session.refresh(result, "Project")
+    result = await session.execute(
+        select(TelegramBot).filter(TelegramBot.id == bot_id))
+    # session.refresh(result, "Project")
     return result.fetchone()
 
 
 async def get_tg_bot_assistant(session: AsyncSession, assistant_id) -> TelegramBot:
-    result = await session.execute(select(Assistant).where(Assistant.id == assistant_id))
+    result = await session.execute(
+        select(Assistant).where(Assistant.id == assistant_id))
     return result.fetchone()
 
 
@@ -115,7 +107,7 @@ async def add_tg_bot(session: AsyncSession,
 
 async def create_chat(session: AsyncSession,):
     new_chat = Chat()
-    await session.add(new_chat)
+    session.add(new_chat)
 
 
 async def add_message(session: AsyncSession,
@@ -151,18 +143,20 @@ async def add_message(session: AsyncSession,
     try:
         await session.commit()
     except IntegrityError as ex:
-        await session.rollback()
+        session.rollback()
         print(ex)
     return new_message
 
 
 async def get_client(session: AsyncSession, in_service_id: str = None, projectId=None,):
-    result = await session.execute(select(Client).filter(Client.in_service_id == in_service_id and Client.ProjectId == projectId))
+    result = await session.execute(select(Client).filter(
+        Client.in_service_id == in_service_id and Client.ProjectId == projectId))
     return result.fetchone()
 
 
 async def get_assistant(session: AsyncSession, assistantId: str = None,):
-    result = await session.execute(select(Assistant).filter(Assistant.id == assistantId))
+    result = await session.execute(
+        select(Assistant).filter(Assistant.id == assistantId))
     return result.fetchone()
 
 
@@ -214,6 +208,6 @@ async def create_client_and_chat(session: AsyncSession,
     try:
         await session.commit()
     except IntegrityError as ex:
-        await session.rollback()
+        session.rollback()
         print(ex)
     return new_client, new_chat
