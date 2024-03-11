@@ -30,6 +30,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
         me: types.User = info[0]
     except Exception as ex:
         return HTTPException(401, ex)
+        print(ex)
     new_bot = await add_tg_bot(session=session,
                                projectId=tgbot.projectId,
                                assistantId=tgbot.assistantId,
@@ -39,6 +40,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
                                username=me.username,
                                startMessage=tgbot.startMessage
                                )
+    print(new_bot)
     try:
         session.commit()
     except IntegrityError as ex:
