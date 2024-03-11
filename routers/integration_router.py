@@ -49,7 +49,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
         print(ex)
         # raise Exception(f"The bot already stored")
 
-    print(await bot.setWebhook(new_bot.id, new_bot.botToken))
+    await bot.setWebhook(new_bot.id, new_bot.botToken)
 
 
 @integration_router.delete("/integrations/tgbot/{bot_id}", name="Удаление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
