@@ -45,7 +45,7 @@ async def profile(bot_id: str, request: Request, session: AsyncSession = Depends
 
     if not client:
         client_and_chat = await create_client_and_chat(session=session, in_service_id=id,
-                                                       integration_id=bot_id,
+
                                                        name=first_name,
                                                        projectId=telegram.projectId,
                                                        username=username,
