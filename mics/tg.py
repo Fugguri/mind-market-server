@@ -21,12 +21,12 @@ class TgBot:
     async def getInfo(self) -> [types.User, str]:
         me = await self.dispather.bot.get_me()
 
-        pict = await self.dispather.bot.get_user_profile_photos(me.id)
-        file = await self.dispather.bot.get_file(file_id=pict.photos[0][0].file_id)
+        # pict = await self.dispather.bot.get_user_profile_photos(me.id)
+        # file = await self.dispather.bot.get_file(file_id=pict.photos[0][0].file_id)
 
-        url = self.bot.get_file_url(file_path=file)
+        # url = self.bot.get_file_url(file_path=file)
         await self.bot.close()
-        return [me, url]
+        return url
 
     async def setWebhook(self, bot_id: str) -> str:
         print(self.BASE_WEBHOOK_URL + bot_id)
