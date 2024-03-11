@@ -24,18 +24,20 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# def get_db():
+#     db = SessionLocal()
+#     try:
+#         yield db
+#     finally:
+#         await db.close()
 
 
 async def get_session() -> AsyncSession:
     async with async_session() as session:
-        session.close()
-        yield session
+        try:
+            yield session
+        except:
+            await session.close()
 
 
 # async def init_models():
