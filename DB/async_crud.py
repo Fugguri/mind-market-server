@@ -136,7 +136,7 @@ async def add_message(session: AsyncSession,
     new_message.managerId = managerId
     new_message.assistant_id = assistant_id
     new_message.is_read = is_read
-    new_message.timestamp = timestamp
+    new_message.timestamp = datetime.datetime.fromtimestamp(timestamp)
     new_message.createdAt = datetime.datetime.now()
     new_message.updatedAt = datetime.datetime.now()
     session.add(new_message)
