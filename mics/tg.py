@@ -26,7 +26,7 @@ class TgBot:
 
         # url = self.bot.get_file_url(file_path=file)
         await self.bot.close()
-        return url
+        return me
 
     async def setWebhook(self, bot_id: str) -> str:
         print(self.BASE_WEBHOOK_URL + bot_id)
