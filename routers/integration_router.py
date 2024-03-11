@@ -24,7 +24,6 @@ async def create_tg_bot(projectId: str, request: Request, session: AsyncSession 
 async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depends(get_session)):
     bot = tg.TgBot(tgbot.botToken)
     print(tgbot.botToken)
-    print(1)
     try:
         info = await bot.getInfo()
         print(info)
@@ -32,7 +31,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
     except Exception as ex:
         print(ex)
         return HTTPException(401, ex)
-    print(2)
+
     new_bot = await add_tg_bot(session=session,
                                projectId=tgbot.projectId,
                                assistantId=tgbot.assistantId,
@@ -42,15 +41,15 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
                                username=me.username,
                                startMessage=tgbot.startMessage
                                )
-    print(new_bot)
+
     try:
         await session.commit()
     except IntegrityError as ex:
         await session.rollback()
         print(ex)
         # raise Exception(f"The bot already stored")
-    print(3)
-    print(await bot.setWebhook(new_bot.id))
+
+    print(await bot.setWebhook(new_bot.id, new_bot.botToken))
 
 
 @integration_router.delete("/integrations/tgbot/{bot_id}", name="Удаление telegram бота", description="Добавление бота созданного в BotFather ", tags=["Интеграции"])
