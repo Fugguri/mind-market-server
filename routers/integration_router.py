@@ -44,7 +44,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
                                )
     print(new_bot)
     try:
-        session.commit()
+        await session.commit()
     except IntegrityError as ex:
         await session.rollback()
         print(ex)
