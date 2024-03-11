@@ -121,7 +121,7 @@ async def add_message(session: AsyncSession,
                       from_manager=None,
                       managerId=None,
                       assistant_id=None,
-                      is_read=None,
+                      is_read=datetime.datetime.now(),
                       timestamp=None,) -> TelegramBot:
     new_message = Message()
     new_message.id = str(uuid4())
