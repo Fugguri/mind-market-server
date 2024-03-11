@@ -24,13 +24,14 @@ async def create_tg_bot(projectId: str, request: Request, session: AsyncSession 
 async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depends(get_session)):
     bot = tg.TgBot(tgbot.botToken)
     print(tgbot.botToken)
-
+    print(1)
     try:
         info = await bot.getInfo()
         me: types.User = info[0]
     except Exception as ex:
-        return HTTPException(401, ex)
         print(ex)
+        return HTTPException(401, ex)
+    print(2)
     new_bot = await add_tg_bot(session=session,
                                projectId=tgbot.projectId,
                                assistantId=tgbot.assistantId,
@@ -47,7 +48,7 @@ async def create_tg_bot(tgbot: schemas.TgBotEntry, session: AsyncSession = Depen
         await session.rollback()
         print(ex)
         # raise Exception(f"The bot already stored")
-
+    print(3)
     print(await bot.setWebhook(new_bot.id))
 
 
