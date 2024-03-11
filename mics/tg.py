@@ -31,7 +31,11 @@ class TgBot:
     async def setWebhook(self, bot_id: str, bot_token: str) -> str:
         print(self.BASE_WEBHOOK_URL + bot_id)
         url = f'https://api.telegram.org/bot{bot_token}/setWebhook?url=https://web-mindmarket.ru/api_v2/webhooks/tgbot/{bot_id}'
-        return requests.get(url)
+        webhook = requests.get(url)
+        if webhook.status_code == 200:
+            return "success"
+        else:
+            return webhook.content()
         return await self.bot.set_webhook(url=self.BASE_WEBHOOK_URL + bot_id)
 
     async def answer(self, text, sender_id, settings) -> str:
