@@ -135,7 +135,7 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
         case _:
             pass
     bot = await get_jivo_bot(session, project_id)
-    assistant = get_assistant(session, bot[0].assistant_id)
+    assistant = await get_assistant(session, bot[0].assistant_id)
     response = await jivo.create_jivo_responce(request, assistant[0])
     answer_request = await jivo.send_jivo_aswer(response, bot.provider_id, project_id)
 
