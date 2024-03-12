@@ -108,10 +108,10 @@ class JivoBotEntry(BaseModel):
 
 class BotMessage(BaseModel):
     id: str = None
-    event: str = "BOT_MESSAGE"
     client_id: str = None
     chat_id: str = None
     message: Message = None
+    event: str = "BOT_MESSAGE"
 
 
 class Assistant(BaseModel):
