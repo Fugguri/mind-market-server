@@ -151,3 +151,16 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
     # return response.__dict__
 # print(asyncio.run(Database.get_jivo_bot(
 #     jivo_id="59e250a4-f1d4-4585-8141-d35d3cb1736")))
+
+{"id": "bd15b9fc-e082-11ee-9b55-314a79332c6a",
+ "client_id": "2",
+ "chat_id": "28",
+ "message": {"type": "TEXT",
+             "text": "Привет! Чем могу помочь?",
+             "timestamp": 1710256261.0},
+ "message":  {
+     "type": "TEXT",
+             "text": "Здравствуйте! Чем могу вам помочь? ",
+             "timestamp": 1653127681833
+ },
+ "event": "BOT_MESSAGE"}
