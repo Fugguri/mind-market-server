@@ -121,6 +121,7 @@ async def create_user(jivoBot: schemas.JivoBotEntry, session: AsyncSession = Dep
 
 @integration_router.post("/integration/jivo/{project_id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
 async def create_user(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
+    print(request.json())
     match request.event:
         case "CHAT_CLOSED":
             return
