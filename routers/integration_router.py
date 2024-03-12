@@ -9,7 +9,7 @@ from aiogram import types
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 from DB.db import get_session
-from DB.async_crud import add_tg_bot
+from DB.async_crud import add_tg_bot, get_jivo_bot, get_assistant
 
 integration_router = APIRouter()
 
@@ -114,8 +114,13 @@ async def user(request: Request, session: AsyncSession = Depends(get_session)):
     return int(res)
 
 
-@integration_router.post("/integration/jivo/{id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
-async def create_user(id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
+@integration_router.post("/integration/jivo/create", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
+async def create_user(jivoBot: schemas.JivoBotEntry, session: AsyncSession = Depends(get_session)):
+    bot = await create_jivo_bot(jivoBot)
+
+
+@integration_router.post("/integration/jivo/{project_id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
+async def create_user(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
     match request.event:
         case "CHAT_CLOSED":
             return
@@ -129,10 +134,10 @@ async def create_user(id: str, request: schemas.ClientMessage, session: AsyncSes
             return
         case _:
             pass
-    # bot = await Database.get_jivo_bot(id)
-
-    response = await jivo.create_jivo_responce(request, bot.assistant)
-    answer_request = await jivo.send_jivo_aswer(response, bot.provider_id, bot.assistant_id)
+    bot = await get_jivo_bot(session, project_id)
+    assistant = get_assistant(session, bot[0].assistant_id)
+    response = await jivo.create_jivo_responce(request, assistant[0])
+    answer_request = await jivo.send_jivo_aswer(response, bot.provider_id, project_id)
 
     if answer_request.status_code == 200:
         ...

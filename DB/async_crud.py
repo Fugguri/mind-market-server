@@ -1,3 +1,4 @@
+from models.schemas import JivoBotEntry
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Session
@@ -154,6 +155,11 @@ async def get_client(session: AsyncSession, in_service_id: str = None, projectId
     return result.fetchone()
 
 
+async def get_Jivo_bot(session: AsyncSession, projectId=None,):
+    result = await session.execute(select(JivoBot).filter(JivoBot.projectId == projectId))
+    return result.fetchone()
+
+
 async def get_assistant(session: AsyncSession, assistantId: str = None,):
     result = await session.execute(
         select(Assistant).filter(Assistant.id == assistantId))
@@ -211,3 +217,22 @@ async def create_client_and_chat(session: AsyncSession,
         session.rollback()
         print(ex)
     return new_client, new_chat
+
+
+async def create_client_and_chat(session: AsyncSession,
+                                 jivoBot_: JivoBotEntry
+                                 ):
+    new_jivo_bot = JivoBot()
+    new_jivo_bot.id = str(uuid4())
+    new_jivo_bot.projectId = jivoBot_.projectId
+    new_jivo_bot.assistant_id = jivoBot_.assistantId
+    new_jivo_bot.provider_id = jivoBot_.provider_id
+    new_jivo_bot.createdAt = datetime.datetime.now()
+    new_jivo_bot.updatedAt = datetime.datetime.now()
+    session.add(new_jivo_bot)
+    try:
+        await session.commit()
+    except IntegrityError as ex:
+        session.rollback()
+        print(ex)
+    return new_jivo_bot

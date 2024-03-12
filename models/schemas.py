@@ -100,6 +100,12 @@ class ClientMessage(BaseModel):
     event: str = None
 
 
+class JivoBotEntry(BaseModel):
+    projectId: str
+    assistantId: str
+    provider_id: str
+
+
 class BotMessage(BaseModel):
     id: str = None
     event: str = "BOT_MESSAGE"
