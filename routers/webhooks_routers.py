@@ -34,6 +34,8 @@ async def profile(bot_id: str, request: Request, session: AsyncSession = Depends
         return
 
     telegram: TelegramBot = await get_tg_bot(session, bot_id)
+    if not telegram:
+        return
     telegram: TelegramBot = telegram[0]
     projectId = telegram.projectId
     assistant: Assistant = await get_assistant(session=session, assistantId=telegram.assistantId)
