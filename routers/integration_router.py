@@ -140,14 +140,14 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
     response = await jivo.create_jivo_responce(request, assistant[0])
     answer_request = await jivo.send_jivo_aswer(response, jivo_[0].provider_id, project_id)
     print(answer_request.content)
-    if answer_request.status_code == 200:
-        ...
-        # обновить счетчик ответов
-    elif answer_request.status_code == 400:
-        await tg.tg_bot.send_err_notification(answer_request.json())
-    elif answer_request.status_code == 500:
-        await tg.tg_bot.send_err_notification(answer_request.json())
+    # if answer_request.status_code == 200:
+    #     ...
+    #     # обновить счетчик ответов
+    # elif answer_request.status_code == 400:
+    #     await tg.tg_bot.send_err_notification(answer_request.json())
+    # elif answer_request.status_code == 500:
+    #     await tg.tg_bot.send_err_notification(answer_request.json())
 
-    return response.__dict__
+    # return response.__dict__
 # print(asyncio.run(Database.get_jivo_bot(
 #     jivo_id="59e250a4-f1d4-4585-8141-d35d3cb1736")))
