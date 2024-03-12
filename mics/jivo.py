@@ -4,8 +4,11 @@ from mics._openai import create_response
 
 
 async def create_jivo_responce(request: schemas.ClientMessage, assistant) -> schemas.BotMessage:
-    print(12, request.dict())
-    response = schemas.BotMessage(**request.dict())
+    response = schemas.BotMessage()
+    response.id = request.id
+    response.client_id = request.client_id
+    response.chat_id = request.chat_id
+
     response.event = "BOT_MESSAGE"
     response.message.text = await create_response(request.chat_id, assistant.settings, request.message.text)
 
