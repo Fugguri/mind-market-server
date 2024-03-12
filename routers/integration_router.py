@@ -114,7 +114,7 @@ async def user(request: Request, session: AsyncSession = Depends(get_session)):
     return int(res)
 
 
-@integration_router.post("integration/jivo/create", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
+@integration_router.post("integration/jivo", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
 async def create_user(jivoBot: schemas.JivoBotEntry, session: AsyncSession = Depends(get_session)):
     bot = await create_jivo_bot(jivoBot)
 
