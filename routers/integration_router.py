@@ -9,7 +9,7 @@ from aiogram import types
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 from DB.db import get_session
-from DB.async_crud import add_tg_bot, get_jivo_bot, get_assistant
+from DB.async_crud import add_tg_bot, get_jivo_bot, get_assistant, create_jivo_bot
 
 integration_router = APIRouter()
 
@@ -114,7 +114,7 @@ async def user(request: Request, session: AsyncSession = Depends(get_session)):
     return int(res)
 
 
-@integration_router.post("integration/jivo", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
+@integration_router.post("/integration/jivo", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
 async def create_user(jivoBot: schemas.JivoBotEntry, session: AsyncSession = Depends(get_session)):
     bot = await create_jivo_bot(jivoBot)
 

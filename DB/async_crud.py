@@ -219,9 +219,9 @@ async def create_client_and_chat(session: AsyncSession,
     return new_client, new_chat
 
 
-async def create_client_and_chat(session: AsyncSession,
-                                 jivoBot_: JivoBotEntry
-                                 ):
+async def create_jivo_bot(session: AsyncSession,
+                          jivoBot_: JivoBotEntry
+                          ):
     new_jivo_bot = JivoBot()
     new_jivo_bot.id = str(uuid4())
     new_jivo_bot.projectId = jivoBot_.projectId
