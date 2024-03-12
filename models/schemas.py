@@ -94,9 +94,9 @@ class ClientMessage(BaseModel):
     client_id: str = None
     chat_id: str = None
     agents_online: bool = None
-    sender: Sender | None = None
-    message: Message = None
-    channel: Channel = None
+    sender: Sender
+    message: Message
+    channel: Channel
     event: str = "CLIENT_MESSAGE"
 
 
