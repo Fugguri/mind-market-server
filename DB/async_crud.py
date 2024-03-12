@@ -155,7 +155,7 @@ async def get_client(session: AsyncSession, in_service_id: str = None, projectId
     return result.fetchone()
 
 
-async def get_Jivo_bot(session: AsyncSession, projectId=None,):
+async def get_jivo_bot(session: AsyncSession, projectId=None,):
     result = await session.execute(select(JivoBot).filter(JivoBot.projectId == projectId))
     return result.fetchone()
 
