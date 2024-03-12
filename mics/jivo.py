@@ -12,7 +12,7 @@ async def create_jivo_responce(request: schemas.ClientMessage, assistant) -> sch
     return response
 
 
-async def send_jivo_aswer(response: schemas.BotMessage, provider_id: str, jivo_id: str):
+async def send_jivo_aswer(response: schemas.BotMessage, provider_id: str, ptoject_id: str):
 
     url = f"https://bot.jivosite.com/webhooks/{provider_id}/{ptoject_id}"
     json = response.model_dump_json()
