@@ -4,11 +4,8 @@ from mics._openai import create_response
 
 
 async def create_jivo_responce(request: schemas.ClientMessage, assistant) -> schemas.BotMessage:
-    response = schemas.BotMessage()
-    response.id = request.id
-    response.client_id = request.client_id
-    response.chat_id = request.chat_id
 
+    response = schemas.BotMessage(**request.dict())
     response.event = "BOT_MESSAGE"
     response.message.text = await create_response(request.chat_id, assistant.settings, request.message.text)
 
@@ -20,8 +17,9 @@ async def send_jivo_aswer(response: schemas.BotMessage, provider_id: str, ptojec
     url = f"https://bot.jivosite.com/webhooks/{provider_id}/{ptoject_id}"
     json = response.model_dump_json()
     print(json)
+    print(url)
     headers = {"Content-Type": "application/json"}
     result = requests.post(url=url, headers=headers, json=json)
     print(result.status_code)
-    print(result.content)
+    print(result.content
     return result
