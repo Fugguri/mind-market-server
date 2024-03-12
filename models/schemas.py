@@ -9,15 +9,6 @@ class AssistantEntry(BaseModel):
     comment: str = None
 
 
-class Sender(BaseModel):
-
-    id: int | None = None
-    user_token: str | None = None
-    name: str | None = None
-    url: str | None = None
-    has_contacts: bool | None = None
-
-
 class TgBotEntry(BaseModel):
     projectId: str
     botToken: str
@@ -87,6 +78,15 @@ class Channel(BaseModel):
     type: str | None = None
 
 
+class Sender(BaseModel):
+
+    id: int | None = None
+    user_token: str | None = None
+    name: str | None = None
+    url: str | None = None
+    has_contacts: bool | None = None
+
+
 class ClientMessage(BaseModel):
 
     id: str = None
@@ -97,7 +97,7 @@ class ClientMessage(BaseModel):
     sender: Sender | None = None
     message: Message = None
     channel: Channel = None
-    event: str = None
+    event: str = "CLIENT_MESSAGE"
 
 
 class JivoBotEntry(BaseModel):
