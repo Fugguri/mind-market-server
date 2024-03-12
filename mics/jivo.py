@@ -16,6 +16,7 @@ async def send_jivo_aswer(response: schemas.BotMessage, provider_id: str, ptojec
 
     url = f"https://bot.jivosite.com/webhooks/{provider_id}/{ptoject_id}"
     json = response.model_dump_json()
+    print(json)
     headers = {"Content-Type": "application/json"}
     result = requests.post(url=url, headers=headers, json=json)
 
