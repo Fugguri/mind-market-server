@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta,
 from uuid import uuid4
 
 
