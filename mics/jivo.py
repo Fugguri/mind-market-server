@@ -16,13 +16,13 @@ async def create_jivo_responce(request: schemas.ClientMessage, assistant) -> sch
 async def send_jivo_aswer(response: schemas.BotMessage, provider_id: str, ptoject_id: str):
 
     url = f"https://bot.jivosite.com/webhooks/{provider_id}/{ptoject_id}"
-    json = response.json().encode()
+    json = response.json()
 
     headers = {"Content-Type": "application/json"}
     async with AsyncClient() as client:
         result = await client.post(url=url, headers=headers, data=json)
-    print(json)
-    # print(result.)
-    print(result.status_code)
-    print(result.content)
+    if result.is_client_error:
+        print(json)
+        print(result.status_code)
+        print(result.content)
     return result
