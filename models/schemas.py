@@ -108,6 +108,7 @@ class JivoBotEntry(BaseModel):
 
 class BotMessage(BaseModel):
     id: str = None
+    site_id: str = None
     client_id: str = None
     chat_id: str = None
     message: Message = None
