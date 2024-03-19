@@ -19,7 +19,7 @@ async def send_jivo_aswer(response_model: schemas.BotMessage, provider_id: str, 
 
     headers = {"Content-Type": "application/json"}
     async with httpx.AsyncClient() as client:
-        response = await client.post(url=url, headers=headers, data=json)
+        response = await client.post(url=url, headers=headers, json=json)
         # print(json)
         print(response.status_code)
         print(response.content)
