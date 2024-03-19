@@ -1,6 +1,7 @@
 import requests
 from models import schemas
 from mics._openai import create_response
+from httpx import AsyncClient
 
 
 async def create_jivo_responce(request: schemas.ClientMessage, assistant) -> schemas.BotMessage:
@@ -18,7 +19,8 @@ async def send_jivo_aswer(response: schemas.BotMessage, provider_id: str, ptojec
     json = response.json().encode()
 
     headers = {"Content-Type": "application/json"}
-    result = requests.post(url=url, headers=headers, data=json)
+    async with AsyncClient as client:
+        result = await client.post(url=url, headers=headers, data=json)
     print(json)
     # print(result.)
     print(result.status_code)
