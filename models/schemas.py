@@ -69,7 +69,7 @@ class Message(BaseModel):
 
     type: str = "TEXT"
     text: str = None
-    timestamp: float = datetime.timestamp(datetime.now()).as_integer_ratio()[0]
+    timestamp: int = datetime.timestamp(datetime.now())
 
 
 class Channel(BaseModel):
