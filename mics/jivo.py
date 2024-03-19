@@ -23,6 +23,7 @@ async def send_jivo_aswer(response: schemas.BotMessage, provider_id: str, ptojec
     async with AsyncClient() as client:
         result = await client.post(url=url, headers=headers, data=json)
     if result.is_client_error:
+        print(result.request.content.decode())
         print(json)
         print(result.status_code)
         print(result.content)
