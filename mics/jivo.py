@@ -24,5 +24,5 @@ async def send_jivo_aswer(response: schemas.BotMessage, provider_id: str, ptojec
     if result.is_client_error:
         print(json)
         print(result.status_code)
-        print(result.headers)
+        print(result.content)
     return result
