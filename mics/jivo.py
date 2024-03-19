@@ -19,7 +19,7 @@ async def send_jivo_aswer(response: schemas.BotMessage, provider_id: str, ptojec
     json = response.json().encode()
 
     headers = {"Content-Type": "application/json"}
-    async with AsyncClient as client:
+    async with AsyncClient() as client:
         result = await client.post(url=url, headers=headers, data=json)
     print(json)
     # print(result.)
