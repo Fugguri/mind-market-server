@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 from mics import jivo, tg, greenApi, utls
 from models import schemas
 from fastapi import APIRouter, HTTPException, Request, logger, Depends
+from fastapi.responses import HTMLResponse
 from fastapi.logger import logger
 from aiogram import types
 from sqlalchemy.orm import Session
@@ -137,10 +138,12 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
             pass
     jivo_ = await get_jivo_bot(session, project_id)
     print(jivo_)
+    if not jivo_:
+        return HTMLResponse(content="User doesn't exist", status_code=400)
     assistant = await get_assistant(session, jivo_[0].assistant_id)
     response = await jivo.create_jivo_responce(request, assistant[0])
-    answer_request = await jivo.send_jivo_aswer(response, jivo_[0].provider_id, project_id)
-
+    await jivo.send_jivo_aswer(response, jivo_[0].provider_id, project_id)
+    return response
     # if answer_request.status_code == 200:
     #     ...
     #     # обновить счетчик ответов
@@ -148,7 +151,3 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
     #     await tg.tg_bot.send_err_notification(answer_request.json())
     # elif answer_request.status_code == 500:
     #     await tg.tg_bot.send_err_notification(answer_request.json())
-
-    # return response.__dict__
-# print(asyncio.run(Database.get_jivo_bot(
-#     jivo_id="59e250a4-f1d4-4585-8141-d35d3cb1736")))
