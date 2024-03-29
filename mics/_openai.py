@@ -21,9 +21,8 @@ async def create_response(user_id: int | str, settings: str, text: str | int):
     answer = ""
 
     if not users_message.get(user_id):
-        users_message[user_id] = [{"role": "user", "content": settings}]
-        users_message[user_id].append(
-            {"role": "user", "content": text})
+        users_message[user_id] = [{"role": "system", "content": settings}]
+        users_message[user_id].append({"role": "user", "content": text})
     else:
         current_settings = users_message[user_id][0].get("content")
         if settings != current_settings:
