@@ -17,6 +17,7 @@ users_message = {}
 
 
 async def create_response(user_id: int | str, settings: str, text: str | int):
+    # try:
     answer = ""
 
     if not users_message.get(user_id):
@@ -37,7 +38,6 @@ async def create_response(user_id: int | str, settings: str, text: str | int):
         max_tokens=300,
     )
     answer = response.choices[0].message.content
-# try:
 
 #     users_message[user_id].append({"role": "assistant", "content": answer})
 # except RateLimitError as ex:

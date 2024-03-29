@@ -8,7 +8,7 @@ async def create_jivo_responce(request: schemas.ClientMessage, assistant) -> sch
 
     response = schemas.BotMessage(**request.dict())
     response.event = "BOT_MESSAGE"
-    response.message.text = await create_response(request.chat_id, assistant.settings, request.message.text)
+    response.message.text = await create_response(request.client_id, assistant.settings, request.message.text)
 
     return response
 
