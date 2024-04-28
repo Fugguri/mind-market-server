@@ -153,7 +153,7 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
     response = await jivo.create_jivo_responce(request, assistant[0])
     print("create responce")
 
-    # await jivo.send_jivo_aswer(response, jivo_[0].provider_id, project_id)
+    await jivo.send_jivo_aswer(response, jivo_[0].provider_id, project_id)
     print("send answer")
     return response
     # if answer_request.status_code == 200:
