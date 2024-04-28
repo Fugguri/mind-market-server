@@ -144,9 +144,7 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
 
 
 def run_async(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
-    loop = asyncio.get_running_loop()
-    asyncio.run_coroutine_threadsafe(create_jivo_answer(
-        project_id, request, session), loop=loop)
+    asyncio.run(create_jivo_answer(project_id, request, session))
 
 
 async def create_jivo_answer(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
