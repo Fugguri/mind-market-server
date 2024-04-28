@@ -16,7 +16,7 @@ job_store = (
 )  # FIXME due to a bug in the apscheduler + gunicorn combination
 
 
-message_scheduler: BaseScheduler = AsyncIOScheduler(
+message_scheduler: BaseScheduler = BackgroundScheduler(
     jobstores={
         "default": job_store,
     },
