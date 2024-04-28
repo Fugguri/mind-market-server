@@ -143,6 +143,10 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
     #     await tg.tg_bot.send_err_notification(answer_request.json())
 
 
+def run_async(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
+    asyncio.create_task(create_jivo_answer(project_id, request, session))
+
+
 async def create_jivo_answer(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
     print(request.json())
     print(datetime.now())
