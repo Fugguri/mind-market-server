@@ -21,10 +21,9 @@ message_scheduler: BaseScheduler = AsyncIOScheduler(
         "default": job_store,
     },
     executors={"default": AsyncIOExecutor(), "cron": ThreadPoolExecutor()},
-    # timezone=utc,
+    timezone=utc,
     job_defaults={
         "coalesce": True,  # Trigger only one job to make up for missed jobs.
         "max_instances": 1,  # Allow only one execution of a job per time.
     },
 )
-
