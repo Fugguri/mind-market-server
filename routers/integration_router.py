@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
 from mics import jivo, tg, greenApi, utls
@@ -123,6 +124,7 @@ async def create_user(jivoBot: schemas.JivoBotEntry, session: AsyncSession = Dep
 @integration_router.post("/integration/jivo/{project_id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
 async def create_user(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
     print(request.json())
+    print(datetime.now())
     print("start")
     match request.event:
         case "CHAT_CLOSED":
@@ -136,6 +138,7 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
         case "CLIENT_INFO":
             return
         case _:
+            print(request.event)
             pass
     jivo_ = await get_jivo_bot(session, project_id)
     print("got jivo bot")
