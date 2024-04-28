@@ -42,7 +42,7 @@ class TgBot:
 
         if text:
             response = await create_response(sender_id, settings, text)
-            # mes = await self.sendMessage(sender_id, response)
+            mes = await self.sendMessage(sender_id, response)
         return response
 
     async def sendMessage(self, receiver_id: str | int, text: str) -> str:
