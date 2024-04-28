@@ -128,8 +128,8 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
                               #    replace_existing=True,
                               #   trigger='date',
                               #    run_date=remaining_datetime,
-                              id=str(request.json().get("id")),
-                              name=str(request.json().get("id")),
+                              id=str(request.id),
+                              name=str(request.id),
                               args=(project_id, request, session))
 
     return HTMLResponse(status_code=200)
