@@ -123,7 +123,7 @@ async def create_user(jivoBot: schemas.JivoBotEntry, session: AsyncSession = Dep
 @integration_router.post("/integration/jivo/{project_id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
 async def create_user(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
     print(request.json())
-    print(123)
+    print("start")
     match request.event:
         case "CHAT_CLOSED":
             return
@@ -138,13 +138,21 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
         case _:
             pass
     jivo_ = await get_jivo_bot(session, project_id)
+    print("got jivo bot")
+
     print(jivo_)
     if not jivo_:
         print("error")
         return HTMLResponse(content="User doesn't exist", status_code=400)
     assistant = await get_assistant(session, jivo_[0].assistant_id)
+    print("got assistant")
+
     response = await jivo.create_jivo_responce(request, assistant[0])
+    print("create responce")
+
     await jivo.send_jivo_aswer(response, jivo_[0].provider_id, project_id)
+    print("send answer")
+
     # return response
     # if answer_request.status_code == 200:
     #     ...
