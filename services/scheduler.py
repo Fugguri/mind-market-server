@@ -27,3 +27,5 @@ message_scheduler: BaseScheduler = AsyncIOScheduler(
         "max_instances": 1,  # Allow only one execution of a job per time.
     },
 )
+
+message_scheduler.start()
