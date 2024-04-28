@@ -28,7 +28,7 @@ async_message_scheduler: BaseScheduler = AsyncIOScheduler(
     },
 )
 
-message_scheduler: BaseScheduler = BackgroundScheduler(
+message_scheduler: BaseScheduler = BaseScheduler(
     jobstores={
         "default": job_store,
     },
