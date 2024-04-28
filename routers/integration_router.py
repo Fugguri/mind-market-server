@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 from DB.db import get_session
 from DB.async_crud import add_tg_bot, get_jivo_bot, get_assistant, create_jivo_bot
-
+from services.scheduler import message_scheduler
 integration_router = APIRouter()
 
 
@@ -123,7 +123,15 @@ async def create_user(jivoBot: schemas.JivoBotEntry, session: AsyncSession = Dep
 
 @integration_router.post("/integration/jivo/{project_id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
 async def create_user(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
-    await create_jivo_answer(project_id, request, session)
+    # await create_jivo_answer(project_id, request, session)
+    message_scheduler.add_job(func=create_jivo_answer,
+                              #    replace_existing=True,
+                              trigger='date',
+                              #    run_date=remaining_datetime,
+                              id=str(request.json().get("id")),
+                              name=str(request.json().get("id")),
+                              args=(project_id, request, session))
+
     return HTMLResponse(status_code=200)
 
     # if answer_request.status_code == 200:
