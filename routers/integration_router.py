@@ -126,7 +126,7 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
     # await create_jivo_answer(project_id, request, session)
     message_scheduler.add_job(func=create_jivo_answer,
                               #    replace_existing=True,
-                              trigger='date',
+                              #   trigger='date',
                               #    run_date=remaining_datetime,
                               id=str(request.json().get("id")),
                               name=str(request.json().get("id")),
