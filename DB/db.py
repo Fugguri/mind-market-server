@@ -33,12 +33,14 @@ Base = declarative_base()
 
 
 async def get_session() -> AsyncSession:
-    async with async_session() as session:
-        try:
-            yield session
-        except:
-            await session.close()
-
+    try:
+        async with async_session() as session:
+            try:
+                yield session
+            except:
+                await session.close()
+    except:
+        pass
 
 # async def init_models():
 #     async with engine.begin() as conn:
