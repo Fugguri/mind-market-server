@@ -27,7 +27,6 @@ async def create_response(user_id: int | str, settings: str, text: str | int):
     else:
         current_settings = users_message[user_id][0].get("content")
         print("checking message history")
-
         if settings != current_settings:
             users_message[user_id] = [
                 {"role": "user", "content": settings}]
@@ -40,8 +39,8 @@ async def create_response(user_id: int | str, settings: str, text: str | int):
         # max_tokens=300,
     )
     answer = response.choices[0].message.content
-    print(answer)
-#     users_message[user_id].append({"role": "assistant", "content": answer})
+    users_message[user_id].append({"role": "assistant", "content": answer})
+    print(users_message[user_id])
 # except RateLimitError as ex:
 #     return "RateLimitError"
 # except Exception as ex:
