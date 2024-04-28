@@ -123,6 +123,19 @@ async def create_user(jivoBot: schemas.JivoBotEntry, session: AsyncSession = Dep
 
 @integration_router.post("/integration/jivo/{project_id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
 async def create_user(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
+    await create_jivo_answer(project_id, request, session)
+    return HTMLResponse(status_code=200)
+
+    # if answer_request.status_code == 200:
+    #     ...
+    #     # обновить счетчик ответов
+    # elif answer_request.status_code == 400:
+    #     await tg.tg_bot.send_err_notification(answer_request.json())
+    # elif answer_request.status_code == 500:
+    #     await tg.tg_bot.send_err_notification(answer_request.json())
+
+
+async def create_jivo_answer(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
     print(request.json())
     print(datetime.now())
     print("start")
@@ -155,11 +168,3 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
 
     await jivo.send_jivo_aswer(response, jivo_[0].provider_id, project_id)
     print("send answer")
-    return response
-    # if answer_request.status_code == 200:
-    #     ...
-    #     # обновить счетчик ответов
-    # elif answer_request.status_code == 400:
-    #     await tg.tg_bot.send_err_notification(answer_request.json())
-    # elif answer_request.status_code == 500:
-    #     await tg.tg_bot.send_err_notification(answer_request.json())
