@@ -143,8 +143,8 @@ async def create_user(project_id: str, request: schemas.ClientMessage, session: 
         return HTMLResponse(content="User doesn't exist", status_code=400)
     assistant = await get_assistant(session, jivo_[0].assistant_id)
     response = await jivo.create_jivo_responce(request, assistant[0])
-    await jivo.send_jivo_aswer(response, jivo_[0].provider_id, project_id)
-    # return response
+    # await jivo.send_jivo_aswer(response, jivo_[0].provider_id, project_id)
+    return response
     # if answer_request.status_code == 200:
     #     ...
     #     # обновить счетчик ответов
