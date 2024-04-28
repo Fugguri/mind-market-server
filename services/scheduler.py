@@ -7,7 +7,7 @@ from apscheduler.executors.asyncio import AsyncIOExecutor
 from apscheduler.executors.pool import ThreadPoolExecutor
 from apscheduler.jobstores.memory import MemoryJobStore
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.schedulers.base
+
 from pytz import utc
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
