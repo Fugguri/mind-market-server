@@ -7,6 +7,7 @@ from apscheduler.executors.asyncio import AsyncIOExecutor
 from apscheduler.executors.pool import ThreadPoolExecutor
 from apscheduler.jobstores.memory import MemoryJobStore
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.schedulers.base
 from pytz import utc
 logging.basicConfig()
 logging.getLogger('apscheduler').setLevel(logging.DEBUG)
@@ -29,15 +30,15 @@ async_message_scheduler: BaseScheduler = AsyncIOScheduler(
 )
 
 message_scheduler: BaseScheduler = BaseScheduler(
-    jobstores={
-        "default": job_store,
-    },
+    # jobstores={
+    #     "default": job_store,
+    # },
 
-    timezone=utc.tzname("RU-MOSCOW"),
-    job_defaults={
-        "coalesce": True,  # Trigger only one job to make up for missed jobs.
-        "max_instances": 1,  # Allow only one execution of a job per time.
-    },
+    # timezone=utc.tzname("RU-MOSCOW"),
+    # job_defaults={
+    #     "coalesce": True,  # Trigger only one job to make up for missed jobs.
+    #     "max_instances": 1,  # Allow only one execution of a job per time.
+    # },
 )
 message_scheduler.start()
 
