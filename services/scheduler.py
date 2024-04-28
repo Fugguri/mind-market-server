@@ -16,7 +16,7 @@ job_store = (
 )  # FIXME due to a bug in the apscheduler + gunicorn combination
 
 
-message_scheduler: BaseScheduler = BackgroundScheduler(
+async_message_scheduler: BaseScheduler = AsyncIOScheduler(
     jobstores={
         "default": job_store,
     },
@@ -28,4 +28,17 @@ message_scheduler: BaseScheduler = BackgroundScheduler(
     },
 )
 
+message_scheduler: BaseScheduler = BackgroundScheduler(
+    jobstores={
+        "default": job_store,
+    },
+
+    timezone=utc,
+    job_defaults={
+        "coalesce": True,  # Trigger only one job to make up for missed jobs.
+        "max_instances": 1,  # Allow only one execution of a job per time.
+    },
+)
 message_scheduler.start()
+
+async_message_scheduler.start()
