@@ -17,9 +17,6 @@ app = FastAPI(
     version="0.1.1",
     description="Your AI assistant",
 )
-# Create `AdminSite` instance
-site = AdminSite(settings=Settings(
-    database_url_async='sqlite+aiosqlite:///amisadmin.db'))
 
 origins = [
     "http://localhost:3000",
