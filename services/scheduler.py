@@ -33,7 +33,7 @@ message_scheduler: BaseScheduler = BackgroundScheduler(
         "default": job_store,
     },
 
-    timezone=utc,
+    timezone=utc.tzname("RU-MOSCOW"),
     job_defaults={
         "coalesce": True,  # Trigger only one job to make up for missed jobs.
         "max_instances": 1,  # Allow only one execution of a job per time.
