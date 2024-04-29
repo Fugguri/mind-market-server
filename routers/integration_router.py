@@ -1,3 +1,4 @@
+from fastapi import BackgroundTasks
 import asyncio
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
@@ -122,15 +123,15 @@ async def create_user(jivoBot: schemas.JivoBotEntry, session: AsyncSession = Dep
 
 
 @integration_router.post("/integration/jivo/{project_id}", name="JivoBot запрос ответа", description="Запрос ответа от ассистента", tags=["Интеграции"])
-async def create_user(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session)):
+async def create_user(project_id: str, request: schemas.ClientMessage, session: AsyncSession = Depends(get_session), background_task: BackgroundTasks = BackgroundTasks):
     # await create_jivo_answer(project_id, request, session)
-    message_scheduler.add_job(func=run_async,
-                              #    replace_existing=True,
-                              #   trigger='date',
-                              #    run_date=remaining_datetime,
-                              id=str(request.id),
-                              name=str(request.id),
-                              args=(project_id, request, session))
+    background_task.add_task(run_async,
+                             #    replace_existing=True,
+                             #   trigger='date',
+                             #    run_date=remaining_datetime,
+                             #   id=str(request.id),
+                             #   name=str(request.id),
+                             project_id, request, session)
 
     return HTMLResponse(status_code=200)
 
